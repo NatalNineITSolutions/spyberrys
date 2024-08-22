@@ -36,6 +36,8 @@
     @if(!empty($generalSettings['preloading']) and $generalSettings['preloading'] == '1')
         @include('admin.includes.preloading')
     @endif
+
+    @yield('css')
 </head>
 
 <body class="@if($isRtl) rtl @endif">
@@ -130,5 +132,7 @@
 
     {!! !empty(getCustomCssAndJs('js')) ? getCustomCssAndJs('js') : '' !!}
 </script>
+
+@yield('script')
 </body>
 </html>

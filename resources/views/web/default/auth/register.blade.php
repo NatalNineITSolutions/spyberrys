@@ -5,6 +5,20 @@
     <link rel="stylesheet" href="/assets/default/vendors/daterangepicker/daterangepicker.min.css">
 @endpush
 
+@section('css')
+    <style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+@endsection
+
 @section('content')
     @php
         $registerMethod = getGeneralSettings('register_method') ?? 'mobile';
@@ -32,18 +46,23 @@
                                 <div class="d-flex align-items-center wizard-custom-radio mt-5">
                                     <div class="wizard-custom-radio-item flex-grow-1">
                                         <input type="radio" name="account_type" value="user" id="role_user" class="" checked>
-                                        <label class="font-12 cursor-pointer px-15 py-10" for="role_user">{{ trans('update.role_user') }}</label>
+                                        <label class="font-12 cursor-pointer px-15 py-10 student" for="role_user">{{ trans('update.role_user') }}</label>
                                     </div>
 
-                                    @foreach($selectRolesDuringRegistration as $selectRole)
+                                    {{-- @foreach($selectRolesDuringRegistration as $selectRole)
                                         <div class="wizard-custom-radio-item flex-grow-1">
                                             <input type="radio" name="account_type" value="{{ $selectRole }}" id="role_{{ $selectRole }}" class="">
                                             <label class="font-12 cursor-pointer px-15 py-10" for="role_{{ $selectRole }}">{{ trans('update.role_'.$selectRole) }}</label>
                                         </div>
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                             </div>
                         @endif
+
+                        <div class="form-group">
+                            <label for="aadharNumber" class="input-label">Aadhar Number</label>
+                            <input type="text" class="form-control" id="aadharNumber" maxlength="14" placeholder="0000 0000 0000">
+                        </div>
 
                         @if($registerMethod == 'mobile')
                             @include('web.default.auth.register_includes.mobile_field')
@@ -192,3 +211,16 @@
     <script src="/assets/default/js/parts/forms.min.js"></script>
     <script src="/assets/default/js/parts/register.min.js"></script>
 @endpush
+
+@section('script')
+    <script>
+        document.getElementById('aadharNumber').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+
+            // Add a space after every 4 digits
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+            e.target.value = value;
+        });
+    </script>
+@endsection

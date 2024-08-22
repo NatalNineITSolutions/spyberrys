@@ -18,7 +18,6 @@ class Setting extends Model implements TranslatableContract
     public $timestamps = false;
     protected $guarded = ['id'];
 
-
     public $translatedAttributes = ['value'];
 
     public function getValueAttribute()

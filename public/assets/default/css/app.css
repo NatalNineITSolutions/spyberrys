@@ -18113,19 +18113,15 @@ p {
 }
 .wizard-custom-radio .wizard-custom-radio-item:first-child label {
   border-right: 0;
-  border-radius: 0.5rem 0 0 0.5rem;
 }
 .wizard-custom-radio .wizard-custom-radio-item:last-child label {
   border-left: 0;
-  border-radius: 0 0.5rem 0.5rem 0;
 }
 .rtl .wizard-custom-radio .wizard-custom-radio-item:first-child label {
   border-left: 0;
-  border-radius: 0 0.5rem 0.5rem 0;
 }
 .rtl .wizard-custom-radio .wizard-custom-radio-item:last-child label {
   border-right: 0;
-  border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .wizard-custom-checkbox {

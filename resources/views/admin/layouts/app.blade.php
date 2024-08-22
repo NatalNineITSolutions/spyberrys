@@ -33,6 +33,8 @@
 
         {!! getThemeColorsSettings(true) !!}
     </style>
+
+    @yield('css')
 </head>
 <body class="@if($isRtl) rtl @endif">
 

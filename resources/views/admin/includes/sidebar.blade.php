@@ -36,6 +36,14 @@
                 </li>
             @endcan
 
+            
+                <li class="">
+                    <a href="{{ getAdminPanelUrl('/sandbox') }}" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Sandbox Configuration</span>
+                    </a>
+                </li>
+
             @if($authUser->can('admin_webinars') or
                 $authUser->can('admin_bundles') or
                 $authUser->can('admin_categories') or

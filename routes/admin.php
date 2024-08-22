@@ -44,6 +44,11 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
             Route::post('/getNetProfitChart', 'DashboardController@getNetProfitChartAjax');
         });
 
+        Route::group(['prefix' => 'sandbox'], function () {
+            Route::get('/', 'DashboardController@sandbox');
+            Route::post('/sandbox/store', 'DashboardController@store')->name('sandbox.store');
+        });
+
         Route::group(['prefix' => 'roles'], function () {
             Route::get('/', 'RoleController@index');
             Route::get('/create', 'RoleController@create');

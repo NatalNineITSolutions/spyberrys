@@ -9,10 +9,13 @@ use App\Models\Role;
 use App\Models\Sale;
 use App\Models\Ticket;
 use App\Models\Webinar;
+use App\Models\Setting;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -155,6 +158,39 @@ class DashboardController extends Controller
 
         return view('admin.marketing_dashboard', $data);
     }
+
+    public function sandbox() {
+        return view('admin.sandbox_configuration');
+    }
+
+    public function store(Request $request) 
+    {
+        // Validate the inputs
+        $request->validate([
+            'apiKey' => 'required|string',
+            'secretKey' => 'required|string',
+            'version' => 'required|string',
+        ]);
+
+
+        // dd($request);
+    
+        // Store the input values in the settings table
+        DB::table('settings')->updateOrInsert(
+            ['id' => 1], // Assuming you want to store only one record with id 1
+            [
+                'api_key' => $request->input('apiKey'),
+                'secret_key' => $request->input('secretKey'),
+                'version' => $request->input('version'),
+                'updated_at' => now()->timestamp
+            ]
+        );
+    
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Settings have been saved.');
+    }
+
+        
 
     public function getSaleStatisticsData(Request $request)
     {
