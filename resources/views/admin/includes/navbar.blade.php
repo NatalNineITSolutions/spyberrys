@@ -41,13 +41,14 @@
                                     <i class="fa fa-info"></i>
                                 </div>
                                 <div class="dropdown-item-desc">
-                                   Rocket LMS Version 1.9
+                                   Rocket LMS Version 1.9.5
                                    <div class="time text-primary">All rights reserved for Rocket Soft</div>
                                 </div>
                             </a>
                     </div>
                 </div>
             </li>
+
 
             <li class="dropdown dropdown-list-toggle">
                 <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg @if(!empty($unreadNotifications) and count($unreadNotifications)) beep @else disabled @endif">

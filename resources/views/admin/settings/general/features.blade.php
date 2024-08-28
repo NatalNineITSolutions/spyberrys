@@ -677,19 +677,6 @@
                 </div>
 
 
-                <div class="mb-5">
-                    <h5>{{ trans('update.twilio_api_settings') }}</h5>
-
-                    @foreach(['twilio_sid', 'twilio_auth_token', 'twilio_number']  as $twilioConf)
-                        <div class="form-group">
-                            <label>{{ trans("update.{$twilioConf}") }}</label>
-                            <input type="text" name="value[{{ $twilioConf }}]" value="{{ (!empty($itemValue) and !empty($itemValue["{$twilioConf}"])) ? $itemValue["{$twilioConf}"] : old("{$twilioConf}") }}" class="form-control "/>
-                        </div>
-                    @endforeach
-
-                </div>
-
-
                 <button type="submit" class="btn btn-primary">{{ trans('admin/main.save_change') }}</button>
             </form>
         </div>

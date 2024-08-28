@@ -105,7 +105,29 @@
 
             <div class="form-group">
                 <label class="input-label">{{ trans('admin/main.commission') }}</label>
-                <input type="text" name="commission" value="{{ !empty($product) ? $product->commission : old('commission') }}" class="form-control @error('commission')  is-invalid @enderror" placeholder=""/>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label class="">{{ trans("admin/main.type") }}</label>
+                        <select name="commission_type" class="js-commission-type-input form-control" data-currency="{{ $currency }}">
+                            <option value="percent" {{ (!empty($product) and $product->commission_type == "percent") ? 'selected' : '' }}>{{ trans('update.percent') }}</option>
+                            <option value="fixed_amount" {{ (!empty($product) and $product->commission_type == "fixed_amount") ? 'selected' : '' }}>{{ trans('update.fixed_amount') }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="">
+                            <label class="">
+                                {{ trans("update.value") }}
+
+                                <span class="ml-1 js-commission-value-span">({{ !empty($product) ? (($product->commission_type == "percent") ? '%' : $currency) : '%' }})</span>
+                            </label>
+
+                            <input type="number" name="commission" value="{{ !empty($product) ? $product->commission : old('commission') }}" class="js-commission-value-input form-control text-center" {{ (!empty($product) and $product->commission_type == "percent") ? 'maxlength="3" min="0" max="100"' : '' }}/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="text-muted text-small mt-1">{{ trans('update.product_commission_hint') }}</div>
                 @error('commission')
                 <div class="invalid-feedback">

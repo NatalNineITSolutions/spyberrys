@@ -41,7 +41,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form method="post" action="{{ getAdminPanelUrl('/upcoming_courses/'. (!empty($upcomingCourse) ? $upcomingCourse->id.'/update' : 'store')) }}" id="upcomingCourseForm" class="webinar-form">
+                            <form method="post" action="{{ getAdminPanelUrl('/upcoming_courses/'. (!empty($upcomingCourse) ? $upcomingCourse->id.'/update' : 'store')) }}" id="upcomingCourseForm" class="webinar-form" enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
                                 <section>

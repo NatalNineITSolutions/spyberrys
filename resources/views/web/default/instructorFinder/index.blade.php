@@ -78,6 +78,7 @@
         var currency = '{{ $currency }}';
         var profileLang = '{{ trans('public.profile') }}';
         var hourLang = '{{ trans('update.hour') }}';
+        var freeLang = '{{ trans('public.free') }}';
         var mapUsers = JSON.parse(@json($mapUsers->toJson()));
         var selectProvinceLang = '{{ trans('update.select_province') }}';
         var selectCityLang = '{{ trans('update.select_city') }}';

@@ -46,6 +46,7 @@
                 <option value="">{{ trans('admin/main.select_type') }}</option>
                 <option value="quiz" {{ (!empty($template) and $template->type == 'quiz') ? 'selected' : '' }}>{{ trans('update.quiz_related') }}</option>
                 <option value="course" {{ (!empty($template) and $template->type == 'course') ? 'selected' : '' }}>{{ trans('update.course_completion') }}</option>
+                <option value="bundle" {{ (!empty($template) and $template->type == 'bundle') ? 'selected' : '' }}>{{ trans('update.bundle_completion') }}</option>
             </select>
             <div class="invalid-feedback">@error('type') {{ $message }} @enderror</div>
         </div>
@@ -172,6 +173,8 @@
                                 <input type="hidden" name="elements[{{ $element }}][content]" class="js-element-content" value="[course_name]">
                             @elseif($element == 'instructor_signature')
                                 <input type="hidden" name="elements[{{ $element }}][content]" class="js-element-content" value="[instructor_signature]">
+                            @elseif($element == 'user_certificate_additional')
+                                <input type="hidden" name="elements[{{ $element }}][content]" class="js-element-content" value="[user_certificate_additional]">
                             @endif
 
                         </div>

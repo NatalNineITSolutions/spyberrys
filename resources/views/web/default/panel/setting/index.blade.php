@@ -55,18 +55,9 @@
                     @break
 
                 @case(8)
-                    @if(!$user->isUser())
-                        @include('web.default.panel.setting.setting_includes.zoom_api')
-                    @else
-                        @include('web.default.panel.setting.setting_includes.settings')
-                    @endif
+                    @include('web.default.panel.setting.setting_includes.settings')
                     @break
 
-                @case(9)
-                    @if(!$user->isUser())
-                        @include('web.default.panel.setting.setting_includes.settings')
-                    @endif
-                    @break
             @endswitch
         @endif
     </form>

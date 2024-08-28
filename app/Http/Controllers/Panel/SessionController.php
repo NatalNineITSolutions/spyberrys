@@ -204,9 +204,11 @@ class SessionController extends Controller
 
                 $changeChapter = ($data['chapter_id'] != $session->chapter_id);
                 $oldChapterId = $session->chapter_id;
+                $chapterId = is_array($data['chapter_id']) ? $data['chapter_id'][0] : $data['chapter_id'];
+
 
                 $session->update([
-                    'chapter_id' => $data['chapter_id'],
+                    'chapter_id' => $chapterId,
                     'date' => $sessionDate,
                     'duration' => $data['duration'] ?? $session->duration,
                     'link' => $data['link'] ?? $session->link,
@@ -220,9 +222,11 @@ class SessionController extends Controller
                     'updated_at' => time()
                 ]);
 
+                $locale = is_array($data['locale']) ? $data['locale'][0] : $data['locale'];
+
                 SessionTranslation::updateOrCreate([
                     'session_id' => $session->id,
-                    'locale' => mb_strtolower($data['locale']),
+                    'locale' => mb_strtolower($locale),
                 ], [
                     'title' => $data['title'],
                     'description' => $data['description'],

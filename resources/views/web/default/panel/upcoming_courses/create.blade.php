@@ -7,7 +7,7 @@
 @section('content')
     <div class="">
 
-        <form method="post" action="/panel/upcoming_courses/{{ !empty($upcomingCourse) ? $upcomingCourse->id .'/update' : 'store' }}" id="upcomingCourseForm" class="webinar-form">
+        <form method="post" action="/panel/upcoming_courses/{{ !empty($upcomingCourse) ? $upcomingCourse->id .'/update' : 'store' }}" id="upcomingCourseForm" class="webinar-form" enctype="multipart/form-data">
             @include('web.default.panel.upcoming_courses.create_includes.progress')
 
             {{ csrf_field() }}

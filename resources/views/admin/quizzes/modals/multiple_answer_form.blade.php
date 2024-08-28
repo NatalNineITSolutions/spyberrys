@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label class="input-label">{{ trans('quiz.answer_title') }}</label>
-                <input type="text" name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][title]" class="form-control {{ !empty($answer) ? 'js-ajax-answer-title-'.$answer->id : '' }}" value="{{ !empty($answer) ? $answer->title : '' }}"/>
+                <textarea type="text" name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][title]" class="form-control {{ !empty($answer) ? 'js-ajax-answer-title-'.$answer->id : '' }}" rows="1">{{ !empty($answer) ? $answer->title : '' }}</textarea>
             </div>
         </div>
     </div>

@@ -61,7 +61,7 @@
                                                         <i class="fa fa-upload"></i>
                                                     </button>
                                                 </div>
-                                                <input type="text" name="user_avatar" id="user_avatar" value="{{ !empty($testimonial->user_avatar) ? $testimonial->user_avatar : old('user_avatar') }}" class="form-control @error('user_avatar') is-invalid @enderror" placeholder="{{ trans('admin/main.testimonial_user_avatar_placeholder') }}"/>
+                                                <input type="text" name="user_avatar" id="user_avatar" value="{{ !empty($testimonial->user_avatar) ? $testimonial->user_avatar : old('user_avatar') }}" class="form-control @error('user_avatar') is-invalid @enderror"/>
                                                 <div class="input-group-append">
                                                     <button type="button" class="input-group-text admin-file-view" data-input="user_avatar">
                                                         <i class="fa fa-eye"></i>

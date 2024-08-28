@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form method="post" action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id.'/update' : 'store' }}" id="webinarForm" class="webinar-form">
+                            <form method="post" action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id.'/update' : 'store' }}" id="webinarForm" class="webinar-form" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <section>
                                     <h2 class="section-title after-line">{{ trans('public.basic_information') }}</h2>
@@ -217,7 +217,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-0">
+                                            <div class="js-video-demo-other-inputs form-group mt-0 {{ (empty($webinar) or $webinar->video_demo_source != 'secure_host') ? '' : 'd-none' }}">
                                                 <label class="input-label font-12">{{ trans('update.path') }}</label>
                                                 <div class="input-group js-video-demo-path-input">
                                                     <div class="input-group-prepend">
@@ -237,6 +237,23 @@
                                                     @enderror
                                                 </div>
                                             </div>
+
+                                            <div class="form-group js-video-demo-secure-host-input {{ (!empty($webinar) and $webinar->video_demo_source == 'secure_host') ? '' : 'd-none' }}">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" class="input-group-text">
+                                                            <i class="fa fa-upload"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="custom-file js-ajax-s3_file">
+                                                        <input type="file" name="video_demo_secure_host_file" class="custom-file-input cursor-pointer" id="video_demo_secure_host_file" accept="video/*">
+                                                        <label class="custom-file-label cursor-pointer" for="video_demo_secure_host_file">{{ trans('update.choose_file') }}</label>
+                                                    </div>
+
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -350,16 +367,6 @@
                                                 </div>
                                             @endif
 
-                                            @if(!empty($webinar) and $webinar->creator->isOrganization())
-                                                <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                    <label class="" for="privateSwitch">{{ trans('webinars.private') }}</label>
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" name="private" class="custom-control-input" id="privateSwitch" {{ (!empty($webinar) and $webinar->private) ? 'checked' :  '' }}>
-                                                        <label class="custom-control-label" for="privateSwitch"></label>
-                                                    </div>
-                                                </div>
-                                            @endif
-
                                             <div class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class="" for="supportSwitch">{{ trans('panel.support') }}</label>
                                                 <div class="custom-control custom-switch">
@@ -417,7 +424,7 @@
                                             </div>
 
                                             <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
+                                                <label class="" for="enable_waitlistSwitch">{{ trans('update.enable_waitlist') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="enable_waitlist" class="custom-control-input" id="enable_waitlistSwitch" {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : ''  }}>
                                                     <label class="custom-control-label" for="enable_waitlistSwitch"></label>
@@ -475,8 +482,6 @@
                                                                 <option value="{{ $partner->teacher->id }}" selected>{{ $partner->teacher->full_name }}</option>
                                                             @endif
                                                         @endforeach
-                                                    @else
-                                                        <option selected disabled>{{ trans('public.search_instructor') }}</option>
                                                     @endif
                                                 </select>
 

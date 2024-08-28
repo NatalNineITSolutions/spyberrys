@@ -15,6 +15,14 @@
             </div>
         </div>
 
+        @if(empty(getCertificateMainSettings("certificate_api_user_id")) or empty(getCertificateMainSettings("certificate_api_key")))
+            <div class="my-2 alert alert-danger d-flex align-items-center justify-content-between">
+                <p class="">{{ trans('update.certificate_credentials_not_set_hint') }}</p>
+
+                <a href="{{ getAdminPanelUrl("/certificates/settings") }}" target="_blank" class="text-white btn-link">{{ trans('admin/main.settings') }}</a>
+            </div>
+        @endif
+
         <div class="section-body">
             <section class="card">
                 <div class="card-body">
@@ -83,6 +91,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th class="text-left">{{ trans('admin/main.title') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.type') }}</th>
                                         <th class="text-left">{{ trans('quiz.student') }}</th>
                                         <th class="text-left">{{ trans('admin/main.instructor') }}</th>
                                         <th class="text-center">{{ trans('public.date_time') }}</th>
@@ -92,11 +101,32 @@
                                     @foreach($certificates as $certificate)
                                         <tr>
                                             <td class="text-center">{{ $certificate->id }}</td>
+
                                             <td class="text-left">
-                                                <span>{{ $certificate->webinar->title }}</span>
+                                                @if(!empty($certificate->webinar_id))
+                                                    {{ $certificate->webinar->title }}
+                                                @else
+                                                    {{ $certificate->bundle->title }}
+                                                @endif
                                             </td>
+
+                                            <td class="text-left">
+                                                @if(!empty($certificate->webinar_id))
+                                                    {{ trans('product.course') }}
+                                                @else
+                                                    {{ trans('update.bundle') }}
+                                                @endif
+                                            </td>
+
                                             <td class="text-left">{{ $certificate->student->full_name }}</td>
-                                            <td class="text-left">{{ $certificate->webinar->teacher->full_name }}</td>
+
+                                            <td class="text-left">
+                                                @if(!empty($certificate->webinar_id))
+                                                    {{ $certificate->webinar->teacher->full_name }}
+                                                @else
+                                                    {{ $certificate->bundle->teacher->full_name }}
+                                                @endif
+                                            </td>
 
                                             <td class="text-center">{{ dateTimeFormat($certificate->created_at, 'j M Y') }}</td>
 

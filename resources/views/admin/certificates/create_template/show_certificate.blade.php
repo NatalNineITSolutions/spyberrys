@@ -1,3 +1,11 @@
+@php
+    $rtlLanguages = !empty($generalSettings['rtl_languages']) ? $generalSettings['rtl_languages'] : [];
+    $isRtl = ((in_array(mb_strtoupper(app()->getLocale()), $rtlLanguages)) or (!empty($generalSettings['rtl_layout']) and $generalSettings['rtl_layout'] == 1));
+
+    $certificateLtrFont = getCertificateMainSettings('ltr_font');
+    $certificateRtlFont = getCertificateMainSettings('rtl_font');
+@endphp
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,10 +16,37 @@
     <title>Document</title>
 
     <style>
+
+        @if(!empty($certificateLtrFont))
+            @font-face {
+                font-family: 'ltr-font-name';
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: url({{ url($certificateLtrFont) }});
+            }
+        @endif
+
+        @if(!empty($certificateRtlFont))
+            @font-face {
+                font-family: 'rtl-font-name';
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: url({{ url($certificateRtlFont) }});
+            }
+        @endif
+
         body {
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'ltr-font-name';
+        }
+
+        body.rtl {
+            direction: rtl;
+            font-family: 'rtl-font-name';
         }
 
         .certificate-template-container {
@@ -30,9 +65,11 @@
 
         }
 
+
+
     </style>
 </head>
-<body>
+<body class="{{ $isRtl ? 'rtl' : '' }}">
 
         {!! $body !!}
 

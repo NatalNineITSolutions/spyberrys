@@ -74,7 +74,8 @@
                             <table class="table text-center custom-table">
                                 <thead>
                                 <tr>
-                                    <th>{{ trans('product.course') }}</th>
+                                    <th>{{ trans('cart.item') }}</th>
+                                    <th class="text-center">{{ trans('public.type') }}</th>
                                     <th class="text-center">{{ trans('public.certificate_id') }}</th>
                                     <th class="text-center">{{ trans('public.date') }}</th>
                                     <th></th>
@@ -85,22 +86,37 @@
                                 @foreach($certificates as $certificate)
                                     <tr>
                                         <td class="text-left">
-                                            <span class="d-block text-dark-blue font-weight-500">{{ $certificate->webinar->title }}</span>
+                                            <span class="d-block text-dark-blue font-weight-500">
+                                                @if(!empty($certificate->webinar_id))
+                                                    {{ $certificate->webinar->title }}
+                                                @else
+                                                    {{ $certificate->bundle->title }}
+                                                @endif
+                                            </span>
                                         </td>
-                                        <td class="align-middle">
+
+                                        <td class="text-center">
+                                            @if(!empty($certificate->webinar_id))
+                                                {{ trans('product.course') }}
+                                            @else
+                                                {{ trans('update.bundle') }}
+                                            @endif
+                                        </td>
+
+                                        <td class="text-center">
                                             {{ $certificate->id }}
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class="text-center">
                                             <span class="text-dark-blue font-weight-500">{{ dateTimeFormat($certificate->created_at, 'j M Y') }}</span>
                                         </td>
-                                        <td class="align-middle font-weight-normal">
+                                        <td class="text-center font-weight-normal">
                                             <div class="btn-group dropdown table-actions">
                                                 <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i data-feather="more-vertical" height="20"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a href="/panel/certificates/webinars/{{ $certificate->id }}/show" target="_blank" class="webinar-actions d-block">{{ trans('public.open') }}</a>
+                                                    <a href="/panel/certificates/{{ !empty($certificate->webinar_id) ? 'webinars' : 'bundles' }}/{{ $certificate->id }}/show" target="_blank" class="webinar-actions d-block">{{ trans('public.open') }}</a>
                                                 </div>
                                             </div>
                                         </td>

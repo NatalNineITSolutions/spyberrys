@@ -46,6 +46,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="general_options-tab" data-toggle="tab" href="#general_options" role="tab" aria-controls="general_options" aria-selected="true">{{ trans('update.options') }}</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sms_channels-tab" data-toggle="tab" href="#sms_channels" role="tab" aria-controls="sms_channels" aria-selected="true">{{ trans('update.sms_channels') }}</a>
+                                </li>
                             </ul>
 
                             <div class="tab-content" id="myTabContent2">
@@ -55,6 +59,7 @@
                                 @include('admin.settings.general.reminders',['itemValue' => (!empty($settings) and !empty($settings['reminders'])) ? $settings['reminders']->value : ''])
                                 @include('admin.settings.general.security',['itemValue' => (!empty($settings) and !empty($settings['security'])) ? $settings['security']->value : ''])
                                 @include('admin.settings.general.options',['itemValue' => (!empty($settings) and !empty($settings['general_options'])) ? $settings['general_options']->value : ''])
+                                @include('admin.settings.general.sms_channels',['itemValue' => (!empty($settings) and !empty($settings['sms_channels'])) ? $settings['sms_channels']->value : ''])
                             </div>
 
                         </div>

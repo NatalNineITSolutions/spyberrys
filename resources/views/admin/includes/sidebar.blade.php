@@ -1717,6 +1717,15 @@
                 <li class="menu-header">{{ trans('admin/main.settings') }}</li>
             @endif
 
+            @can('admin_translator')
+                <li class="nav-item {{ (request()->is(getAdminPanelUrl('/translator*', false))) ? 'active' : '' }}">
+                    <a href="{{ getAdminPanelUrl() }}/translator" class="nav-link">
+                        <i class="fa fa-language"></i>
+                        <span>{{ trans('update.translator') }}</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('admin_settings')
                 @php
                     $settingClass ='';

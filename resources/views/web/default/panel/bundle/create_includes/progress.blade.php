@@ -24,12 +24,14 @@
             'name' => 'faq',
             'icon' => 'tick_square'
         ],
+    ];
 
-        6 => [
+    if (empty(getGeneralOptionsSettings('direct_publication_of_bundles'))) {
+        $progressSteps[6] = [
             'name' => 'message_to_reviewer',
             'icon' => 'shield_done'
-        ],
-    ];
+        ];
+    }
 
     $currentStep = empty($currentStep) ? 1 : $currentStep;
 @endphp
@@ -44,7 +46,7 @@
             </button>
 
             <div class="ml-10 {{ $key == $currentStep ? '' : 'd-lg-none' }}">
-                <span class="font-14 text-gray">{{ trans('webinars.progress_step', ['step' => $key,'count' => 6]) }}</span>
+                <span class="font-14 text-gray">{{ trans('webinars.progress_step', ['step' => $key,'count' => $stepCount]) }}</span>
                 <h4 class="font-16 text-secondary font-weight-bold">{{ trans('public.' . $step['name']) }}</h4>
             </div>
         </div>
