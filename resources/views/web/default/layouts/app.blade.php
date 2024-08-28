@@ -11,6 +11,14 @@
     @include('web.default.includes.metas')
     <title>{{ $pageTitle ?? '' }}{{ !empty($generalSettings['site_name']) ? (' | '.$generalSettings['site_name']) : '' }}</title>
 
+    {{-- Google Font --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    {{-- Font Awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- General CSS File -->
     <link rel="stylesheet" href="/assets/default/vendors/sweetalert2/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/toast/jquery.toast.min.css">
@@ -32,6 +40,20 @@
         {!! getThemeColorsSettings() !!}
     </style>
 
+    <style>
+        .navbar {
+            padding: 20px 0;
+        }
+
+        .fa-solid {
+            line-height: 0;
+        }
+
+        .menu-category > ul > li {
+            font-size: 14px;
+        }
+    </style>
+
 
     @if(!empty($generalSettings['preloading']) and $generalSettings['preloading'] == '1')
         @include('admin.includes.preloading')
@@ -46,7 +68,7 @@
     @endif
 
     @if(!isset($appHeader))
-        @include('web.default.includes.top_nav')
+        {{-- @include('web.default.includes.top_nav') --}}
         @include('web.default.includes.navbar')
     @endif
 

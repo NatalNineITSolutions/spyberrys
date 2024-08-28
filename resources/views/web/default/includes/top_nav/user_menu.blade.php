@@ -2,8 +2,8 @@
 
     <div class="custom-dropdown navbar-auth-user-dropdown position-relative ml-50">
         <div class="custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer">
-            <img src="{{ $authUser->getAvatar() }}" class="rounded-circle" alt="{{ $authUser->full_name }}">
-            <span class="font-16 user-name ml-10 text-dark-blue font-14">{{ $authUser->full_name }}</span>
+            <img src="{{ $authUser->getAvatar() }}" class="rounded-circle" alt="{{ $authUser->full_name }}" style="width: 40px;">
+            <span class="font-16 user-name ml-10 text-white font-14" style="font-weight: 600;">{{ $authUser->full_name }}</span>
         </div>
 
         <div class="custom-dropdown-body pb-10">
@@ -96,7 +96,7 @@
     </div>
 @else
     <div class="d-flex align-items-center ml-md-50">
-        <a href="/login" class="py-5 px-10 mr-10 text-dark-blue font-14">{{ trans('auth.login') }}</a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14">{{ trans('auth.register') }}</a>
+        <a href="/login" class="py-5 px-10 mr-10 login">{{ trans('auth.login') }}</a>
+        <a href="/register" class="text-white register">{{ trans('auth.register') }}</a>
     </div>
 @endif

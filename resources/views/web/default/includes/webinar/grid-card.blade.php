@@ -40,35 +40,38 @@
         </div>
 
         <figcaption class="webinar-card-body">
+            <a href="{{ $webinar->getUrl() }}" class="title">
+                <h4 class="webinar-title">{{ clean($webinar->title,'title') }}</h4>
+                <img src="/assets/default/img/classes/arrow-up-right.png" alt="">
+            </a>
+
+            <p>"Master the essentials of Cybersecurity and protect sensitive information from cyber threats. Our course covers key concepts like network security, encryption, and risk management, equipping you with the skills to safeguard digital assets in today's interconnected world."</p>
+
+            {{-- @if(!empty($webinar->category))
+                <span class="d-block font-14 mt-10">{{ trans('public.in') }} <a href="{{ $webinar->category->getUrl() }}" target="_blank" class="text-decoration-underline">{{ $webinar->category->title }}</a></span>
+            @endif --}}
+
+            {{-- @include(getTemplate() . '.includes.webinar.rate',['rate' => $webinar->getRate()]) --}}
+
+            <div class="d-flex justify-content-between" style="margin-top: 10px;">
+                <div class="d-flex align-items-center" style="gap: 6px;">
+                    <i data-feather="clock" width="20" height="20" class="webinar-icon"></i>
+                    <span class="duration font-12">{{ convertMinutesToHourAndMinute($webinar->duration) }} {{ trans('home.hours') }}</span>
+                </div>
+
+                <div class="vertical-line mx-15"></div>
+
+                <div class="d-flex align-items-center" style="gap: 6px;">
+                    <i data-feather="calendar" width="20" height="20" class="webinar-icon"></i>
+                    <span class="date-published font-12">{{ dateTimeFormat(!empty($webinar->start_date) ? $webinar->start_date : $webinar->created_at,'j M Y') }}</span>
+                </div>
+            </div>
+
             <div class="user-inline-avatar d-flex align-items-center">
                 <div class="avatar bg-gray200">
                     <img src="{{ $webinar->teacher->getAvatar() }}" class="img-cover" alt="{{ $webinar->teacher->full_name }}">
                 </div>
                 <a href="{{ $webinar->teacher->getProfileUrl() }}" target="_blank" class="user-name ml-5 font-14">{{ $webinar->teacher->full_name }}</a>
-            </div>
-
-            <a href="{{ $webinar->getUrl() }}">
-                <h3 class="mt-15 webinar-title font-weight-bold font-16 text-dark-blue">{{ clean($webinar->title,'title') }}</h3>
-            </a>
-
-            @if(!empty($webinar->category))
-                <span class="d-block font-14 mt-10">{{ trans('public.in') }} <a href="{{ $webinar->category->getUrl() }}" target="_blank" class="text-decoration-underline">{{ $webinar->category->title }}</a></span>
-            @endif
-
-            @include(getTemplate() . '.includes.webinar.rate',['rate' => $webinar->getRate()])
-
-            <div class="d-flex justify-content-between mt-20">
-                <div class="d-flex align-items-center">
-                    <i data-feather="clock" width="20" height="20" class="webinar-icon"></i>
-                    <span class="duration font-14 ml-5">{{ convertMinutesToHourAndMinute($webinar->duration) }} {{ trans('home.hours') }}</span>
-                </div>
-
-                <div class="vertical-line mx-15"></div>
-
-                <div class="d-flex align-items-center">
-                    <i data-feather="calendar" width="20" height="20" class="webinar-icon"></i>
-                    <span class="date-published font-14 ml-5">{{ dateTimeFormat(!empty($webinar->start_date) ? $webinar->start_date : $webinar->created_at,'j M Y') }}</span>
-                </div>
             </div>
 
             <div class="webinar-price-box mt-25">
