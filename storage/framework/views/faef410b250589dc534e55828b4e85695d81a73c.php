@@ -332,23 +332,7 @@
     
 
     
-    <div class="course-slide">
-        <div class="container course-slide-container">
-            <div class="slide-details">
-                <h4>All Courses</h4>
-                <div class="address">
-                    <p>Home</p>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <p>Courses</p>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <p>UI/UX Design</p>
-                </div>
-            </div>
-        </div>
-        <img src="./assets/default/img/course/shape-1.png" class="one" alt="">
-        <img src="./assets/default/img/course/shape-2.png" class="two" alt="">
-        <img src="./assets/default/img/course/shape-3.png" class="three" alt="">
-    </div>
+    
 
     
     <div class="container main-container">
