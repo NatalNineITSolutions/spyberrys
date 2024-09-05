@@ -3,160 +3,480 @@
 <?php $__env->startPush('styles_top'); ?>
     <link rel="stylesheet" href="/assets/default/css/css-stars.css">
     <link rel="stylesheet" href="/assets/default/vendors/video/video-js.min.css">
+
+    <style>
+        .course-slide {
+            width: 100%;
+            background-image: url(/assets/default/img/classes/course-bg.png);
+            display: flex;
+            position: relative;
+        }
+
+        .course-slide-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-details{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 60px 0;
+        }
+
+        .slide-details h4 {
+            font-size: 25px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .address {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .address i {
+            font-size: 12px;
+        }
+
+        .address p {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .address p:last-child {
+            color: #5751E1;
+        }
+
+        .course-slide .one {
+            width: 50px;
+            position: absolute;
+            top: 50px;
+            left: 60px;
+        }
+
+        .course-slide .two {
+            width: 50px;
+            position: absolute;
+            top: 50px;
+            right: 450px;
+        }
+
+        .course-slide .three {
+            width: 50px;
+            position: absolute;
+            top: 50px;
+            right: 0px;
+        }
+
+        .main-container {
+            margin-top: 3rem;
+        }
+
+        .course-img {
+            position: relative;
+            height: 350px;
+        }
+
+        .course-img.has-video .course-video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 20px 12px 0 rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .rightbar {
+            border: 1px solid #DFDFDF;
+        }
+
+        .course-teacher-card .teacher-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        .course-teacher-card .teacher-avatar img {
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .exp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            margin-top: 10px;
+            color: #828282;
+            font-size: 13px;
+        }
+
+        .price {
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            background-color: #5751E1;
+            color: white;
+        }
+
+        .price h5 {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .form span {
+            font-size: 19px;
+            font-weight: 600;
+            align-self: flex-start;
+            color: white;
+        }
+
+        .course-spe {
+            padding-bottom: 8px;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .sector {
+            background-color: #EFEFF2;
+            padding: 8px 10px;
+            border-radius: 15px;
+        }
+
+        .sector p {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .reviews {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reviews p {
+            color: #7F7E97;
+            font-size: 13px;
+            line-height: 0;
+        }
+
+        .course-title {
+            margin-top: 12px;
+        }
+
+        .course-title h4 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .course-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #7F7E97;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .course-details span {
+            color: black;
+        }
+
+        .instructor {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .dot {
+            background-color: #8C9AB4;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .tab {
+            margin-top: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 15px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background-color: #4A3AFF;
+            color: #fff;
+        }
+
+        .tab-content {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .review-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .review-option-btn {
+            padding: 10px 15px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .review-option-btn.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .review-option-btn:hover {
+            background-color: #d0d0d0;
+        }
+
+        .review-option-btn.active {
+            background-color: #4A3AFF;
+            color: #fff;
+        }
+
+        .desp {
+            border: 1px solid #DFDFDF;
+            padding: 20px 30px;
+        }
+
+        .desp p {
+            color: #6D6C80;
+            font-size: 13px;
+        }
+
+        .points {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .point {
+            background-color: #FFC224;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .point i {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .points p {
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 0;
+            color: black;
+        }
+
+        .last-text {
+            color: #6D6C80;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
+    </style>
 <?php $__env->stopPush(); ?>
 
 
 <?php $__env->startSection('content'); ?>
-    <section class="course-cover-container <?php echo e(empty($activeSpecialOffer) ? 'not-active-special-offer' : ''); ?>">
-        <img src="<?php echo e($course->getImageCover()); ?>" class="img-cover course-cover-img" alt="<?php echo e($course->title); ?>"/>
+    
 
-        <div class="cover-content pt-40">
-            <div class="container position-relative">
-                <?php if(!empty($activeSpecialOffer)): ?>
-                    <?php echo $__env->make('web.default.course.special_offer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
-
-    <?php
-        $percent = $course->getProgress();
-    ?>
-
-    <section class="container course-content-section <?php echo e($course->type); ?> <?php echo e(($hasBought or $percent) ? 'has-progress-bar' : ''); ?>">
-        <div class="row">
-            <div class="col-12 col-lg-8">
-                <div class="course-content-body user-select-none">
-                    <div class="course-body-on-cover text-white">
-                        <h1 class="font-30 course-title">
-                            <?php echo e($course->title); ?>
-
-                        </h1>
-
-                        <?php if(!empty($course->category)): ?>
-                            <span class="d-block font-16 mt-10"><?php echo e(trans('public.in')); ?> <a href="<?php echo e($course->category->getUrl()); ?>" target="_blank" class="font-weight-500 text-decoration-underline text-white"><?php echo e($course->category->title); ?></a></span>
-                        <?php endif; ?>
-
-                        <div class="d-flex align-items-center">
-                            <?php echo $__env->make('web.default.includes.webinar.rate',['rate' => $course->getRate()], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            <span class="ml-10 mt-15 font-14">(<?php echo e($course->reviews->pluck('creator_id')->count()); ?> <?php echo e(trans('public.ratings')); ?>)</span>
-                        </div>
-
-                        <div class="mt-15">
-                            <span class="font-14"><?php echo e(trans('public.created_by')); ?></span>
-                            <a href="<?php echo e($course->teacher->getProfileUrl()); ?>" target="_blank" class="text-decoration-underline text-white font-14 font-weight-500"><?php echo e($course->teacher->full_name); ?></a>
-                        </div>
-
-                        <?php if($hasBought or $percent): ?>
-
-                            <div class="mt-30 d-flex align-items-center">
-                                <div class="progress course-progress flex-grow-1 shadow-xs rounded-sm">
-                                    <span class="progress-bar rounded-sm bg-warning" style="width: <?php echo e($percent); ?>%"></span>
-                                </div>
-
-                                <span class="ml-15 font-14 font-weight-500">
-                                    <?php if($hasBought and (!$course->isWebinar() or $course->isProgressing())): ?>
-                                        <?php echo e(trans('public.course_learning_passed',['percent' => $percent])); ?>
-
-                                    <?php elseif(!is_null($course->capacity)): ?>
-                                        <?php echo e($course->getSalesCount()); ?>/<?php echo e($course->capacity); ?> <?php echo e(trans('quiz.students')); ?>
-
-                                    <?php else: ?>
-                                        <?php echo e(trans('public.course_learning_passed',['percent' => $percent])); ?>
-
-                                    <?php endif; ?>
-                                </span>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-
-                    <?php if(
-                            !empty(getFeaturesSettings("frontend_coupons_display_type")) and
-                            getFeaturesSettings("frontend_coupons_display_type") == "before_content" and
-                            !empty($instructorDiscounts) and
-                            count($instructorDiscounts)
-                        ): ?>
-                        <?php $__currentLoopData = $instructorDiscounts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $instructorDiscount): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php echo $__env->make('web.default.includes.discounts.instructor_discounts_card', ['discount' => $instructorDiscount, 'instructorDiscountClassName' => "mt-35"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php endif; ?>
-
-                    <div class="mt-35">
-                        <ul class="nav nav-tabs bg-secondary rounded-sm p-15 d-flex align-items-center justify-content-between" id="tabs-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white <?php echo e((empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'active' : ''); ?>" id="information-tab"
-                                   data-toggle="tab" href="#information" role="tab" aria-controls="information"
-                                   aria-selected="true"><?php echo e(trans('product.information')); ?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white <?php echo e((request()->get('tab','') == 'content') ? 'active' : ''); ?>" id="content-tab" data-toggle="tab"
-                                   href="#content" role="tab" aria-controls="content"
-                                   aria-selected="false"><?php echo e(trans('product.content')); ?> (<?php echo e($webinarContentCount); ?>)</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white <?php echo e((request()->get('tab','') == 'reviews') ? 'active' : ''); ?>" id="reviews-tab" data-toggle="tab"
-                                   href="#reviews" role="tab" aria-controls="reviews"
-                                   aria-selected="false"><?php echo e(trans('product.reviews')); ?> (<?php echo e($course->reviews->count() > 0 ? $course->reviews->pluck('creator_id')->count() : 0); ?>)</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade <?php echo e((empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'show active' : ''); ?> " id="information" role="tabpanel"
-                                 aria-labelledby="information-tab">
-                                <?php echo $__env->make(getTemplate().'.course.tabs.information', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            </div>
-                            <div class="tab-pane fade <?php echo e((request()->get('tab','') == 'content') ? 'show active' : ''); ?>" id="content" role="tabpanel" aria-labelledby="content-tab">
-                                <?php echo $__env->make(getTemplate().'.course.tabs.content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            </div>
-                            <div class="tab-pane fade <?php echo e((request()->get('tab','') == 'reviews') ? 'show active' : ''); ?>" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                                <?php echo $__env->make(getTemplate().'.course.tabs.reviews', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <?php if(
-                           !empty(getFeaturesSettings("frontend_coupons_display_type")) and
-                           getFeaturesSettings("frontend_coupons_display_type") == "after_content" and
-                           !empty($instructorDiscounts) and
-                           count($instructorDiscounts)
-                       ): ?>
-                        <?php $__currentLoopData = $instructorDiscounts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $instructorDiscount): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php echo $__env->make('web.default.includes.discounts.instructor_discounts_card', ['discount' => $instructorDiscount, 'instructorDiscountClassName' => "mt-35"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php endif; ?>
-
+    
+    <div class="course-slide">
+        <div class="container course-slide-container">
+            <div class="slide-details">
+                <h4>All Courses</h4>
+                <div class="address">
+                    <p>Home</p>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <p>Courses</p>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <p>UI/UX Design</p>
                 </div>
             </div>
+        </div>
+        <img src="./assets/default/img/course/shape-1.png" class="one" alt="">
+        <img src="./assets/default/img/course/shape-2.png" class="two" alt="">
+        <img src="./assets/default/img/course/shape-3.png" class="three" alt="">
+    </div>
 
-            <div class="course-content-sidebar col-12 col-lg-4 mt-25 mt-lg-0">
-                <div class="rounded-lg shadow-sm">
-                    <div class="course-img <?php echo e($course->video_demo ? 'has-video' :''); ?>">
+    
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-9">
+                <div class="course-img <?php echo e($course->video_demo ? 'has-video' :''); ?>">
+                    <img src="<?php echo e($course->getImage()); ?>" class="img-cover" alt="">
+                    <?php if($course->video_demo): ?>
+                        <div id="webinarDemoVideoBtn"
+                             data-video-path="<?php echo e($course->video_demo_source == 'upload' ?  url($course->video_demo) : $course->video_demo); ?>"
+                             data-video-source="<?php echo e($course->video_demo_source); ?>"
+                             class="course-video-icon cursor-pointer d-flex align-items-center justify-content-center">
+                            <i data-feather="play" width="25" height="25" style="color: white;"></i>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="d-flex align-items-center mt-3" style="gap: 11px;">
+                    <div class="sector">
+                        <p>Development</p>
+                    </div>
+                    <div class="reviews">
+                        <i class="fa-solid fa-star"></i>
+                        <p>(4.5 Reviews)</p>
+                    </div>
+                </div>
+                <div class="course-title">
+                    <h4>UI / UX Course begginer to Pro</h4>
+                </div>
+                <div class="d-flex align-items-center mt-20" style="gap: 13px;">
+                    <div class="course-details">
+                        <img class="instructor" src="/assets/default/img/home/ment-1.png" alt="">
+                        <p>By <span>Ricardo Dave</span></p>
+                    </div>
+                    <p class="dot"></p>
+                    <div class="course-details">
+                        <img src="/assets/default/img/date.png" alt="">
+                        <p>24/07/2024</p>
+                    </div>
+                    <p class="dot"></p>
+                    <div class="course-details">
+                        <img src="/assets/default/img/student.png" alt="">
+                        <p>2,250 students</p>
+                    </div>
+                </div>
+                <div class="tab">
+                    <div class="tabs">
+                        <button class="tab-btn active" id="overview-tab" onclick="showTabContent('overview')">Overview</button>
+                        <button class="tab-btn" id="curriculum-tab" onclick="showTabContent('curriculum')">Curriculum</button>
+                        <button class="tab-btn" id="instructors-tab" onclick="showTabContent('instructors')">Instructors</button>
+                        <button class="tab-btn" id="reviews-tab" onclick="showTabContent('reviews'); toggleReviewOptions()">Reviews</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="overview-content">
+                        <div class="desp rounded shadow">
+                            <h4>Course Description</h4>
+                            <p>"Transform your passion for design into a professional skillset with our comprehensive UI/UX Course: Beginner to Pro. Whether you’re just starting or looking to refine your expertise, this course takes you through the entire design process, from the fundamentals to advanced techniques. Learn how to create user-centered designs that are not only visually appealing but also intuitive and effective.</p>
+                            <p>Through hands-on projects, real-world case studies, and expert guidance, you’ll gain the skills to build engaging user interfaces and experiences that stand out in the digital world. By the end of the course, you’ll be equipped to take on complex design challenges and excel in your UI/UX design career."</p>
 
-                        <img src="<?php echo e($course->getImage()); ?>" class="img-cover" alt="">
-
-                        <?php if($course->video_demo): ?>
-                            <div id="webinarDemoVideoBtn"
-                                 data-video-path="<?php echo e($course->video_demo_source == 'upload' ?  url($course->video_demo) : $course->video_demo); ?>"
-                                 data-video-source="<?php echo e($course->video_demo_source); ?>"
-                                 class="course-video-icon cursor-pointer d-flex align-items-center justify-content-center">
-                                <i data-feather="play" width="25" height="25"></i>
+                            <h4 class="mt-20">What you'll learn in this course?</h4>
+                            <div class="points">
+                                <div class="point">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p>Foundations of UI/UX Design: Grasp the basics of user interface and user experience design.</p>
                             </div>
+                            <div class="points">
+                                <div class="point">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p>Design Tools Mastery: Get hands-on with industry-standard tools like Figma, Sketch, and Adobe XD.</p>
+                            </div>
+                            <div class="points">
+                                <div class="point">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p>Wireframing and Prototyping: Learn how to create wireframes, prototypes, and user flows.</p>
+                            </div>
+
+                            <p class="last-text mt-35 font-15">Start your journey from beginner to pro with Spyberry's UI/UX Course and shape the digital experiences of tomorrow</p>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="curriculum-content" style="display:none;">
+                        <p>Curriculum content goes here.</p>
+                    </div>
+                    <div class="tab-content" id="instructors-content" style="display:none;">
+                        <p>Instructors content goes here.</p>
+                    </div>
+                    <div class="tab-content" id="reviews-content" style="display:none;">
+                        <div class="review-options" id="review-options">
+                            <button class="review-option-btn">Newest</button>
+                            <button class="review-option-btn">Oldest</button>
+                            <button class="review-option-btn">Positive</button>
+                            <button class="review-option-btn">Negative</button>
+                        </div>
+                        <div>
+                            <p>Reviews content goes here.</p>
+                        </div>
+                    </div>
+                    
+                </div>            
+            </div>
+            <div class="col-3">
+                <div class="rounded-lg shadow-sm rightbar p-20">
+                    <div>
+                        <?php if($course->creator_id != $course->teacher_id): ?>
+                            <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->creator], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        <?php endif; ?>
+               
+                        <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->teacher], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+                        <?php if($course->webinarPartnerTeacher->count() > 0): ?>
+                            <?php $__currentLoopData = $course->webinarPartnerTeacher; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $webinarPartnerTeacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $webinarPartnerTeacher->teacher], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
                     </div>
-
-                    <div class="px-20 pb-30">
-                        <form action="/cart/store" method="post">
+                    <div class="price">
+                        <h5>This course Fee:</h5>
+                        <form action="/cart/store" method="post" class="form">
                             <?php echo e(csrf_field()); ?>
 
                             <input type="hidden" name="item_id" value="<?php echo e($course->id); ?>">
                             <input type="hidden" name="item_name" value="webinar_id">
-
+        
                             <?php if(!empty($course->tickets)): ?>
                                 <?php $__currentLoopData = $course->tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                    <div class="form-check mt-20">
+        
+                                    <div class="form-check">
                                         <input class="form-check-input" <?php if(!$ticket->isValid()): ?> disabled <?php endif; ?> type="radio"
                                                data-discount-price="<?php echo e(handlePrice($ticket->getPriceWithDiscount($course->price, !empty($activeSpecialOffer) ? $activeSpecialOffer : null))); ?>"
                                                value="<?php echo e(($ticket->isValid()) ? $ticket->id : ''); ?>"
@@ -171,9 +491,9 @@
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
-
+        
                             <?php if($course->price > 0): ?>
-                                <div id="priceBox" class="d-flex align-items-center justify-content-center mt-20 <?php echo e(!empty($activeSpecialOffer) ? ' flex-column ' : ''); ?>">
+                                <div id="priceBox" class="d-flex align-items-center justify-content-center <?php echo e(!empty($activeSpecialOffer) ? ' flex-column ' : ''); ?>">
                                     <div class="text-center">
                                         <?php
                                             $realPrice = handleCoursePagePrice($course->price);
@@ -184,12 +504,12 @@
                                             <?php echo e($realPrice['price']); ?>
 
                                         </span>
-
+        
                                         <?php if(!empty($realPrice['tax']) and empty($activeSpecialOffer)): ?>
                                             <span class="d-block font-14 text-gray">+ <?php echo e($realPrice['tax']); ?> <?php echo e(trans('cart.tax')); ?></span>
                                         <?php endif; ?>
                                     </div>
-
+        
                                     <?php if(!empty($activeSpecialOffer)): ?>
                                         <div class="text-center">
                                             <?php
@@ -200,7 +520,7 @@
                                                 <?php echo e($priceWithDiscount['price']); ?>
 
                                             </span>
-
+        
                                             <?php if(!empty($priceWithDiscount['tax'])): ?>
                                                 <span class="d-block font-14 text-gray">+ <?php echo e($priceWithDiscount['tax']); ?> <?php echo e(trans('cart.tax')); ?></span>
                                             <?php endif; ?>
@@ -208,345 +528,126 @@
                                     <?php endif; ?>
                                 </div>
                             <?php else: ?>
-                                <div class="d-flex align-items-center justify-content-center mt-20">
-                                    <span class="font-36 text-primary"><?php echo e(trans('public.free')); ?></span>
+                                <div class="d-flex">
+                                    <span class=""><?php echo e(trans('public.free')); ?></span>
                                 </div>
                             <?php endif; ?>
-
+        
                             <?php
                                 $canSale = ($course->canSale() and !$hasBought);
                                 $authUserJoinedWaitlist = false;
-
+        
                                 if (!empty($authUser)) {
                                     $authUserWaitlist = $course->waitlists()->where('user_id', $authUser->id)->first();
                                     $authUserJoinedWaitlist = !empty($authUserWaitlist);
                                 }
                             ?>
-
-                            <div class="mt-20 d-flex flex-column">
-                                <?php if(!$canSale and $course->canJoinToWaitlist()): ?>
-                                    <button type="button" data-slug="<?php echo e($course->slug); ?>" class="btn btn-primary <?php echo e((!$authUserJoinedWaitlist) ? ((!empty($authUser)) ? 'js-join-waitlist-user' : 'js-join-waitlist-guest') : 'disabled'); ?>" <?php echo e($authUserJoinedWaitlist ? 'disabled' : ''); ?>>
-                                        <?php if($authUserJoinedWaitlist): ?>
-                                            <?php echo e(trans('update.already_joined')); ?>
-
-                                        <?php else: ?>
-                                            <?php echo e(trans('update.join_waitlist')); ?>
-
-                                        <?php endif; ?>
-                                    </button>
-                                <?php elseif($hasBought or !empty($course->getInstallmentOrder())): ?>
-                                    <a href="<?php echo e($course->getLearningPageUrl()); ?>" class="btn btn-primary"><?php echo e(trans('update.go_to_learning_page')); ?></a>
-                                <?php elseif(!empty($course->price) and $course->price > 0): ?>
-                                    <button type="button" class="btn btn-primary <?php echo e($canSale ? 'js-course-add-to-cart-btn' : ($course->cantSaleStatus($hasBought) .' disabled ')); ?>">
-                                        <?php if(!$canSale): ?>
-                                            <?php if($course->checkCapacityReached()): ?>
-                                                <?php echo e(trans('update.capacity_reached')); ?>
-
-                                            <?php else: ?>
-                                                <?php echo e(trans('update.disabled_add_to_cart')); ?>
-
-                                            <?php endif; ?>
-                                        <?php else: ?>
-                                            <?php echo e(trans('public.add_to_cart')); ?>
-
-                                        <?php endif; ?>
-                                    </button>
-
-                                    <?php if($canSale and !empty($course->points)): ?>
-                                        <a href="<?php echo e(!(auth()->check()) ? '/login' : '#'); ?>" class="<?php echo e((auth()->check()) ? 'js-buy-with-point' : ''); ?> btn btn-outline-warning mt-20 <?php echo e((!$canSale) ? 'disabled' : ''); ?>" rel="nofollow">
-                                            <?php echo trans('update.buy_with_n_points',['points' => $course->points]); ?>
-
-                                        </a>
-                                    <?php endif; ?>
-
-                                    <?php if($canSale and !empty(getFeaturesSettings('direct_classes_payment_button_status'))): ?>
-                                        <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
-                                            <?php echo e(trans('update.buy_now')); ?>
-
-                                        </button>
-                                    <?php endif; ?>
-
-                                    <?php if(!empty($installments) and count($installments) and getInstallmentsSettings('display_installment_button')): ?>
-                                        <a href="/course/<?php echo e($course->slug); ?>/installments" class="btn btn-outline-primary mt-20">
-                                            <?php echo e(trans('update.pay_with_installments')); ?>
-
-                                        </a>
-                                    <?php endif; ?>
-                                <?php else: ?>
-                                    <a href="<?php echo e($canSale ? '/course/'. $course->slug .'/free' : '#'); ?>" class="btn btn-primary <?php echo e((!$canSale) ? (' disabled ' . $course->cantSaleStatus($hasBought)) : ''); ?>">
-                                        <?php if(!$canSale): ?>
-                                            <?php if($course->checkCapacityReached()): ?>
-                                                <?php echo e(trans('update.capacity_reached')); ?>
-
-                                            <?php else: ?>
-                                                <?php echo e(trans('public.disabled')); ?>
-
-                                            <?php endif; ?>
-                                        <?php else: ?>
-                                            <?php echo e(trans('public.enroll_on_webinar')); ?>
-
-                                        <?php endif; ?>
-                                    </a>
-                                <?php endif; ?>
-
-                                <?php if($canSale and $course->subscribe): ?>
-                                    <a href="/subscribes/apply/<?php echo e($course->slug); ?>" class="btn btn-outline-primary btn-subscribe mt-20 <?php if(!$canSale): ?> disabled <?php endif; ?>"><?php echo e(trans('public.subscribe')); ?></a>
-                                <?php endif; ?>
-
-                            </div>
-
+        
+                            
                         </form>
-
-                        <?php if(!empty(getOthersPersonalizationSettings('show_guarantee_text')) and getOthersPersonalizationSettings('show_guarantee_text')): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-center text-gray">
-                                <i data-feather="thumbs-up" width="20" height="20"></i>
-                                <span class="ml-5 font-14"><?php echo e(trans('product.guarantee_text')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="mt-35">
-                            <strong class="d-block text-secondary font-weight-bold"><?php echo e(trans('webinars.this_webinar_includes',['classes' => trans('webinars.'.$course->type)])); ?></strong>
-                            <?php if($course->isDownloadable()): ?>
-                                <div class="mt-20 d-flex align-items-center text-gray">
-                                    <i data-feather="download-cloud" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.downloadable_content')); ?></span>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if($course->certificate or ($course->quizzes->where('certificate', 1)->count() > 0)): ?>
-                                <div class="mt-20 d-flex align-items-center text-gray">
-                                    <i data-feather="award" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.official_certificate')); ?></span>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if($course->quizzes->where('status', \App\models\Quiz::ACTIVE)->count() > 0): ?>
-                                <div class="mt-20 d-flex align-items-center text-gray">
-                                    <i data-feather="file-text" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.online_quizzes_count',['quiz_count' => $course->quizzes->where('status', \App\models\Quiz::ACTIVE)->count()])); ?></span>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if($course->support): ?>
-                                <div class="mt-20 d-flex align-items-center text-gray">
-                                    <i data-feather="headphones" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.instructor_support')); ?></span>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mt-40 p-10 rounded-sm border row align-items-center favorites-share-box">
+                    </div>
+                    <div class="" style="margin-top: 12px;">
+                        <h3 class="sidebar-title font-16 text-secondary font-weight-bold"><?php echo e(trans('webinars.'.$course->type) .' '. trans('webinars.specifications')); ?></h3>
+    
+                        <div class="mt-15">
                             <?php if($course->isWebinar()): ?>
-                                <div class="col">
-                                    <a href="<?php echo e($course->addToCalendarLink()); ?>" target="_blank" class="d-flex flex-column align-items-center text-center text-gray">
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray course-spe" style="padding-bottom: 5px; border-bottom:1px solid #D9D9D9;">
+                                    <div class="d-flex align-items-center">
                                         <i data-feather="calendar" width="20" height="20"></i>
-                                        <span class="font-12"><?php echo e(trans('public.reminder')); ?></span>
-                                    </a>
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.start_date')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e(dateTimeFormat($course->start_date, 'j M Y | H:i')); ?></span>
                                 </div>
                             <?php endif; ?>
-
-                            <div class="col">
-                                <a href="/favorites/<?php echo e($course->slug); ?>/toggle" id="favoriteToggle" class="d-flex flex-column align-items-center text-gray">
-                                    <i data-feather="heart" class="<?php echo e(!empty($isFavorite) ? 'favorite-active' : ''); ?>" width="20" height="20"></i>
-                                    <span class="font-12"><?php echo e(trans('panel.favorite')); ?></span>
-                                </a>
+    
+                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class="d-flex align-items-center">
+                                    <i data-feather="user" width="20" height="20"></i>
+                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.capacity')); ?>:</span>
+                                </div>
+                                <?php if(!is_null($course->capacity)): ?>
+                                    <span class="font-14"><?php echo e($course->capacity); ?> <?php echo e(trans('quiz.students')); ?></span>
+                                <?php else: ?>
+                                    <span class="font-14"><?php echo e(trans('update.unlimited')); ?></span>
+                                <?php endif; ?>
                             </div>
-
-                            <div class="col">
-                                <a href="#" class="js-share-course d-flex flex-column align-items-center text-gray">
-                                    <i data-feather="share-2" width="20" height="20"></i>
-                                    <span class="font-12"><?php echo e(trans('public.share')); ?></span>
-                                </a>
+    
+                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class="d-flex align-items-center">
+                                    <i data-feather="clock" width="20" height="20"></i>
+                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.duration')); ?>:</span>
+                                </div>
+                                <span class="font-14"><?php echo e(convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0)); ?> <?php echo e(trans('home.hours')); ?></span>
                             </div>
-                        </div>
-
-                        <div class="mt-30 text-center">
-                            <button type="button" id="webinarReportBtn" class="font-14 text-gray btn-transparent"><?php echo e(trans('webinars.report_this_webinar')); ?></button>
+    
+                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class="d-flex align-items-center">
+                                    <i data-feather="users" width="20" height="20"></i>
+                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('quiz.students')); ?>:</span>
+                                </div>
+                                <span class="font-14"><?php echo e($course->getSalesCount()); ?></span>
+                            </div>
+    
+                            <?php if($course->isWebinar()): ?>
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.sessions')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e($course->sessions->count()); ?></span>
+                                </div>
+                            <?php endif; ?>
+    
+                            <?php if($course->isTextCourse()): ?>
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.text_lessons')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e($course->textLessons->count()); ?></span>
+                                </div>
+                            <?php endif; ?>
+    
+                            <?php if($course->isCourse() or $course->isTextCourse()): ?>
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.files')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e($course->files->count()); ?></span>
+                                </div>
+    
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.created_at')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e(dateTimeFormat($course->created_at,'j M Y')); ?></span>
+                                </div>
+                            <?php endif; ?>
+    
+                            <?php if(!empty($course->access_days)): ?>
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="alert-circle" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('update.access_period')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e($course->access_days); ?> <?php echo e(trans('public.days')); ?></span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-
                 
-                <?php echo $__env->make('web.default.includes.cashback_alert',['itemPrice' => $course->price], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
-                
-                <?php if($course->canSale() and !empty(getGiftsGeneralSettings('status')) and !empty(getGiftsGeneralSettings('allow_sending_gift_for_courses'))): ?>
-                    <a href="/gift/course/<?php echo e($course->slug); ?>" class="d-flex align-items-center mt-30 rounded-lg border p-15">
-                        <div class="size-40 d-flex-center rounded-circle bg-gray200">
-                            <i data-feather="gift" class="text-gray" width="20" height="20"></i>
-                        </div>
-                        <div class="ml-5">
-                            <h4 class="font-14 font-weight-bold text-gray"><?php echo e(trans('update.gift_this_course')); ?></h4>
-                            <p class="font-12 text-gray"><?php echo e(trans('update.gift_this_course_hint')); ?></p>
-                        </div>
-                    </a>
-                <?php endif; ?>
-
-                <?php if($course->teacher->offline): ?>
-                    <div class="rounded-lg shadow-sm mt-35 d-flex">
-                        <div class="offline-icon offline-icon-left d-flex align-items-stretch">
-                            <div class="d-flex align-items-center">
-                                <img src="/assets/default/img/profile/time-icon.png" alt="offline">
-                            </div>
-                        </div>
-
-                        <div class="p-15">
-                            <h3 class="font-16 text-dark-blue"><?php echo e(trans('public.instructor_is_not_available')); ?></h3>
-                            <p class="font-14 font-weight-500 text-gray mt-15"><?php echo e($course->teacher->offline_message); ?></p>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
-                <div class="rounded-lg shadow-sm mt-35 px-25 py-20">
-                    <h3 class="sidebar-title font-16 text-secondary font-weight-bold"><?php echo e(trans('webinars.'.$course->type) .' '. trans('webinars.specifications')); ?></h3>
-
-                    <div class="mt-30">
-                        <?php if($course->isWebinar()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <i data-feather="calendar" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.start_date')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e(dateTimeFormat($course->start_date, 'j M Y | H:i')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="user" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.capacity')); ?>:</span>
-                            </div>
-                            <?php if(!is_null($course->capacity)): ?>
-                                <span class="font-14"><?php echo e($course->capacity); ?> <?php echo e(trans('quiz.students')); ?></span>
-                            <?php else: ?>
-                                <span class="font-14"><?php echo e(trans('update.unlimited')); ?></span>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="clock" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.duration')); ?>:</span>
-                            </div>
-                            <span class="font-14"><?php echo e(convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0)); ?> <?php echo e(trans('home.hours')); ?></span>
-                        </div>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="users" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('quiz.students')); ?>:</span>
-                            </div>
-                            <span class="font-14"><?php echo e($course->getSalesCount()); ?></span>
-                        </div>
-
-                        <?php if($course->isWebinar()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.sessions')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->sessions->count()); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if($course->isTextCourse()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.text_lessons')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->textLessons->count()); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if($course->isCourse() or $course->isTextCourse()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.files')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->files->count()); ?></span>
-                            </div>
-
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.created_at')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e(dateTimeFormat($course->created_at,'j M Y')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if(!empty($course->access_days)): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <i data-feather="alert-circle" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('update.access_period')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->access_days); ?> <?php echo e(trans('public.days')); ?></span>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                
-                <?php if($course->creator_id != $course->teacher_id): ?>
-                    <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->creator], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                <?php endif; ?>
-                
-                <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->teacher], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
-                <?php if($course->webinarPartnerTeacher->count() > 0): ?>
-                    <?php $__currentLoopData = $course->webinarPartnerTeacher; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $webinarPartnerTeacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $webinarPartnerTeacher->teacher], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <?php endif; ?>
-                
-
-                
-                <?php if($course->tags->count() > 0): ?>
-                    <div class="rounded-lg tags-card shadow-sm mt-35 px-25 py-20">
-                        <h3 class="sidebar-title font-16 text-secondary font-weight-bold"><?php echo e(trans('public.tags')); ?></h3>
-
-                        <div class="d-flex flex-wrap mt-10">
-                            <?php $__currentLoopData = $course->tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <a href="/tags/courses/<?php echo e(urlencode($tag->title)); ?>" class="tag-item bg-gray200 p-5 font-14 text-gray font-weight-500 rounded"><?php echo e($tag->title); ?></a>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                
-                <?php if(!empty($advertisingBannersSidebar) and count($advertisingBannersSidebar)): ?>
-                    <div class="row">
-                        <?php $__currentLoopData = $advertisingBannersSidebar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sidebarBanner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="rounded-lg sidebar-ads mt-35 col-<?php echo e($sidebarBanner->size); ?>">
-                                <a href="<?php echo e($sidebarBanner->link); ?>">
-                                    <img src="<?php echo e($sidebarBanner->image); ?>" class="img-cover rounded-lg" alt="<?php echo e($sidebarBanner->title); ?>">
-                                </a>
-                            </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </div>
-
-                <?php endif; ?>
             </div>
         </div>
+    </div>
 
-        
-        <?php if(!empty($advertisingBanners) and count($advertisingBanners)): ?>
-            <div class="mt-30 mt-md-50">
-                <div class="row">
-                    <?php $__currentLoopData = $advertisingBanners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="col-<?php echo e($banner->size); ?>">
-                            <a href="<?php echo e($banner->link); ?>">
-                                <img src="<?php echo e($banner->image); ?>" class="img-cover rounded-sm" alt="<?php echo e($banner->title); ?>">
-                            </a>
-                        </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </div>
-            </div>
-        <?php endif; ?>
-        
-    </section>
+    <?php
+        $percent = $course->getProgress();
+    ?>
+
+    
 
     <div id="webinarReportModal" class="d-none">
         <h3 class="section-title after-line font-20 text-dark-blue"><?php echo e(trans('product.report_the_course')); ?></h3>
@@ -632,6 +733,56 @@
     <script src="/assets/default/js/parts/comment.min.js"></script>
     <script src="/assets/default/js/parts/video_player_helpers.min.js"></script>
     <script src="/assets/default/js/parts/webinar_show.min.js"></script>
+
+    <script>
+        function showTabContent(tab) {
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName('tab-content');
+            Array.from(tabContents).forEach(function(content) {
+                content.style.display = 'none';
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            var tabButtons = document.getElementsByClassName('tab-btn');
+            Array.from(tabButtons).forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // Show the selected tab content and add active class to the button
+            document.getElementById(tab + '-content').style.display = 'block';
+            document.getElementById(tab + '-content').classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        function toggleReviewOptions() {
+            var reviewOptions = document.getElementById('review-options');
+            var reviewOptionButtons = reviewOptions.getElementsByClassName('review-option-btn');
+            var reviewsTab = document.getElementById('reviews-tab');
+
+            if (reviewOptions.style.visibility === 'visible') {
+                // Hide options
+                reviewOptions.style.opacity = 0;
+                reviewOptions.style.visibility = 'hidden';
+                
+                // Remove animation class
+                Array.from(reviewOptionButtons).forEach((btn, index) => {
+                    btn.classList.remove('animate');
+                });
+            } else {
+                // Show options with animation
+                reviewOptions.style.opacity = 1;
+                reviewOptions.style.visibility = 'visible';
+                
+                // Animate each option one by one
+                Array.from(reviewOptionButtons).forEach((btn, index) => {
+                    setTimeout(() => {
+                        btn.classList.add('animate');
+                    }, index * 100); // Staggered delay for each button
+                });
+            }
+        }
+    </script>
 
 
     <?php if(!empty($course->creator) and !empty($course->creator->getLiveChatJsCode()) and !empty(getFeaturesSettings('show_live_chat_widget'))): ?>

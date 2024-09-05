@@ -3318,7 +3318,7 @@ a.badge-gray100:focus, a.badge-gray100.focus {
 .form-control {
   display: block;
   padding: 8px 1rem;
-  font-family: "main-font-family";
+  font-family: "Montserrat", system-ui;
   font-size: 0.75rem;
   font-weight: normal;
   line-height: 1.25;
@@ -4016,8 +4016,8 @@ textarea.form-control {
   top: -0.1rem;
   left: -2rem;
   display: block;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   pointer-events: none;
   content: "";
   background-color: #ffffff;
@@ -14993,7 +14993,7 @@ p {
   top: 10px;
 }
 .navbar .nav-item .nav-link {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   text-align: center;
   color: white;
@@ -15329,10 +15329,10 @@ p {
 }
 
 .footer {
-  margin-top: 4rem;
   padding: 40px 0;
   background-color: black;
 }
+
 .footer .footer-subscribe {
   position: relative;
   top: -100px;
@@ -15342,6 +15342,7 @@ p {
   border-radius: 15px;
   padding: 25px;
 }
+
 @media (max-width: 767px) {
   .footer .footer-subscribe {
     height: auto;
@@ -16715,6 +16716,9 @@ p {
 }
 .webinar-card .webinar-card-body {
   padding: 15px ;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .webinar-card-body .title {
@@ -16728,17 +16732,16 @@ p {
 .webinar-card-body p {
   font-size: 10px;
   font-weight: 500;
-  margin-top: 10px;
 }
 
 .rtl .webinar-card .webinar-card-body {
   padding: 15px 15px 20px 10px;
 }
 .webinar-card .webinar-card-body .webinar-price-box .real {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 17px;
+  font-weight: 600;
   line-height: 1.22;
-  color: var(--primary);
+  color: var(--primary-color);
   pointer-events: none;
 }
 .webinar-card .webinar-card-body .webinar-price-box .off {
@@ -16803,9 +16806,7 @@ p {
 .webinar-card.webinar-list.panel-installment-card .image-box::after {
   display: none;
 }
-.webinar-card.webinar-list .webinar-card-body {
-  padding: 12px 17px 12px 25px;
-}
+
 .rtl .webinar-card.webinar-list .webinar-card-body {
   padding: 15px 25px 20px 17px;
 }
@@ -17124,14 +17125,6 @@ p {
   max-height: 180px;
 }
 
-.course-teacher-card .teacher-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
-.course-teacher-card .teacher-avatar img {
-  border-radius: 50%;
-}
 .course-teacher-card.instructors-list .teacher-avatar {
   width: 190px;
   height: 190px;
@@ -18196,8 +18189,8 @@ p {
   display: none;
 }
 .wizard-custom-radio input:checked ~ label {
-  background-color: var(--primary);
-  border-color: var(--primary);
+  background-color: black;
+  border-color: black;
   color: #FFFFFF;
 }
 .wizard-custom-radio .wizard-custom-radio-item:first-child label {
@@ -19273,7 +19266,6 @@ p {
   text-decoration: line-through;
 }
 .gift-item-card .gift-webinar-card .webinar-title {
-  height: 48px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -19456,7 +19448,8 @@ p {
   line-height: 1.19;
   color: #171347;
 }
-.category-filter-title:after {
+
+/* .category-filter-title:after {
   content: "";
   width: 50px;
   height: 3px;
@@ -19468,7 +19461,7 @@ p {
 .rtl .category-filter-title:after {
   left: auto;
   right: 0;
-}
+} */
 
 .accordion-content-wrapper {
   position: relative;
@@ -19721,7 +19714,7 @@ p {
 }
 
 .text-primary {
-  color: var(--primary) !important;
+  color: var(--primary-color) !important;
 }
 
 .badge-primary {
@@ -19814,9 +19807,9 @@ p {
 }
 
 .custom-control-input:not(:disabled):active ~ .custom-control-label:before, .custom-control-input:checked ~ .custom-control-label:before {
-  color: var(--primary-btn-color) !important;
-  background-color: var(--primary) !important;
-  border-color: var(--primary-border) !important;
+  color: var(--primary-btn-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   box-shadow: none;
 }
 
@@ -19828,7 +19821,7 @@ p {
   padding: 8px 14px;
   background-color: var(--primary-color);
   color: white;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   border-radius: 7px;
   border: none;
@@ -19836,8 +19829,12 @@ p {
 }
 
 .login {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
+}
+
+.login:hover {
+  color: var(--primary-color);
 }
 
 .slide-text {

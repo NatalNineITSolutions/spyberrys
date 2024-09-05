@@ -1591,7 +1591,7 @@
 
 
     
-    <div class="container subscription-container">
+    <div class="container subscription-container" style="margin-bottom: 35px;">
         <div class="subscription-box">
             <div class="subscription-text">
                 <h4>Join us today</h4>
