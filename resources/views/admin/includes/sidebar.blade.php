@@ -34,15 +34,21 @@
                         <span>{{ trans('admin/main.marketing_dashboard') }}</span>
                     </a>
                 </li>
-            @endcan
-
-            
-                <li class="">
+                <li class="{{ (request()->is(getAdminPanelUrl('/sandbox', false))) ? 'active' : '' }}">
                     <a href="{{ getAdminPanelUrl('/sandbox') }}" class="nav-link">
                         <i class="fas fa-chart-pie"></i>
                         <span>Sandbox Configuration</span>
                     </a>
                 </li>
+            @endcan
+
+            
+                {{-- <li class="">
+                    <a href="{{ getAdminPanelUrl('/sandbox') }}" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Sandbox Configuration</span>
+                    </a>
+                </li> --}}
 
             @if($authUser->can('admin_webinars') or
                 $authUser->can('admin_bundles') or

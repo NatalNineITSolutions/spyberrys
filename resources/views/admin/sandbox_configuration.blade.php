@@ -30,19 +30,19 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label for="apiKey" class="input-label">API Key</label>
-                        <input type="text" class="form-control" id="apiKey" name="apiKey" placeholder="Enter API Key">
+                        <input type="text" class="form-control" id="apiKey" name="apiKey" placeholder="Enter API Key"  value="{{ old('apiKey', $settings->api_key ?? '') }}" >
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label for="secretKey" class="input-label">Secret Key</label>
-                        <input type="text" class="form-control" id="secretKey" name="secretKey" placeholder="Enter Secret Key">
+                        <input type="text" class="form-control" id="secretKey" name="secretKey" placeholder="Enter Secret Key"  value="{{ old('secretKey', $settings->secret_key ?? '') }}">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label for="version" class="input-label">Version</label>
-                        <input type="text" class="form-control" id="version" name="version" placeholder="Enter Version">
+                        <input type="text" class="form-control" id="version" name="version" placeholder="Enter Version"  value="{{ old('version', $settings->version ?? '') }}" >
                     </div>
                 </div>
             </div>
