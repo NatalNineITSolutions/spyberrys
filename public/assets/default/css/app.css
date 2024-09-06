@@ -15002,7 +15002,7 @@ p {
 
 .navbar .nav-item .nav-link:hover {
   color: var(--primary-color);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -15329,7 +15329,8 @@ p {
 }
 
 .footer {
-  padding: 40px 0;
+  padding-top: 40px;
+  padding-bottom: 20px;
   background-color: black;
 }
 
@@ -20675,6 +20676,9 @@ p {
   line-height: 20px;
 }
 
+.header-container {
+  padding: 0 40px;
+}
 
 @media(max-width:991px) {
 
@@ -20878,6 +20882,10 @@ p {
 
   .slider-container .slider-content .slide-hint {
     line-height: 20px;
+  }
+
+  .header-container {
+    padding: 0 15px;
   }
 
 }

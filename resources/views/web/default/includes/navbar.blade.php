@@ -21,14 +21,14 @@
 
 <div id="navbarVacuum"></div>
 <nav id="navbar" class="navbar navbar-expand-lg">
-    <div class="{{ (!empty($isPanel) and $isPanel) ? 'container-fluid' : 'container' }}">
+    <div class="w-100 header-container">
         <div class="d-flex align-items-center justify-content-between w-100">
 
-            {{-- <a class="navbar-brand navbar-order d-flex align-items-center justify-content-center mr-0 {{ (empty($navBtnUrl) and empty($navBtnText)) ? 'ml-auto' : '' }}" href="/">
+            <a class="navbar-brand navbar-order d-flex align-items-center justify-content-center mr-0 {{ (empty($navBtnUrl) and empty($navBtnText)) ? 'ml-auto' : '' }}" href="/">
                 @if (!empty($generalSettings['logo']))
                     <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
                 @endif
-            </a> --}}
+            </a>
 
             <button class="navbar-toggler navbar-order" type="button" id="navbarToggle">
                 <span class="navbar-toggler-icon" style="background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Cpath stroke=%27rgba(255, 255, 255, 1)%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3E%3C/svg%3E');"></span>

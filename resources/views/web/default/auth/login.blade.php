@@ -427,7 +427,11 @@
 <body>
     <div class="main">
         <div class="sidebar">
-            <img class="logo" src="./assets/default/img/logo.png" alt="">
+            <a href="/">
+                @if (!empty($generalSettings['logo']))
+                    <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
+                @endif
+            </a>
 
             <div class="form-step">
                 <div class="step" id="step-1">

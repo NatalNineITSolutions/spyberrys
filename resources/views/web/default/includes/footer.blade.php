@@ -19,8 +19,11 @@
 
             <div class="col-lg-3 col-md-12 col-12">
                 <div class="logo">
-                    <img src="./assets/default/img/home/logo.png" alt="" style="width: 160px;">
-                    <p>Top learning experiences that create more talent in the world.</p>
+                    <a class="" href="/">
+                        @if (!empty($generalSettings['logo']))
+                            <img src="{{ $generalSettings['logo'] }}" alt="site logo">
+                        @endif
+                    </a>
                 </div>
             </div>
 
@@ -69,7 +72,7 @@
 
     @if(getOthersPersonalizationSettings('platform_phone_and_email_position') == 'footer')
         <div class="footer-copyright-card">
-            <div class="container d-flex align-items-center justify-content-between py-15 copyright">
+            <div class="container d-flex align-items-center justify-content-between copyright mt-15">
                 <div class="font-14 text-white">{{ trans('update.platform_copyright_hint') }}</div>
 
                 <div class="d-flex align-items-center justify-content-center contact">

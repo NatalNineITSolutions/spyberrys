@@ -76,10 +76,6 @@
             right: 0px;
         }
 
-        .main-container {
-            margin-top: 3rem;
-        }
-
         .course-img {
             position: relative;
             height: 350px;
@@ -248,6 +244,7 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 10px;
+            margin-bottom: 15px;
             opacity: 0;
             visibility: hidden;
         }
@@ -324,6 +321,201 @@
             font-weight: 500;
             text-align: center;
         }
+
+        .payments {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .payments h4 {
+            font-size: 1rem;
+            margin-top: 13px;
+        }
+
+        .payment-image {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 9px;
+        }
+
+        .payment-image img {
+            width: 35px;
+            cursor: pointer;
+        }
+
+        .social-sharing {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .social-sharing h4 {
+            font-size: 1rem;
+            margin-top: 13px;
+        }
+
+        .social-icons {
+            margin-top: 9px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .icon {
+            background-color: #E6E9EF;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon i {
+            font-size: 14px;
+        }
+
+        .purchase {
+            padding: 10px 20px;
+            background-color: #0089FF;
+            color: white;
+            border-radius: 25px;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .purchase:hover {
+            color: white;
+        }
+
+        .instructors {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .instructor-image img {
+            width:150px;
+            height: 150px;
+            border-radius: 50%
+        }
+
+        .instructor-ratings {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        
+        .instructor-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .instructor-details h4 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .instructor-details p {
+            font-size: 12px;
+            font-weight: 600;
+            color: #5751E1;
+            margin-top: 0;
+        }
+
+        .instructor-ratings p {
+            color: #7F7E97;
+            margin-top: 0;
+            font-weight: 500;
+        }
+
+        .review {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .review p {
+            font-size: 12px;
+            font-weight: 500;
+            color: black;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #0000001A;
+        }
+
+        .comments {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .comment-icon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comment {
+            padding: 5px 15px;
+            background-color: #0089FF;
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .comment:hover {
+            color: white;
+        }
+
+        .img-cover {
+            border-radius: 15px;
+        }
+
+        @media (max-width:768px) {
+            .instructors {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .desp {
+                padding: 20px 15px;
+            }
+
+            .point {
+                width: 40px;
+            }
+        }
     </style>
 @endpush
 
@@ -363,7 +555,7 @@
     {{-- Main Section --}}
     <div class="container main-container">
         <div class="row">
-            <div class="col-9">
+            <div class="col-lg-9 col-md-12 col-12 mt-4">
                 <div class="course-img {{ $course->video_demo ? 'has-video' :'' }}">
                     <img src="{{ $course->getImage() }}" class="img-cover" alt="">
                     @if($course->video_demo)
@@ -385,12 +577,12 @@
                     </div>
                 </div>
                 <div class="course-title">
-                    <h4>UI / UX Course begginer to Pro</h4>
+                    <h4>{{ $course->title }}</h4>
                 </div>
-                <div class="d-flex align-items-center mt-20" style="gap: 13px;">
+                <div class="d-flex align-items-center mt-20" style="gap: 13px; flex-wrap:wrap;">
                     <div class="course-details">
                         <img class="instructor" src="/assets/default/img/home/ment-1.png" alt="">
-                        <p>By <span>Ricardo Dave</span></p>
+                        <p>By <span>{{ $course->teacher->full_name }}</span></p>
                     </div>
                     <p class="dot"></p>
                     <div class="course-details">
@@ -404,7 +596,7 @@
                     </div>
                 </div>
                 <div class="tab">
-                    <div class="tabs">
+                    <div class="tabs" style="flex-wrap: wrap;">
                         <button class="tab-btn active" id="overview-tab" onclick="showTabContent('overview')">Overview</button>
                         <button class="tab-btn" id="curriculum-tab" onclick="showTabContent('curriculum')">Curriculum</button>
                         <button class="tab-btn" id="instructors-tab" onclick="showTabContent('instructors')">Instructors</button>
@@ -414,8 +606,9 @@
                     <div class="tab-content active" id="overview-content">
                         <div class="desp rounded shadow">
                             <h4>Course Description</h4>
-                            <p>"Transform your passion for design into a professional skillset with our comprehensive UI/UX Course: Beginner to Pro. Whether you’re just starting or looking to refine your expertise, this course takes you through the entire design process, from the fundamentals to advanced techniques. Learn how to create user-centered designs that are not only visually appealing but also intuitive and effective.</p>
-                            <p>Through hands-on projects, real-world case studies, and expert guidance, you’ll gain the skills to build engaging user interfaces and experiences that stand out in the digital world. By the end of the course, you’ll be equipped to take on complex design challenges and excel in your UI/UX design career."</p>
+                            @if($course->description)
+                                <p>{!! nl2br($course->description) !!}</p>
+                            @endif
 
                             <h4 class="mt-20">What you'll learn in this course?</h4>
                             <div class="points">
@@ -441,26 +634,97 @@
                         </div>
                     </div>
                     <div class="tab-content" id="curriculum-content" style="display:none;">
-                        <p>Curriculum content goes here.</p>
+                        <div class="desp rounded shadow">
+                            <h4>Curriculum</h4>
+                            <h4 class="mt-20">What you'll learn in this course?</h4>
+                            @include(getTemplate().'.course.tabs.content')
+                            <div class="points">
+                                <div class="point">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p>Foundations of UI/UX Design: Grasp the basics of user interface and user experience design.</p>
+                            </div>
+                            <div class="points">
+                                <div class="point">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p>Design Tools Mastery: Get hands-on with industry-standard tools like Figma, Sketch, and Adobe XD.</p>
+                            </div>
+                            <div class="points">
+                                <div class="point">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p>Wireframing and Prototyping: Learn how to create wireframes, prototypes, and user flows.</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-content" id="instructors-content" style="display:none;">
-                        <p>Instructors content goes here.</p>
+                        <div class="desp rounded shadow">
+                            <div class="col-lg-6 col-md-12 col-12">
+                                <div class="instructors">
+                                    <div class="instructor-image">
+                                        <img src="/assets/default/img/home/ment-1.png" alt="">
+                                    </div>
+                                    <div class="instructor-details">
+                                        <h4>{{ $course->teacher->full_name }}</h4>
+                                        <p>{{ $course->teacher->bio }}</p>
+                                        <div class="instructor-ratings">
+                                            <i class="fa-solid fa-star"></i>
+                                            <p>(4.8 Ratings)</p>
+                                        </div>
+                                        <div class="social-icons">
+                                            <a href="{{ $course->getShareLink('telegram') }}" target="_blank" class="icon">
+                                                <i class="fa-brands fa-telegram"></i>
+                                            </a>
+                
+                                            <a href="{{ $course->getShareLink('whatsapp') }}" target="_blank" class="icon">
+                                                <i class="fa-brands fa-whatsapp"></i>
+                                            </a>
+                                
+                                            <a href="{{ $course->getShareLink('facebook') }}" target="_blank" class="icon">
+                                                <i class="fa-brands fa-facebook-f"></i>
+                                            </a>
+                                
+                                            <a href="{{ $course->getShareLink('twitter') }}" target="_blank" class="icon">
+                                                <i class="fa-brands fa-twitter"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-content" id="reviews-content" style="display:none;">
                         <div class="review-options" id="review-options">
                             <button class="review-option-btn">Newest</button>
                             <button class="review-option-btn">Oldest</button>
                             <button class="review-option-btn">Positive</button>
-                            <button class="review-option-btn">Negative</button>
                         </div>
                         <div>
-                            <p>Reviews content goes here.</p>
+                            <div class="desp rounded shadow">
+                                <h4>Comments</h4>
+                                <div class="review">
+                                    <div class="user">
+                                        <img src="/assets/default/img/home/testi-1.png" alt="">
+                                        <h5>John Doe</h5>
+                                    </div>
+                                    <p>"Spyberry offers an exceptional e-learning experience, blending expert-led courses with a user-friendly platform. The variety of courses and the quality of content are top-notch, making it a go-to destination for anyone looking to upskill. The hands-on projects and real-world applications truly set it apart, helping learners not just understand but excel in their chosen fields. Whether you're a beginner or a seasoned professional, Spyberry provides the tools and knowledge to take your skills to the next level. Highly recommended for anyone serious about learning!"</p>
+                                    <div class="comments">
+                                        <div class="comment-icon">
+                                            <img src="/assets/default/img/course/bold.png" alt="">
+                                            <img src="/assets/default/img/course/italic.png" alt="">
+                                            <img src="/assets/default/img/course/link.png" alt="">
+                                        </div>
+                                        <button class="btn comment">Comment</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                 </div>            
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-md-12 col-12 mt-4">
                 <div class="rounded-lg shadow-sm rightbar p-20">
                     <div>
                         @if($course->creator_id != $course->teacher_id)
@@ -549,67 +813,6 @@
                                     $authUserJoinedWaitlist = !empty($authUserWaitlist);
                                 }
                             @endphp
-        
-                            {{-- <div class="mt-20 d-flex flex-column">
-                                @if(!$canSale and $course->canJoinToWaitlist())
-                                    <button type="button" data-slug="{{ $course->slug }}" class="btn btn-primary {{ (!$authUserJoinedWaitlist) ? ((!empty($authUser)) ? 'js-join-waitlist-user' : 'js-join-waitlist-guest') : 'disabled' }}" {{ $authUserJoinedWaitlist ? 'disabled' : '' }}>
-                                        @if($authUserJoinedWaitlist)
-                                            {{ trans('update.already_joined') }}
-                                        @else
-                                            {{ trans('update.join_waitlist') }}
-                                        @endif
-                                    </button>
-                                @elseif($hasBought or !empty($course->getInstallmentOrder()))
-                                    <a href="{{ $course->getLearningPageUrl() }}" class="btn btn-primary">{{ trans('update.go_to_learning_page') }}</a>
-                                @elseif(!empty($course->price) and $course->price > 0)
-                                    <button type="button" class="btn btn-primary {{ $canSale ? 'js-course-add-to-cart-btn' : ($course->cantSaleStatus($hasBought) .' disabled ') }}">
-                                        @if(!$canSale)
-                                            @if($course->checkCapacityReached())
-                                                {{ trans('update.capacity_reached') }}
-                                            @else
-                                                {{ trans('update.disabled_add_to_cart') }}
-                                            @endif
-                                        @else
-                                            {{ trans('public.add_to_cart') }}
-                                        @endif
-                                    </button>
-        
-                                    @if($canSale and !empty($course->points))
-                                        <a href="{{ !(auth()->check()) ? '/login' : '#' }}" class="{{ (auth()->check()) ? 'js-buy-with-point' : '' }} btn btn-outline-warning mt-20 {{ (!$canSale) ? 'disabled' : '' }}" rel="nofollow">
-                                            {!! trans('update.buy_with_n_points',['points' => $course->points]) !!}
-                                        </a>
-                                    @endif
-        
-                                    @if($canSale and !empty(getFeaturesSettings('direct_classes_payment_button_status')))
-                                        <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
-                                            {{ trans('update.buy_now') }}
-                                        </button>
-                                    @endif
-        
-                                    @if(!empty($installments) and count($installments) and getInstallmentsSettings('display_installment_button'))
-                                        <a href="/course/{{ $course->slug }}/installments" class="btn btn-outline-primary mt-20">
-                                            {{ trans('update.pay_with_installments') }}
-                                        </a>
-                                    @endif
-                                @else
-                                    <a href="{{ $canSale ? '/course/'. $course->slug .'/free' : '#' }}" class="btn btn-primary {{ (!$canSale) ? (' disabled ' . $course->cantSaleStatus($hasBought)) : '' }}">
-                                        @if(!$canSale)
-                                            @if($course->checkCapacityReached())
-                                                {{ trans('update.capacity_reached') }}
-                                            @else
-                                                {{ trans('public.disabled') }}
-                                            @endif
-                                        @else
-                                            {{ trans('public.enroll_on_webinar') }}
-                                        @endif
-                                    </a>
-                                @endif
-        
-                                @if($canSale and $course->subscribe)
-                                    <a href="/subscribes/apply/{{ $course->slug }}" class="btn btn-outline-primary btn-subscribe mt-20 @if(!$canSale) disabled @endif">{{ trans('public.subscribe') }}</a>
-                                @endif
-        
-                            </div> --}}
                         </form>
                     </div>
                     <div class="" style="margin-top: 12px;">
@@ -703,11 +906,100 @@
                             @endif
                         </div>
                     </div>
+                    <div class="payments">
+                        <h4>Secure Payment:</h4>
+                        <div class="payment-image">
+                            <img src="/assets/default/img/course/paypal.png" alt="">
+                            <img src="/assets/default/img/course/visa.png" alt="">
+                            <img src="/assets/default/img/course/master_card.png" alt="">
+                            <img src="/assets/default/img/course/express.png" alt="">
+                            <img src="/assets/default/img/course/discover.png" alt="">
+                        </div>
+                    </div>
+                    <div class="social-sharing">
+                        <h4>Share this Course:</h4>
+                        <div class="social-icons">
+                            <a href="{{ $course->getShareLink('telegram') }}" target="_blank" class="icon">
+                                <i class="fa-brands fa-telegram"></i>
+                            </a>
+
+                            <a href="{{ $course->getShareLink('whatsapp') }}" target="_blank" class="icon">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </a>
+                
+                            <a href="{{ $course->getShareLink('facebook') }}" target="_blank" class="icon">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                
+                            <a href="{{ $course->getShareLink('twitter') }}" target="_blank" class="icon">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-20 d-flex flex-column">
+                        @if(!$canSale and $course->canJoinToWaitlist())
+                            <button type="button" data-slug="{{ $course->slug }}" class="purchase {{ (!$authUserJoinedWaitlist) ? ((!empty($authUser)) ? 'js-join-waitlist-user' : 'js-join-waitlist-guest') : 'disabled' }}" {{ $authUserJoinedWaitlist ? 'disabled' : '' }}>
+                                @if($authUserJoinedWaitlist)
+                                    {{ trans('update.already_joined') }}
+                                @else
+                                    {{ trans('update.join_waitlist') }}
+                                @endif
+                            </button>
+                        @elseif($hasBought or !empty($course->getInstallmentOrder()))
+                            <a href="{{ $course->getLearningPageUrl() }}" class="purchase">{{ trans('update.go_to_learning_page') }}</a>
+                        @elseif(!empty($course->price) and $course->price > 0)
+                            <button type="button" class="purchase {{ $canSale ? 'js-course-add-to-cart-btn' : ($course->cantSaleStatus($hasBought) .' disabled ') }}">
+                                @if(!$canSale)
+                                    @if($course->checkCapacityReached())
+                                        {{ trans('update.capacity_reached') }}
+                                    @else
+                                        {{ trans('update.disabled_add_to_cart') }}
+                                    @endif
+                                @else
+                                    {{ trans('public.add_to_cart') }}
+                                @endif
+                            </button>
+
+                            @if($canSale and !empty($course->points))
+                                <a href="{{ !(auth()->check()) ? '/login' : '#' }}" class="{{ (auth()->check()) ? 'js-buy-with-point' : '' }} btn btn-outline-warning mt-20 {{ (!$canSale) ? 'disabled' : '' }}" rel="nofollow">
+                                    {!! trans('update.buy_with_n_points',['points' => $course->points]) !!}
+                                </a>
+                            @endif
+
+                            @if($canSale and !empty(getFeaturesSettings('direct_classes_payment_button_status')))
+                                <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
+                                    {{ trans('update.buy_now') }}
+                                </button>
+                            @endif
+
+                            @if(!empty($installments) and count($installments) and getInstallmentsSettings('display_installment_button'))
+                                <a href="/course/{{ $course->slug }}/installments" class="btn btn-outline-primary mt-20">
+                                    {{ trans('update.pay_with_installments') }}
+                                </a>
+                            @endif
+                        @else
+                            <a href="{{ $canSale ? '/course/'. $course->slug .'/free' : '#' }}" class="purchase {{ (!$canSale) ? (' disabled ' . $course->cantSaleStatus($hasBought)) : '' }}">
+                                @if(!$canSale)
+                                    @if($course->checkCapacityReached())
+                                        {{ trans('update.capacity_reached') }}
+                                    @else
+                                        {{ trans('public.disabled') }}
+                                    @endif
+                                @else
+                                    {{ trans('public.enroll_on_webinar') }}
+                                @endif
+                            </a>
+                        @endif
+
+                        @if($canSale and $course->subscribe)
+                            <a href="/subscribes/apply/{{ $course->slug }}" class="btn btn-outline-primary btn-subscribe mt-20 @if(!$canSale) disabled @endif">{{ trans('public.subscribe') }}</a>
+                        @endif
+                    </div>
                 </div>
                 
             </div>
         </div>
-    </div>
+    </div> 
 
     @php
         $percent = $course->getProgress();
@@ -1349,7 +1641,6 @@
             }
         }
     </script>
-
 
     @if(!empty($course->creator) and !empty($course->creator->getLiveChatJsCode()) and !empty(getFeaturesSettings('show_live_chat_widget')))
         <script>

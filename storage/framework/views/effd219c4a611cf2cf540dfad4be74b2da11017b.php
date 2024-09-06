@@ -329,7 +329,11 @@
 <body>
     <div class="main">
         <div class="sidebar">
-            <img class="logo" src="./assets/default/img/logo.png" alt="">
+            <a href="/">
+                <?php if(!empty($generalSettings['logo'])): ?>
+                    <img src="<?php echo e($generalSettings['logo']); ?>" class="img-cover" alt="site logo">
+                <?php endif; ?>
+            </a>
 
             <div class="form-step">
                 <div class="step" id="step-1">
