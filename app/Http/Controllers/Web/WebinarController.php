@@ -336,6 +336,14 @@ class WebinarController extends Controller
             return $data;
         }
 
+        $course = Webinar::where('slug', $slug)
+        ->with([
+            'teacher' => function ($query) {
+                $query->select('id', 'full_name', 'avatar', 'bio'); 
+            }
+        ])
+        ->first();
+
         return view('web.default.course.index', $data);
     }
 

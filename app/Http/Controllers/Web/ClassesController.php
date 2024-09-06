@@ -21,45 +21,64 @@ class ClassesController extends Controller
 
 
     public function index(Request $request)
-    {
-        $webinarsQuery = Webinar::where('webinars.status', 'active')
-            ->where('private', false);
+{
+    $webinarsQuery = Webinar::where('webinars.status', 'active')
+        ->where('private', false);
 
-        $type = $request->get('type');
-        if (!empty($type) and is_array($type) and in_array('bundle', $type)) {
-            $webinarsQuery = Bundle::where('bundles.status', 'active');
-            $this->tableName = 'bundles';
-            $this->columnId = 'bundle_id';
-        }
-
-        $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
-
-
-        $sort = $request->get('sort', null);
-
-        if (empty($sort) or $sort == 'newest') {
-            $webinarsQuery = $webinarsQuery->orderBy("{$this->tableName}.created_at", 'desc');
-        }
-
-        $webinars = $webinarsQuery->with([
-            'tickets'
-        ])->paginate(6);
-
-        $seoSettings = getSeoMetas('classes');
-        $pageTitle = $seoSettings['title'] ?? '';
-        $pageDescription = $seoSettings['description'] ?? '';
-        $pageRobot = getPageRobot('classes');
-
-        $data = [
-            'pageTitle' => $pageTitle,
-            'pageDescription' => $pageDescription,
-            'pageRobot' => $pageRobot,
-            'webinars' => $webinars,
-            'coursesCount' => $webinars->total()
-        ];
-
-        return view(getTemplate() . '.pages.classes', $data);
+    $type = $request->get('type');
+    if (!empty($type) && is_array($type) && in_array('bundle', $type)) {
+        $webinarsQuery = Bundle::where('bundles.status', 'active');
+        $this->tableName = 'bundles';
+        $this->columnId = 'bundle_id';
     }
+
+    $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
+
+    $sort = $request->get('sort', null);
+    if (empty($sort) || $sort == 'newest') {
+        $webinarsQuery = $webinarsQuery->orderBy("{$this->tableName}.created_at", 'desc');
+    }
+
+    // Include translations when fetching webinars
+    $webinars = $webinarsQuery->with(['tickets', 'translations'])->paginate(6);
+
+    // Get the current locale
+    $currentLocale = app()->getLocale();
+
+    // Iterate over webinars and get the description for the current locale
+    foreach ($webinars as $webinar) {
+        $translation = $webinar->translations->where('locale', $currentLocale)->first();
+        $webinar->description = $translation ? $translation->description : '';
+        // You can add other fields as needed, e.g. title
+        $webinar->title = $translation ? $translation->title : ''; // Assuming 'title' is a field in the translations
+    }
+
+    // Retrieve categories with translations
+    $categories = Category::with('translations')->get();
+
+    // Prepare categories for the current locale
+    foreach ($categories as $category) {
+        $categoryTranslation = $category->translations->where('locale', $currentLocale)->first();
+        $category->translated_name = $categoryTranslation ? $categoryTranslation->name : ''; // Assuming 'name' is the field you want
+    }
+
+    $seoSettings = getSeoMetas('classes');
+    $pageTitle = $seoSettings['title'] ?? '';
+    $pageDescription = $seoSettings['description'] ?? '';
+    $pageRobot = getPageRobot('classes');
+
+    $data = [
+        'pageTitle' => $pageTitle,
+        'pageDescription' => $pageDescription,
+        'pageRobot' => $pageRobot,
+        'webinars' => $webinars,
+        'categories' => $categories, // Include categories in the data
+        'coursesCount' => $webinars->total()
+    ];
+
+    return view(getTemplate() . '.pages.classes', $data);
+}
+
 
     public function handleFilters($request, $query)
     {

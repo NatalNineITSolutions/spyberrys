@@ -7,34 +7,8 @@
     $footerColumns = getFooterColumns();
 @endphp
 
-<footer class="footer bg-secondary position-relative user-select-none">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class=" footer-subscribe d-block d-md-flex align-items-center justify-content-between">
-                    <div class="flex-grow-1">
-                        <strong>{{ trans('footer.join_us_today') }}</strong>
-                        <span class="d-block mt-5 text-white">{{ trans('footer.subscribe_content') }}</span>
-                    </div>
-                    <div class="subscribe-input bg-white p-10 flex-grow-1 mt-30 mt-md-0">
-                        <form action="/newsletters" method="post">
-                            {{ csrf_field() }}
-
-                            <div class="form-group d-flex align-items-center m-0">
-                                <div class="w-100">
-                                    <input type="text" name="newsletter_email" class="form-control border-0 @error('newsletter_email') is-invalid @enderror" placeholder="{{ trans('footer.enter_email_here') }}"/>
-                                    @error('newsletter_email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-primary rounded-pill">{{ trans('footer.join') }}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<footer class="footer position-relative user-select-none">
+    {{--   --}}
 
     @php
         $columns = ['first_column','second_column','third_column','forth_column'];
@@ -43,25 +17,39 @@
     <div class="container">
         <div class="row">
 
-            @foreach($columns as $column)
-                <div class="col-6 col-md-3">
-                    @if(!empty($footerColumns[$column]))
-                        @if(!empty($footerColumns[$column]['title']))
-                            <span class="header d-block text-white font-weight-bold">{{ $footerColumns[$column]['title'] }}</span>
+            <div class="col-lg-3 col-md-12 col-12">
+                <div class="logo">
+                    <a class="" href="/">
+                        @if (!empty($generalSettings['logo']))
+                            <img src="{{ $generalSettings['logo'] }}" alt="site logo">
                         @endif
-
-                        @if(!empty($footerColumns[$column]['value']))
-                            <div class="mt-20">
-                                {!! $footerColumns[$column]['value'] !!}
-                            </div>
-                        @endif
-                    @endif
+                    </a>
                 </div>
-            @endforeach
+            </div>
+
+            <div class="col-lg-9 col-md-12 col-12">
+                <div class="row">
+                    @foreach($columns as $column)
+                        <div class="col-6 col-md-3">
+                            @if(!empty($footerColumns[$column]))
+                                @if(!empty($footerColumns[$column]['title']))
+                                    <span class="header d-block text-white font-weight-bold">{{ $footerColumns[$column]['title'] }}</span>
+                                @endif
+
+                                @if(!empty($footerColumns[$column]['value']))
+                                    <div class="mt-20" style="font-family: 'Montserrat';">
+                                        {!! $footerColumns[$column]['value'] !!}
+                                    </div>
+                                @endif
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
 
         </div>
 
-        <div class="mt-40 border-blue py-25 d-flex align-items-center justify-content-between">
+        {{-- <div class="mt-40 border-blue py-25 d-flex align-items-center justify-content-between">
             <div class="footer-logo">
                 <a href="/">
                     @if(!empty($generalSettings['footer_logo']))
@@ -79,15 +67,15 @@
                     @endforeach
                 @endif
             </div>
-        </div>
+        </div> --}}
     </div>
 
     @if(getOthersPersonalizationSettings('platform_phone_and_email_position') == 'footer')
         <div class="footer-copyright-card">
-            <div class="container d-flex align-items-center justify-content-between py-15">
+            <div class="container d-flex align-items-center justify-content-between copyright mt-15">
                 <div class="font-14 text-white">{{ trans('update.platform_copyright_hint') }}</div>
 
-                <div class="d-flex align-items-center justify-content-center">
+                <div class="d-flex align-items-center justify-content-center contact">
                     @if(!empty($generalSettings['site_phone']))
                         <div class="d-flex align-items-center text-white font-14">
                             <i data-feather="phone" width="20" height="20" class="mr-10"></i>
