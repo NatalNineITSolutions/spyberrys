@@ -1,5 +1,13 @@
 @extends('web.default.layouts.app')
 
+@section('css')
+    <style>
+        .form-control {
+            width: 100%;
+        }
+    </style>
+@endsection
+
 @section('content')
     <section class="site-top-banner search-top-banner opacity-04 position-relative">
         <img src="{{ getPageBackgroundSettings('products_lists') }}" class="img-cover" alt=""/>

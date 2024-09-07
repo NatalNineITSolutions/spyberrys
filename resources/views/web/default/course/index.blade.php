@@ -5,35 +5,10 @@
     <link rel="stylesheet" href="/assets/default/vendors/video/video-js.min.css">
 
     <style>
-        .course-slide {
-            width: 100%;
-            background-image: url(/assets/default/img/classes/course-bg.png);
-            display: flex;
-            position: relative;
-        }
 
-        .course-slide-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slide-details{
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 60px 0;
-        }
-
-        .slide-details h4 {
-            font-size: 25px;
-            font-weight: 600;
-            margin-bottom: 7px;
+        .main-container {
+            margin-bottom: 3rem;
+            padding: 0 100px;
         }
 
         .address {
@@ -503,6 +478,11 @@
         }
 
         @media (max-width:768px) {
+
+            .main-container {
+                padding: 0 25px;
+            }
+
             .instructors {
                 flex-direction: column;
                 align-items: center;
@@ -553,7 +533,7 @@
     </div> --}}
 
     {{-- Main Section --}}
-    <div class="container main-container">
+    <div class="main-container">
         <div class="row">
             <div class="col-lg-9 col-md-12 col-12 mt-4">
                 <div class="course-img {{ $course->video_demo ? 'has-video' :'' }}">

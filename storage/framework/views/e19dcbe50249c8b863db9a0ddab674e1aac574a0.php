@@ -1,5 +1,13 @@
 
 
+<?php $__env->startSection('css'); ?>
+    <style>
+        .form-control {
+            width: 100%;
+        }
+    </style>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
     <section class="site-top-banner search-top-banner opacity-04 position-relative">
         <img src="<?php echo e(getPageBackgroundSettings('products_lists')); ?>" class="img-cover" alt=""/>

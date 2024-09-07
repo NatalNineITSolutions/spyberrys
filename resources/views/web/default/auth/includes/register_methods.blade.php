@@ -30,7 +30,10 @@
                 Please enter your email address.
             </div>
 
+            
+
             <button type="button" class="btn btn-block mt-35 next" onclick="nextStep()">Next</button>
+            <img src="/assets/default/img/mail.png" class="input-icon" alt="" style="width:20px;">
         </div>
     </div>
 

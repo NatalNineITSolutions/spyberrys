@@ -58,6 +58,8 @@
         }
     </style>
 
+    <?php echo $__env->yieldContent('css'); ?>
+
 
     <?php if(!empty($generalSettings['preloading']) and $generalSettings['preloading'] == '1'): ?>
         <?php echo $__env->make('admin.includes.preloading', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

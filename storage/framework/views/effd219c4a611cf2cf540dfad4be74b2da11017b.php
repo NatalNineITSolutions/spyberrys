@@ -44,6 +44,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
         }
 
         .sidebar .logo {
@@ -127,6 +128,7 @@
             font-weight: 600;
             color: #797979;
         }
+
 
         .designs {
             width: 100%;
@@ -258,6 +260,11 @@
             background-color: #4A3AFF; /* Fallback for browsers that don't support animations */
         }
 
+        /* Initially activate the first step */
+        .step#step-1 .circle {
+            background-color: #4A3AFF;
+        }
+
         .step-content {
             display: none;
         }
@@ -309,6 +316,70 @@
             font-size: 12px;
         }
 
+        /* Eye icon */
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group .form-control {
+            padding-right: 45px; /* Make more space for the icon to prevent overlap */
+        }
+
+        .input-group-append {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 10; /* Ensure icon stays on top */
+        }
+
+        .input-group-append i {
+            font-size: 16px;
+            color: #797979;
+        }
+
+        .input-group .form-control {
+            z-index: 1; /* Input field stays below the icon */
+            position: relative;
+        }
+
+        .input-group .form-control:focus {
+            z-index: 1;
+        }
+
+        /* Remove the hover effects or any shadow on focus if needed */
+        .input-group .form-control:focus, 
+        .input-group-append {
+            box-shadow: none;
+        }
+
+        .input-group-text {
+            background-color: transparent;
+            border: none;
+        }
+
+        .form-control {
+            display: flex;
+            position: relative;
+        }
+
+        .input-group-append {
+            position: absolute;
+            top: 25px;
+        }
+
+        input[type="password"]::after {
+            content: none !important;
+        }
+
+        .input-icon {
+            position: absolute;
+            top: 26%;
+            right: 13px;
+        }
+
         @media (max-width:768px) {
 
             .sidebar {
@@ -316,8 +387,21 @@
             }
 
             .login-form-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between; 
+                align-items: center;
                 width: 100%;
-                padding: 0 30px;
+                height: 100vh;
+                padding: 30px;
+            }
+
+            .login-form-content {
+                flex-grow: 1; /* Makes the form container take up available space */
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Center form content vertically */
+                align-items: center;
             }
 
             .mob-home {
@@ -374,56 +458,65 @@
             </a>
         </div>
         <div class="login-form-container">
-            <div class="login-form">
-                <h4>Welcome Back!</h4>
-                <p>"Secure Your Learning Journey: Log in to Spyberry and Unlock Endless Knowledge"</p>
-
-                <form method="Post" action="/login" class="forms">
-                    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-                
-                    <?php echo $__env->make('web.default.auth.includes.register_methods', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                
-                    <div class="step-content" id="password-step" style="display: none;">
-                        <div class="d-flex align-items-center justify-content-between" style="margin-bottom:10px;">
-                            <label class="input-label" for="password"><?php echo e(trans('auth.password')); ?>:</label>
-                            <a href="/forget-password" target="_blank" class="forget-password"><?php echo e(trans('auth.forget_your_password')); ?></a>
-                        </div>
-                        <div class="form-group">
-                            <input name="password" type="password" class="form-control form <?php $__errorArgs = ['password'];
+            <div class="login-form-content">
+                <div class="login-form">
+                    <h4>Welcome Back!</h4>
+                    <p>"Secure Your Learning Journey: Log in to Spyberry and Unlock Endless Knowledge"</p>
+    
+                    <form method="Post" action="/login" class="forms">
+                        <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                    
+                        <?php echo $__env->make('web.default.auth.includes.register_methods', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    
+                        <div class="step-content" id="password-step" style="display: none;">
+                            <div class="d-flex align-items-center justify-content-between" style="margin-bottom:10px;">
+                                <label class="input-label" for="password"><?php echo e(trans('auth.password')); ?>:</label>
+                                <a href="/forget-password" target="_blank" class="forget-password"><?php echo e(trans('auth.forget_your_password')); ?></a>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input name="password" type="password" class="form-control form <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="password" aria-describedby="passwordHelp">
-                            <?php $__errorArgs = ['password'];
+unset($__errorArgs, $__bag); ?>" id="password" aria-describedby="passwordHelp" placeholder="Enter Your Password">
+                                    <div class="input-group-append">
+                                        <span id="togglePassword">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback">
-                                <?php echo e($message); ?>
+                                <div class="invalid-feedback">
+                                    <?php echo e($message); ?>
 
-                            </div>
-                            <?php unset($message);
+                                </div>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                        </div>
-                    
-                        <?php if(!empty(getGeneralSecuritySettings('captcha_for_login'))): ?>
-                            <?php echo $__env->make('web.default.includes.captcha_input', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                        <?php endif; ?>
-                    
-                        <div class="mt-20 text-center sign-up">
-                            <span><?php echo e(trans('auth.dont_have_account')); ?></span>
-                            <a href="/register"><?php echo e(trans('auth.signup')); ?></a>  
-                        </div>
-                    
-                        <button type="button" class="btn btn-block login" onclick="validatePassword()">Login</button>
-                    </div>            
-                </form>
+                            </div>                                                    
+                        
+                            <?php if(!empty(getGeneralSecuritySettings('captcha_for_login'))): ?>
+                                <?php echo $__env->make('web.default.includes.captcha_input', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <?php endif; ?>
+                        
+                            <div class="mt-20 text-center sign-up">
+                                <span><?php echo e(trans('auth.dont_have_account')); ?></span>
+                                <a href="/register"><?php echo e(trans('auth.signup')); ?></a>  
+                            </div>
+                        
+                            <button type="button" class="btn btn-block login" onclick="validatePassword()">Login</button>
+                        </div>            
+                    </form>
+                </div>
             </div>
 
             <a href="<?php echo e(route ('home')); ?>" class="mob-home">
@@ -459,19 +552,53 @@ unset($__errorArgs, $__bag); ?>
         }
     
         function validatePassword() {
-            var password = document.getElementById('password').value;
-    
+            var passwordInput = document.getElementById('password');
+            var password = passwordInput.value;
+
+            // Remove any existing error messages
+            var existingError = passwordInput.parentNode.querySelector('.invalid-feedback');
+            if (existingError) {
+                existingError.remove();
+            }
+
+            // Check if the password field is empty
             if (password === '') {
-                document.getElementById('password').classList.add('is-invalid');
+                // Add the invalid class
+                passwordInput.classList.add('is-invalid');
+
+                // Create and append the error message if password is empty
                 var errorDiv = document.createElement('div');
                 errorDiv.classList.add('invalid-feedback');
                 errorDiv.innerText = 'Please enter your password.';
-                document.getElementById('password').parentNode.appendChild(errorDiv);
+                passwordInput.parentNode.appendChild(errorDiv);
             } else {
-                document.querySelector('.forms').submit(); // Submit the form if the password is entered
+                // Remove the invalid class if the password is valid
+                passwordInput.classList.remove('is-invalid');
+                
+                // Submit the form if the password is entered
+                document.querySelector('.forms').submit(); 
             }
         }
     </script>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const togglePassword = document.querySelector('#togglePassword');
+            const passwordField = document.querySelector('#password');
+
+            togglePassword.addEventListener('click', function (e) {
+                // Toggle the type attribute of the password field
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                
+                // Toggle the icon
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
+
 </body>
 </html>
 <?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/auth/login.blade.php ENDPATH**/ ?>
