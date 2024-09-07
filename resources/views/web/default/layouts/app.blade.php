@@ -55,6 +55,8 @@
         }
     </style>
 
+    @yield('css')
+
 
     @if(!empty($generalSettings['preloading']) and $generalSettings['preloading'] == '1')
         @include('admin.includes.preloading')

@@ -95,7 +95,7 @@
         </div>
     </div>
 <?php else: ?>
-    <div class="d-flex align-items-center ml-md-50">
+    <div class="d-flex align-items-center">
         <a href="/login" class="py-5 px-10 mr-10 login"><?php echo e(trans('auth.login')); ?></a>
         <a href="/register" class="text-white register"><?php echo e(trans('auth.register')); ?></a>
     </div>

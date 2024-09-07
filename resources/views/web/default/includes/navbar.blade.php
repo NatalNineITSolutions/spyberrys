@@ -24,7 +24,7 @@
     <div class="w-100 header-container">
         <div class="d-flex align-items-center justify-content-between w-100">
 
-            <a class="navbar-brand navbar-order d-flex align-items-center justify-content-center mr-0 {{ (empty($navBtnUrl) and empty($navBtnText)) ? 'ml-auto' : '' }}" href="/">
+            <a class="navbar-brand navbar-order d-flex align-items-center justify-content-center d-lg-none d-block mr-0 {{ (empty($navBtnUrl) and empty($navBtnText)) ? 'ml-auto' : '' }}" href="/">
                 @if (!empty($generalSettings['logo']))
                     <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
                 @endif
@@ -42,6 +42,12 @@
                 </div>
 
                 <ul class="navbar-nav mr-auto d-flex align-items-center justify-content-between">
+
+                    <a class="navbar-brand navbar-order d-flex align-items-center justify-content-center mr-0" href="/">
+                        @if (!empty($generalSettings['logo']))
+                            <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
+                        @endif
+                    </a>
 
                     <div class="nav">
                         @if (!empty($navbarPages) and count($navbarPages))
