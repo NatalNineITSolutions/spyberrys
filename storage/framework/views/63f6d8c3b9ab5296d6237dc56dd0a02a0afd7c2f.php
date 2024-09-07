@@ -1,0 +1,1 @@
+<?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/auth/includes/personal_deatils.blade.php ENDPATH**/ ?>

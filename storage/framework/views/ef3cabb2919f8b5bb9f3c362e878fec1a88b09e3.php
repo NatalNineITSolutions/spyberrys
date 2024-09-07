@@ -25,26 +25,6 @@
                     <form method="post" action="/register" class="mt-35">
                         <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
 
-                        <?php if(!empty($selectRolesDuringRegistration) and count($selectRolesDuringRegistration)): ?>
-                            <div class="form-group">
-                                <label class="input-label"><?php echo e(trans('financial.account_type')); ?></label>
-
-                                <div class="d-flex align-items-center wizard-custom-radio mt-5">
-                                    <div class="wizard-custom-radio-item flex-grow-1">
-                                        <input type="radio" name="account_type" value="user" id="role_user" class="" checked>
-                                        <label class="font-12 cursor-pointer px-15 py-10" for="role_user"><?php echo e(trans('update.role_user')); ?></label>
-                                    </div>
-
-                                    <?php $__currentLoopData = $selectRolesDuringRegistration; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $selectRole): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <div class="wizard-custom-radio-item flex-grow-1">
-                                            <input type="radio" name="account_type" value="<?php echo e($selectRole); ?>" id="role_<?php echo e($selectRole); ?>" class="">
-                                            <label class="font-12 cursor-pointer px-15 py-10" for="role_<?php echo e($selectRole); ?>"><?php echo e(trans('update.role_'.$selectRole)); ?></label>
-                                        </div>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
                         <?php if($registerMethod == 'mobile'): ?>
                             <?php echo $__env->make('web.default.auth.register_includes.mobile_field', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
