@@ -28,7 +28,7 @@
         <?php endif; ?>
 
 
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin_notifications_list')): ?>
+         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin_notifications_list')): ?>
 
         <li class="dropdown dropdown-list-toggle">
                 <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg">
@@ -41,15 +41,13 @@
                                     <i class="fa fa-info"></i>
                                 </div>
                                 <div class="dropdown-item-desc">
-                                   Rocket LMS Version 1.9.7
+                                   Rocket LMS Version 1.9.9
                                    <div class="time text-primary">All rights reserved for Rocket Soft</div>
                                 </div>
                             </a>
                     </div>
                 </div>
             </li>
-
-
             <li class="dropdown dropdown-list-toggle">
                 <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg <?php if(!empty($unreadNotifications) and count($unreadNotifications)): ?> beep <?php else: ?> disabled <?php endif; ?>">
                     <i class="far fa-bell"></i>

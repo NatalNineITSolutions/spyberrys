@@ -95,7 +95,7 @@
                                         <div class="form-group">
                                             <label>{{ trans('admin/main.background') }}</label>
 
-                                            <div class="input-group colorpickerinput" data-format="rgb">
+                                            <div class="input-group colorpickerinput">
                                                 <input type="text" name="background"
                                                        autocomplete="off"
                                                        class="form-control  @error('background') is-invalid @enderror"

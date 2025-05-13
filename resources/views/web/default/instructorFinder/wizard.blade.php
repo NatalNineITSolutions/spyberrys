@@ -41,6 +41,10 @@
             <div class="row wizard-content d-flex align-items-lg-center justify-content-lg-center">
                 <div class="col-12 col-lg-5">
 
+                    @php
+                        $prevStep = $step - 1;
+                    @endphp
+
                     <form action="/instructor-finder/wizard?{{ http_build_query(request()->all()) }}" method="get">
                         @if(!empty(request()->all()) and count(request()->all()))
                             @foreach(request()->all() as $param => $value)
@@ -54,8 +58,20 @@
 
                         @include('web.default.instructorFinder.wizard.step_'.$step)
 
+                        @php
+                            $prevUrl = "/instructor-finder/wizard";
+
+                            if ($step == 2) {
+                                $prevUrl .= "?step={$prevStep}";
+                            } elseif ($step == 3) {
+                                $prevUrl .= "?step={$prevStep}&category_id=". request()->get('category_id');
+                            }elseif ($step == 4) {
+                                $prevUrl .= "?step={$prevStep}&category_id=" . request()->get('category_id') . '&level_of_training=' . request()->get('level_of_training');
+                            }
+                        @endphp
+
                         <div class="mt-50 pt-20 border-top border-gray300 d-flex align-items-center justify-content-end">
-                            <a href="{{ url()->previous() }}" class="js-prev-btn btn btn-gray300 btn-sm text-gray {{ ($step == 1) ? 'disabled' : '' }}" >{{ trans('update.prev') }}</a>
+                            <a href="{{ $prevUrl }}" class="js-prev-btn btn btn-gray300 btn-sm text-gray {{ ($step == 1) ? 'disabled' : '' }}">{{ trans('update.prev') }}</a>
 
                             <button type="submit" class="btn btn-primary btn-sm ml-10">{{ trans('webinars.next') }}</button>
                         </div>

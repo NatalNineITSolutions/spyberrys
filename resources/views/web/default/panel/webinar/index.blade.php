@@ -173,6 +173,7 @@
                                                             'deleteContentUrl' => "/panel/webinars/{$webinar->id}/delete",
                                                             'deleteContentClassName' => 'webinar-actions d-block mt-10 text-danger',
                                                             'deleteContentItem' => $webinar,
+                                                            'deleteContentItemType' => "course",
                                                         ])
                                                     @endcan
                                                 @endif

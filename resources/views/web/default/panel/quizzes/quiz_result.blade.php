@@ -53,7 +53,7 @@
         </section>
 
         <section class="mt-30 quiz-form">
-            <form action="{{ !empty($newQuizStart) ? '/panel/quizzes/'. $newQuizStart->quiz->id .'/update-result' : '' }} " method="post">
+            <form action="{{ !empty($formActionUrl) ? $formActionUrl : '' }} " method="post">
                 {{ csrf_field() }}
                 <input type="hidden" name="quiz_result_id" value="{{ !empty($newQuizStart) ? $newQuizStart->id : ''}}" class="form-control" placeholder=""/>
                 <input type="hidden" name="attempt_number" value="{{  $numberOfAttempt }}" class="form-control" placeholder=""/>
@@ -83,10 +83,10 @@
 
                                     <div class="form-group mt-35">
                                         <label class="input-label text-secondary">{{ trans('quiz.correct_answer') }}</label>
-                                        <textarea rows="10" name="question[{{ $question->id }}][correct_answer]" @if(empty($newQuizStart) or $newQuizStart->quiz->creator_id != $authUser->id) disabled @endif class="form-control">{{ $question->correct }}</textarea>
+                                        <textarea rows="10" name="question[{{ $question->id }}][correct_answer]" @if(empty($newQuizStart) or !$canEditResult) disabled @endif class="form-control">{{ $question->correct }}</textarea>
                                     </div>
 
-                                    @if(!empty($newQuizStart) and $newQuizStart->quiz->creator_id == $authUser->id)
+                                    @if($canEditResult)
                                         <div class="form-group mt-35">
                                             <label class="font-16 text-secondary">{{ trans('quiz.grade') }}</label>
                                             <input type="text" name="question[{{ $question->id }}][grade]" value="{{ (!empty($userAnswers[$question->id]) and !empty($userAnswers[$question->id]["grade"])) ? $userAnswers[$question->id]["grade"] : 0 }}" class="form-control">

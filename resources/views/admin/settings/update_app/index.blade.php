@@ -6,8 +6,8 @@
 
 @section('content')
     <section class="section">
-    <div class="section-header">
-            <h1>{{ trans('update.update_app') }} (v1.9.7)</h1>
+        <div class="section-header">
+        <h1>{{ trans('update.update_app') }} (v1.9.9)</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a></div>
                 <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}/settings">{{ trans('admin/main.settings') }}</a></div>

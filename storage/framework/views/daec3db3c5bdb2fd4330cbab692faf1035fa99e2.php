@@ -41,9 +41,9 @@
     <?php endif; ?>
 </head>
 
-<body class="<?php if($isRtl): ?> rtl <?php endif; ?>">
+<body class="<?php echo e($isRtl ? 'rtl' : ''); ?>">
 
-<div id="app" class="<?php echo e((!empty($floatingBar) and $floatingBar->position == 'top' and $floatingBar->fixed) ? 'has-fixed-top-floating-bar' : ''); ?>">
+<div id="app" class="<?php echo e($isRtl ? 'rtl' : ''); ?> <?php echo e((!empty($floatingBar) and $floatingBar->position == 'top' and $floatingBar->fixed) ? 'has-fixed-top-floating-bar' : ''); ?>">
     <?php if(!empty($floatingBar) and $floatingBar->position == 'top'): ?>
         <?php echo $__env->make('web.default.includes.floating_bar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php endif; ?>
@@ -93,6 +93,7 @@
     var deleteAlertSuccessHint = '<?php echo e(trans('public.deleteAlertSuccessHint')); ?>';
     var forbiddenRequestToastTitleLang = '<?php echo e(trans('public.forbidden_request_toast_lang')); ?>';
     var forbiddenRequestToastMsgLang = '<?php echo e(trans('public.forbidden_request_toast_msg_lang')); ?>';
+    var priceInvalidHintLang = '<?php echo e(trans('update.price_invalid_hint')); ?>';
 </script>
 
 <?php if(session()->has('toast')): ?>
@@ -135,6 +136,7 @@
     <?php echo !empty(getCustomCssAndJs('js')) ? getCustomCssAndJs('js') : ''; ?>
 
 </script>
+
 </body>
 </html>
 <?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/layouts/app.blade.php ENDPATH**/ ?>

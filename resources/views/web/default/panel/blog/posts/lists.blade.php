@@ -90,6 +90,7 @@
                                                             'deleteContentUrl' => "/panel/blog/posts/{$post->id}/delete",
                                                             'deleteContentClassName' => 'webinar-actions d-block mt-10',
                                                             'deleteContentItem' => $post,
+                                                            'deleteContentItemType' => "post",
                                                         ])
                                                     @endcan
 

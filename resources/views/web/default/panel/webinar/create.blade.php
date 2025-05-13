@@ -48,6 +48,7 @@
                         'deleteContentUrl' => "/panel/webinars/{$webinar->id}/delete?redirect_to=/panel/webinars",
                         'deleteContentClassName' => 'webinar-actions btn btn-danger btn-sm mt-20 mt-md-0',
                         'deleteContentItem' => $webinar,
+                        'deleteContentItemType' => "course",
                     ])
                 @endif
             </div>

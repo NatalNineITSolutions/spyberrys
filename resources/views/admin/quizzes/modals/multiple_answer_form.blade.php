@@ -28,10 +28,10 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="form-group mt-2 d-flex align-items-center justify-content-between js-switch-parent">
-                <label class="js-switch" for="correctAnswerSwitch{{ !empty($answer) ? $answer->id : '' }}">{{ trans('quiz.correct_answer') }}</label>
+                <label class="js-switch" for="correctAnswerSwitch_{{ !empty($answer) ? $answer->id : 'ans_tmp' }}">{{ trans('quiz.correct_answer') }}</label>
                 <div class="custom-control custom-switch">
-                    <input id="correctAnswerSwitch{{ !empty($answer) ? $answer->id : '' }}" type="checkbox" name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][correct]" @if(!empty($answer) and $answer->correct) checked @endif class="custom-control-input js-switch">
-                    <label class="custom-control-label js-switch" for="correctAnswerSwitch{{ !empty($answer) ? $answer->id : '' }}"></label>
+                    <input id="correctAnswerSwitch_{{ !empty($answer) ? $answer->id : 'ans_tmp' }}" type="checkbox" name="ajax[answers][{{ !empty($answer) ? $answer->id : 'ans_tmp' }}][correct]" @if(!empty($answer) and $answer->correct) checked @endif class="custom-control-input js-switch">
+                    <label class="custom-control-label js-switch" for="correctAnswerSwitch_{{ !empty($answer) ? $answer->id : 'ans_tmp' }}"></label>
                 </div>
             </div>
         </div>

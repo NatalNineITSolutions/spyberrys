@@ -48,6 +48,7 @@
                         'deleteContentUrl' => "/panel/store/products/{$product->id}/delete?redirect_to=/panel/store/products",
                         'deleteContentClassName' => 'webinar-actions btn btn-sm btn-danger mt-20 mt-md-0',
                         'deleteContentItem' => $product,
+                        'deleteContentItemType' => "product",
                     ])
                 @endif
             </div>

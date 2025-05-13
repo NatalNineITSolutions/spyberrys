@@ -48,6 +48,7 @@
                         'deleteContentUrl' => "/panel/bundles/{$bundle->id}/delete?redirect_to=/panel/bundles",
                         'deleteContentClassName' => 'bundle-actions btn btn-danger btn-sm mt-20 mt-md-0',
                         'deleteContentItem' => $bundle,
+                        'deleteContentItemType' => "bundle",
                     ])
                 @endif
             </div>

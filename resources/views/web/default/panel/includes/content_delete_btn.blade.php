@@ -9,7 +9,7 @@
            class="delete-action {{ !empty($deleteContentClassName) ? $deleteContentClassName : '' }}"
         >{{ trans('public.delete') }}</a>
     @else
-        <a href="{{ $deleteContentUrl }}" data-item="{{ $deleteContentItem->id }}" data-item-type="{{ $deleteContentItem->getMorphClass() }}"
+        <a href="{{ $deleteContentUrl }}" data-item="{{ $deleteContentItem->id }}" data-item-type="{{ $deleteContentItemType }}"
            class="js-content-delete-action {{ !empty($deleteContentClassName) ? $deleteContentClassName : '' }}"
         >{{ trans('public.delete') }}</a>
     @endif

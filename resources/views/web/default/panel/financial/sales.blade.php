@@ -183,6 +183,7 @@
                                                 <span class="text-danger">{{ trans('update.deleted_user') }}</span>
                                             @endif
                                         </td>
+                                        {{-- Content --}}
                                         <td class="align-middle">
                                             <div class="text-left">
                                                 @php
@@ -219,6 +220,8 @@
                                                 @endif
                                             </div>
                                         </td>
+
+                                        {{-- Price --}}
                                         <td class="align-middle">
                                             @if($sale->payment_method == \App\Models\Sale::$subscribe)
                                                 <span class="">{{ trans('financial.subscribe') }}</span>
@@ -226,7 +229,11 @@
                                                 <span>{{ !empty($sale->amount) ? handlePrice($sale->amount) : '-' }}</span>
                                             @endif
                                         </td>
+
+                                        {{-- Discount --}}
                                         <td class="align-middle">{{ !empty($sale->discount) ? handlePrice($sale->discount) : '-' }}</td>
+
+                                        {{-- Total amount --}}
                                         <td class="align-middle">
                                             @if($sale->payment_method == \App\Models\Sale::$subscribe)
                                                 <span class="">{{ trans('financial.subscribe') }}</span>
@@ -234,9 +241,13 @@
                                                 <span>{{ !empty($sale->total_amount) ? handlePrice($sale->total_amount) : '-' }}</span>
                                             @endif
                                         </td>
+
+                                        {{-- Income --}}
                                         <td class="align-middle">
                                             <span>{{ !empty($sale->getIncomeItem()) ? handlePrice($sale->getIncomeItem()) : '-' }}</span>
                                         </td>
+
+                                        {{-- Type --}}
                                         <td class="align-middle">
                                             @switch($sale->type)
                                                 @case(\App\Models\Sale::$webinar)

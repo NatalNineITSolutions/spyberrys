@@ -38,6 +38,24 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6 col-lg-6">
 
+                                        @if(!empty(getGeneralSettings('content_translate')))
+                                            <div class="form-group">
+                                                <label class="input-label">{{ trans('auth.language') }}</label>
+                                                <select name="locale" class="form-control {{ !empty($role) ? 'js-edit-content-locale' : '' }}">
+                                                    @foreach($userLanguages as $lang => $language)
+                                                        <option value="{{ $lang }}" @if($locale == mb_strtolower($lang)) selected @endif>{{ $language }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('locale')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        @else
+                                            <input type="hidden" name="locale" value="{{ getDefaultLocale() }}">
+                                        @endif
+
                                         @if(empty($role))
                                             <div class="form-group @error('name') is-invalid @enderror">
                                                 <label>{{ trans('admin/main.name') }}</label>
@@ -57,8 +75,7 @@
 
                                         <div class="form-group @error('caption') is-invalid @enderror">
                                             <label>{{ trans('admin/main.caption') }}</label>
-                                            <input type="text" name="caption" class="form-control" value="{{ !empty($role) ? $role->caption : old('caption') }}"
-                                                   placeholder="{{ trans('admin/main.create_field_name_placeholder') }}"/>
+                                            <input type="text" name="caption" value="{{ (!empty($role) and !empty($role->translate($locale))) ? $role->translate($locale)->caption : '' }}" class="js-ajax-caption form-control " placeholder="{{ trans('admin/main.create_field_name_placeholder') }}" />
 
                                             @error('caption')
                                             <div class="invalid-feedback">
@@ -82,44 +99,44 @@
                                 </div>
 
 
-                                    <div class="form-group" id="sections">
+                                <div class="form-group" id="sections">
 
-                                        <h2 class="section-title">{{ trans('admin/main.permission') }}</h2>
-                                        <p class="section-lead">
-                                            {{ trans('admin/main.permission_description') }}
-                                        </p>
+                                    <h2 class="section-title">{{ trans('admin/main.permission') }}</h2>
+                                    <p class="section-lead">
+                                        {{ trans('admin/main.permission_description') }}
+                                    </p>
 
-                                        <div class="row">
-                                            @foreach($sections as $section)
-                                                <div class="section-card is_{{ $section->type }} col-12 col-md-6 col-lg-4 {{ (!empty($role) and $role->is_admin and $section->type == 'panel') ? 'd-none' : '' }} {{ (!empty($role) and !$role->is_admin and $section->type == 'admin') ? 'd-none' : '' }} {{ (empty($role) and $section->type == 'admin') ? 'd-none' : '' }}">
-                                                    <div class="card card-primary section-box">
-                                                        <div class="card-header">
-                                                            <input type="checkbox" name="permissions[]" id="permissions_{{ $section->id }}" value="{{ $section->id }}"
-                                                                   {{isset($permissions[$section->id]) ? 'checked' : ''}} class="form-check-input mt-0 section-parent">
-                                                            <label class="form-check-label font-16 font-weight-bold cursor-pointer" for="permissions_{{ $section->id }}">
-                                                                {{ $section->caption }}
-                                                            </label>
-                                                        </div>
-
-                                                        @if(!empty($section->children))
-                                                            <div class="card-body">
-
-                                                                @foreach($section->children as $key => $child)
-                                                                    <div class="form-check mt-1">
-                                                                        <input type="checkbox" name="permissions[]" id="permissions_{{ $child->id }}" value="{{ $child->id }}"
-                                                                               {{ isset($permissions[$child->id]) ? 'checked' : '' }} class="form-check-input section-child">
-                                                                        <label class="form-check-label cursor-pointer mt-0" for="permissions_{{ $child->id }}">
-                                                                            {{ $child->caption }}
-                                                                        </label>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        @endif
+                                    <div class="row">
+                                        @foreach($sections as $section)
+                                            <div class="section-card is_{{ $section->type }} col-12 col-md-6 col-lg-4 {{ (!empty($role) and $role->is_admin and $section->type == 'panel') ? 'd-none' : '' }} {{ (!empty($role) and !$role->is_admin and $section->type == 'admin') ? 'd-none' : '' }} {{ (empty($role) and $section->type == 'admin') ? 'd-none' : '' }}">
+                                                <div class="card card-primary section-box">
+                                                    <div class="card-header">
+                                                        <input type="checkbox" name="permissions[]" id="permissions_{{ $section->id }}" value="{{ $section->id }}"
+                                                               {{isset($permissions[$section->id]) ? 'checked' : ''}} class="form-check-input mt-0 section-parent">
+                                                        <label class="form-check-label font-16 font-weight-bold cursor-pointer" for="permissions_{{ $section->id }}">
+                                                            {{ $section->caption }}
+                                                        </label>
                                                     </div>
+
+                                                    @if(!empty($section->children))
+                                                        <div class="card-body">
+
+                                                            @foreach($section->children as $key => $child)
+                                                                <div class="form-check mt-1">
+                                                                    <input type="checkbox" name="permissions[]" id="permissions_{{ $child->id }}" value="{{ $child->id }}"
+                                                                           {{ isset($permissions[$child->id]) ? 'checked' : '' }} class="form-check-input section-child">
+                                                                    <label class="form-check-label cursor-pointer mt-0" for="permissions_{{ $child->id }}">
+                                                                        {{ $child->caption }}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                            @endforeach
-                                        </div>
+                                            </div>
+                                        @endforeach
                                     </div>
+                                </div>
 
                                 <div class=" mt-4">
                                     <button class="btn btn-primary">{{ trans('admin/main.submit') }}</button>

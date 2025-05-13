@@ -126,7 +126,7 @@
                     </div>
                 @endforeach
 
-                <button type="button" onclick="window.history.back()" class="btn btn-sm btn-primary mt-25">{{ trans('cart.continue_shopping') }}</button>
+                <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary mt-25">{{ trans('cart.continue_shopping') }}</a>
             </div>
         </section>
 

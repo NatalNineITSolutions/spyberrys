@@ -1,6 +1,13 @@
 <?php if(!empty($currencies) and count($currencies)): ?>
     <?php
         $userCurrency = currency();
+        $matchesCurrency = $currencies->first();
+
+        foreach($currencies as $currencyItem) {
+            if($userCurrency == $currencyItem->currency) {
+                $matchesCurrency = $currencyItem;
+            }
+        }
     ?>
 
     <div class="js-currency-select custom-dropdown position-relative">
@@ -12,16 +19,14 @@
                 <input type="hidden" name="previous_url" value="<?php echo e($previousUrl); ?>">
             <?php endif; ?>
 
-            <?php $__currentLoopData = $currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currencyItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($userCurrency == $currencyItem->currency): ?>
-                    <div class="custom-dropdown-toggle d-flex align-items-center cursor-pointer">
-                        <div class="mr-5 text-secondary">
-                            <span class="js-lang-title font-14"><?php echo e($currencyItem->currency); ?> (<?php echo e(currencySign($currencyItem->currency)); ?>)</span>
-                        </div>
-                        <i data-feather="chevron-down" class="icons" width="14px" height="14px"></i>
+            <?php if(!empty($matchesCurrency)): ?>
+                <div class="custom-dropdown-toggle d-flex align-items-center cursor-pointer">
+                    <div class="mr-5 text-secondary">
+                        <span class="js-lang-title font-14"><?php echo e($matchesCurrency->currency); ?> (<?php echo e(currencySign($matchesCurrency->currency)); ?>)</span>
                     </div>
-                <?php endif; ?>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <i data-feather="chevron-down" class="icons" width="14px" height="14px"></i>
+                </div>
+            <?php endif; ?>
         </form>
 
         <div class="custom-dropdown-body py-10">

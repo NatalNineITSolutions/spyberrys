@@ -108,6 +108,7 @@
                                                         'deleteContentUrl' => "/panel/store/products/{$product->id}/delete",
                                                         'deleteContentClassName' => 'webinar-actions d-block mt-10 text-danger',
                                                         'deleteContentItem' => $product,
+                                                        'deleteContentItemType' => "product",
                                                     ])
                                                 @endif
                                             </div>

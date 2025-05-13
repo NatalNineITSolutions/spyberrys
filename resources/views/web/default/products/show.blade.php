@@ -111,7 +111,7 @@
                         <div class="product-show-price-box mt-15">
                             @if(!empty($product->price) and $product->price > 0)
                                 @if($product->getPriceWithActiveDiscountPrice() < $product->price)
-                                    <span class="real">{{ handlePrice($product->getPriceWithActiveDiscountPrice(), true, true, false, null, true, 'store') }}</span>
+                                    <span class="real">{{ ($product->getPriceWithActiveDiscountPrice() > 0) ? handlePrice($product->getPriceWithActiveDiscountPrice(), true, true, false, null, true, 'store') : trans('public.free') }}</span>
                                     <span class="off ml-10">{{ handlePrice($product->price, true, true, false, null, true, 'store') }}</span>
                                 @else
                                     <span class="real">{{ handlePrice($product->price, true, true, false, null, true, 'store') }}</span>
@@ -129,51 +129,53 @@
                             @endif
                         </div>
 
-                        <div class="product-show-cart-actions d-flex align-items-center flex-wrap ">
-                            <div class="cart-quantity d-flex align-items-center mt-20 mr-15">
-                                <input type="hidden" id="productAvailabilityCount" value="{{ $product->getAvailability() }}">
-                                <button type="button" class="minus d-flex align-items-center justify-content-center" {{ ($product->getAvailability() < 1) ? 'disabled' : '' }}>
-                                    <i data-feather="minus" class="" width="20" height="20"></i>
-                                </button>
-
-                                <input type="number" name="quantity" value="1" {{ ($product->getAvailability() < 1) ? 'disabled' : '' }}>
-
-                                <button type="button" class="plus d-flex align-items-center justify-content-center" {{ ($product->getAvailability() < 1) ? 'disabled' : '' }}>
-                                    <i data-feather="plus" class="" width="20" height="20"></i>
-                                </button>
-                            </div>
-
-                            @php
-                                $productAvailability = $product->getAvailability();
-                            @endphp
-
-                            <div class="d-flex flex-column flex-md-row flex-md-wrap align-items-md-center w-100">
-                                <button type="submit" class="btn mt-20 {{ ($productAvailability > 0) ? 'btn-primary' : 'btn-dark' }}" {{ ($productAvailability < 1) ? 'disabled' : '' }}>
-                                    <i data-feather="shopping-cart" class="mr-5" width="20" height="20"></i>
-                                    {{ ($productAvailability > 0) ? trans('public.add_to_cart') : trans('update.out_of_stock') }}
-                                </button>
-
-                                @if($productAvailability > 0 and !empty($product->point) and $product->point > 0)
-                                    <input type="hidden" class="js-product-points" value="{{ $product->point }}">
-
-                                    <a href="{{ !(auth()->check()) ? '/login' : '#!' }}" class="{{ (auth()->check()) ? 'js-buy-with-point' : '' }} js-buy-with-point-show-btn btn btn-outline-warning mt-20 ml-0 ml-md-10" rel="nofollow">
-                                        {!! trans('update.buy_with_n_points',['points' => $product->point]) !!}
-                                    </a>
-                                @endif
-
-                                @if($productAvailability > 0 and !empty(getFeaturesSettings('direct_products_payment_button_status')))
-                                    <button type="button" class="btn btn-outline-danger mt-20 ml-0 ml-md-10 js-product-direct-payment">
-                                        {{ trans('update.buy_now') }}
+                        @if($product->ordering)
+                            <div class="product-show-cart-actions d-flex align-items-center flex-wrap ">
+                                <div class="cart-quantity d-flex align-items-center mt-20 mr-15">
+                                    <input type="hidden" id="productAvailabilityCount" value="{{ $product->getAvailability() }}">
+                                    <button type="button" class="minus d-flex align-items-center justify-content-center" {{ ($product->getAvailability() < 1) ? 'disabled' : '' }}>
+                                        <i data-feather="minus" class="" width="20" height="20"></i>
                                     </button>
-                                @endif
 
-                                @if($productAvailability > 0 and $hasInstallments)
-                                    <a href="/products/{{ $product->slug }}/installments" class="js-installments-btn btn btn-outline-primary mt-20 ml-0 ml-md-10">
-                                        {{ trans('update.installments') }}
-                                    </a>
-                                @endif
+                                    <input type="number" name="quantity" value="1" {{ ($product->getAvailability() < 1) ? 'disabled' : '' }}>
+
+                                    <button type="button" class="plus d-flex align-items-center justify-content-center" {{ ($product->getAvailability() < 1) ? 'disabled' : '' }}>
+                                        <i data-feather="plus" class="" width="20" height="20"></i>
+                                    </button>
+                                </div>
+
+                                @php
+                                    $productAvailability = $product->getAvailability();
+                                @endphp
+
+                                <div class="d-flex flex-column flex-md-row flex-md-wrap align-items-md-center w-100">
+                                    <button type="submit" class="btn mt-20 {{ ($productAvailability > 0) ? 'btn-primary' : 'btn-dark' }}" {{ ($productAvailability < 1) ? 'disabled' : '' }}>
+                                        <i data-feather="shopping-cart" class="mr-5" width="20" height="20"></i>
+                                        {{ ($productAvailability > 0) ? trans('public.add_to_cart') : trans('update.out_of_stock') }}
+                                    </button>
+
+                                    @if($productAvailability > 0 and !empty($product->point) and $product->point > 0)
+                                        <input type="hidden" class="js-product-points" value="{{ $product->point }}">
+
+                                        <a href="{{ !(auth()->check()) ? '/login' : '#!' }}" class="{{ (auth()->check()) ? 'js-buy-with-point' : '' }} js-buy-with-point-show-btn btn btn-outline-warning mt-20 ml-0 ml-md-10" rel="nofollow">
+                                            {!! trans('update.buy_with_n_points',['points' => $product->point]) !!}
+                                        </a>
+                                    @endif
+
+                                    @if($productAvailability > 0 and !empty(getFeaturesSettings('direct_products_payment_button_status')))
+                                        <button type="button" class="btn btn-outline-danger mt-20 ml-0 ml-md-10 js-product-direct-payment">
+                                            {{ trans('update.buy_now') }}
+                                        </button>
+                                    @endif
+
+                                    @if($productAvailability > 0 and $hasInstallments)
+                                        <a href="/products/{{ $product->slug }}/installments" class="js-installments-btn btn btn-outline-primary mt-20 ml-0 ml-md-10">
+                                            {{ trans('update.installments') }}
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="d-flex flex-column flex-md-row align-items-md-center w-100 mt-35">
                             @if($product->isPhysical() and !empty($product->delivery_estimated_time))

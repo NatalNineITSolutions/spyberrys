@@ -45,12 +45,12 @@
                                                                 <address>
                                                                     <strong>{{ trans('admin/main.buyer') }}:</strong>
                                                                     <br>
-                                                                    {{ $buyer->full_name }}
+                                                                    {{ !empty($buyer) ? $buyer->full_name : trans('update.deleted_user') }}
                                                                 </address>
 
                                                                 <address class="mt-2">
                                                                     <strong>{{ trans('update.buyer_address') }}:</strong><br>
-                                                                    {{ $buyer->getAddress(true) }}
+                                                                    {{ !empty($buyer) ? $buyer->getAddress(true) : '' }}
                                                                 </address>
                                                             </div>
                                                             <div class="col-md-6 text-md-right">

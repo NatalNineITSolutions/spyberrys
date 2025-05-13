@@ -58,24 +58,32 @@
                                             <td class="text-center">
                                                 @switch($result->status)
                                                     @case(\App\Models\QuizzesResult::$passed)
-                                                    <span class="text-success">{{ trans('quiz.passed') }}</span>
-                                                    @break
+                                                        <span class="text-success">{{ trans('quiz.passed') }}</span>
+                                                        @break
 
                                                     @case(\App\Models\QuizzesResult::$failed)
 
-                                                    <span class="text-danger">{{ trans('quiz.failed') }}</span>
-                                                    @break
+                                                        <span class="text-danger">{{ trans('quiz.failed') }}</span>
+                                                        @break
 
                                                     @case(\App\Models\QuizzesResult::$waiting)
-                                                    <span class="text-warning">{{ trans('quiz.waiting') }}</span>
-                                                    @break
+                                                        <span class="text-warning">{{ trans('quiz.waiting') }}</span>
+                                                        @break
 
                                                 @endswitch
                                             </td>
 
                                             <td>
+                                                @if($result->status == 'waiting')
+                                                    @can('admin_quiz_result_review')
+                                                        <a href="{{ getAdminPanelUrl("/quizzes/{$result->quiz_id}/results/{$result->id}/review") }}" target="_blank" class="">
+                                                            <i class="fa fa-eye mr-2" data-toggle="tooltip" data-placement="top" title="{{ trans('public.review') }}"></i>
+                                                        </a>
+                                                    @endcan
+                                                @endif
+
                                                 @can('admin_quizzes_results_delete')
-                                                    @include('admin.includes.delete_button',['url' => getAdminPanelUrl().'/quizzes/result/'. $result->id.'/delete'])
+                                                    @include('admin.includes.delete_button',['url' => getAdminPanelUrl("/quizzes/{$result->quiz_id}/results/{$result->id}/delete")])
                                                 @endcan
                                             </td>
                                         </tr>

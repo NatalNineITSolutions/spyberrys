@@ -22,8 +22,9 @@
                                 <i class="fas fa-percentage"></i>
                             </div>
                         </div>
-                        <input type="number" name="value[tax]" value="{{ (!empty($itemValue) and !empty($itemValue['tax'])) ? $itemValue['tax'] : old('tax') }}" class="form-control text-center" maxlength="3" min="0" max="100"/>
+                        <input type="text" name="value[tax]" value="{{ (!empty($itemValue) and !empty($itemValue['tax'])) ? $itemValue['tax'] : old('tax') }}" class="form-control text-center" oninput="validatePrice(this)"/>
                     </div>
+                    <div class="invalid-feedback d-block"></div>
                 </div>
 
 

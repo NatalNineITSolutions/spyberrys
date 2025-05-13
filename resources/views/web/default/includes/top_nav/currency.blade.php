@@ -1,6 +1,13 @@
 @if(!empty($currencies) and count($currencies))
     @php
         $userCurrency = currency();
+        $matchesCurrency = $currencies->first();
+
+        foreach($currencies as $currencyItem) {
+            if($userCurrency == $currencyItem->currency) {
+                $matchesCurrency = $currencyItem;
+            }
+        }
     @endphp
 
     <div class="js-currency-select custom-dropdown position-relative">
@@ -11,16 +18,14 @@
                 <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
             @endif
 
-            @foreach($currencies as $currencyItem)
-                @if($userCurrency == $currencyItem->currency)
-                    <div class="custom-dropdown-toggle d-flex align-items-center cursor-pointer">
-                        <div class="mr-5 text-secondary">
-                            <span class="js-lang-title font-14">{{ $currencyItem->currency }} ({{ currencySign($currencyItem->currency) }})</span>
-                        </div>
-                        <i data-feather="chevron-down" class="icons" width="14px" height="14px"></i>
+            @if(!empty($matchesCurrency))
+                <div class="custom-dropdown-toggle d-flex align-items-center cursor-pointer">
+                    <div class="mr-5 text-secondary">
+                        <span class="js-lang-title font-14">{{ $matchesCurrency->currency }} ({{ currencySign($matchesCurrency->currency) }})</span>
                     </div>
-                @endif
-            @endforeach
+                    <i data-feather="chevron-down" class="icons" width="14px" height="14px"></i>
+                </div>
+            @endif
         </form>
 
         <div class="custom-dropdown-body py-10">

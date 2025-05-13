@@ -126,6 +126,13 @@
                                         'btnIcon' => 'fa-arrow-up',
                                         'tooltip' => trans('update.confirm')
                                        ])
+
+                                        @include('admin.includes.delete_button',[
+                                            'url' => getAdminPanelUrl().'/users/delete-account-requests/'.$request->id.'/delete',
+                                            'btnIcon' => 'fa-times',
+                                            'tooltip' => trans('public.delete'),
+                                            'btnClass' => 'text-danger',
+                                        ])
                                 @endcan
                             </td>
 

@@ -38,9 +38,9 @@
     @endif
 </head>
 
-<body class="@if($isRtl) rtl @endif">
+<body class="{{ $isRtl ? 'rtl' : '' }}">
 
-<div id="app" class="{{ (!empty($floatingBar) and $floatingBar->position == 'top' and $floatingBar->fixed) ? 'has-fixed-top-floating-bar' : '' }}">
+<div id="app" class="{{ $isRtl ? 'rtl' : '' }} {{ (!empty($floatingBar) and $floatingBar->position == 'top' and $floatingBar->fixed) ? 'has-fixed-top-floating-bar' : '' }}">
     @if(!empty($floatingBar) and $floatingBar->position == 'top')
         @include('web.default.includes.floating_bar')
     @endif
@@ -90,6 +90,7 @@
     var deleteAlertSuccessHint = '{{ trans('public.deleteAlertSuccessHint') }}';
     var forbiddenRequestToastTitleLang = '{{ trans('public.forbidden_request_toast_lang') }}';
     var forbiddenRequestToastMsgLang = '{{ trans('public.forbidden_request_toast_msg_lang') }}';
+    var priceInvalidHintLang = '{{ trans('update.price_invalid_hint') }}';
 </script>
 
 @if(session()->has('toast'))
@@ -130,5 +131,6 @@
 
     {!! !empty(getCustomCssAndJs('js')) ? getCustomCssAndJs('js') : '' !!}
 </script>
+
 </body>
 </html>

@@ -73,42 +73,51 @@
                     <div class="row mt-30">
                         <div class="col-12">
                             <div class="webinar-card webinar-list panel-installment-card d-flex">
-                                <div class="image-box">
-                                    @if(in_array($itemType, ['course', 'bundle']))
-                                        <img src="{{ $orderItem->getImage() }}" class="img-cover" alt="">
-                                    @elseif($itemType == 'product')
-                                        <img src="{{ $orderItem->thumbnail }}" class="img-cover" alt="">
-                                    @elseif($itemType == "subscribe")
-                                        <div class="d-flex align-items-center justify-content-center w-100 h-100">
-                                            <img src="/assets/default/img/icons/installment/subscribe_default.svg" alt="">
-                                        </div>
-                                    @elseif($itemType == "registrationPackage")
-                                        <div class="d-flex align-items-center justify-content-center w-100 h-100">
-                                            <img src="/assets/default/img/icons/installment/reg_package_default.svg" alt="">
-                                        </div>
-                                    @endif
 
-                                    <div class="badges-lists">
-                                        @if($order->isCompleted())
-                                            <span class="badge badge-secondary">{{ trans('update.completed') }}</span>
-                                        @elseif($order->status == "open")
-                                            <span class="badge badge-primary">{{  trans('public.open') }}</span>
-                                        @elseif($order->status == "rejected")
-                                            <span class="badge badge-danger">{{  trans('public.rejected') }}</span>
-                                        @elseif($order->status == "canceled")
-                                            <span class="badge badge-danger">{{  trans('public.canceled') }}</span>
-                                        @elseif($order->status == "pending_verification")
-                                            <span class="badge badge-warning">{{  trans('update.pending_verification') }}</span>
-                                        @elseif($order->status == "refunded")
-                                            <span class="badge badge-secondary">{{  trans('update.refunded') }}</span>
+                                <a href="{{ (in_array($itemType, ['course', 'bundle', 'product'])) ? $orderItem->getUrl() : '#!' }}" target="_blank" class="">
+                                    <div class="image-box">
+                                        @if(in_array($itemType, ['course', 'bundle']))
+                                            <img src="{{ $orderItem->getImage() }}" class="img-cover" alt="">
+                                        @elseif($itemType == 'product')
+                                            <img src="{{ $orderItem->thumbnail }}" class="img-cover" alt="">
+                                        @elseif($itemType == "subscribe")
+                                            <div class="d-flex align-items-center justify-content-center w-100 h-100">
+                                                <img src="/assets/default/img/icons/installment/subscribe_default.svg" alt="">
+                                            </div>
+                                        @elseif($itemType == "registrationPackage")
+                                            <div class="d-flex align-items-center justify-content-center w-100 h-100">
+                                                <img src="/assets/default/img/icons/installment/reg_package_default.svg" alt="">
+                                            </div>
                                         @endif
+
+                                        <div class="badges-lists">
+                                            @if($order->isCompleted())
+                                                <span class="badge badge-secondary">{{ trans('update.completed') }}</span>
+                                            @elseif($order->status == "open")
+                                                <span class="badge badge-primary">{{  trans('public.open') }}</span>
+                                            @elseif($order->status == "rejected")
+                                                <span class="badge badge-danger">{{  trans('public.rejected') }}</span>
+                                            @elseif($order->status == "canceled")
+                                                <span class="badge badge-danger">{{  trans('public.canceled') }}</span>
+                                            @elseif($order->status == "pending_verification")
+                                                <span class="badge badge-warning">{{  trans('update.pending_verification') }}</span>
+                                            @elseif($order->status == "refunded")
+                                                <span class="badge badge-secondary">{{  trans('update.refunded') }}</span>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
 
                                 <div class="webinar-card-body w-100 d-flex flex-column">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-flex align-items-center">
-                                            <h3 class="font-16 text-dark-blue font-weight-bold">{{ $orderItem->title }}</h3>
+                                            @if(in_array($itemType, ['course', 'bundle', 'product']))
+                                                <a href="{{ $orderItem->getUrl() }}" target="_blank" class="">
+                                                    <h3 class="font-16 text-dark-blue font-weight-bold">{{ $orderItem->title }}</h3>
+                                                </a>
+                                            @else
+                                                <h3 class="font-16 text-dark-blue font-weight-bold">{{ $orderItem->title }}</h3>
+                                            @endif
 
                                             @if($order->has_overdue)
                                                 <span class="badge badge-outlined-danger ml-10">{{  trans('update.overdue') }}</span>
@@ -132,6 +141,10 @@
 
                                                     @if($itemType == "course" and ($order->isCompleted() or $order->status == "open"))
                                                         <a href="{{ $orderItem->getLearningPageUrl() }}" target="_blank" class="webinar-actions d-block mt-10">{{ trans('update.learning_page') }}</a>
+                                                    @endif
+
+                                                    @if($itemType == "bundle" and ($order->isCompleted() or $order->status == "open"))
+                                                        <a href="{{ $orderItem->getUrl() }}" target="_blank" class="webinar-actions d-block mt-10">{{ trans('update.bundle_page') }}</a>
                                                     @endif
 
                                                     {{--@if($order->isCompleted() or $order->status == "open")

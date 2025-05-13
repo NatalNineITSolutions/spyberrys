@@ -699,11 +699,11 @@
 
                             <div class="mt-35 d-flex align-items-center">
                                 <?php if(!empty($becomeInstructorSection['button1']) and !empty($becomeInstructorSection['button1']['title']) and !empty($becomeInstructorSection['button1']['link'])): ?>
-                                    <a href="<?php echo e(empty($authUser) ? '/login' : (($authUser->isUser()) ? $becomeInstructorSection['button1']['link'] : '/panel/financial/registration-packages')); ?>" class="btn btn-primary mr-15"><?php echo e($becomeInstructorSection['button1']['title']); ?></a>
+                                    <a href="<?php echo e($becomeInstructorSection['button1']['link']); ?>" class="btn btn-primary mr-15"><?php echo e($becomeInstructorSection['button1']['title']); ?></a>
                                 <?php endif; ?>
 
                                 <?php if(!empty($becomeInstructorSection['button2']) and !empty($becomeInstructorSection['button2']['title']) and !empty($becomeInstructorSection['button2']['link'])): ?>
-                                    <a href="<?php echo e(empty($authUser) ? '/login' : (($authUser->isUser()) ? $becomeInstructorSection['button2']['link'] : '/panel/financial/registration-packages')); ?>" class="btn btn-outline-primary"><?php echo e($becomeInstructorSection['button2']['title']); ?></a>
+                                    <a href="<?php echo e($becomeInstructorSection['button2']['link']); ?>" class="btn btn-outline-primary"><?php echo e($becomeInstructorSection['button2']['title']); ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>

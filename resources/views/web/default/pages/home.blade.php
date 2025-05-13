@@ -696,11 +696,11 @@
 
                             <div class="mt-35 d-flex align-items-center">
                                 @if(!empty($becomeInstructorSection['button1']) and !empty($becomeInstructorSection['button1']['title']) and !empty($becomeInstructorSection['button1']['link']))
-                                    <a href="{{ empty($authUser) ? '/login' : (($authUser->isUser()) ? $becomeInstructorSection['button1']['link'] : '/panel/financial/registration-packages') }}" class="btn btn-primary mr-15">{{ $becomeInstructorSection['button1']['title'] }}</a>
+                                    <a href="{{ $becomeInstructorSection['button1']['link'] }}" class="btn btn-primary mr-15">{{ $becomeInstructorSection['button1']['title'] }}</a>
                                 @endif
 
                                 @if(!empty($becomeInstructorSection['button2']) and !empty($becomeInstructorSection['button2']['title']) and !empty($becomeInstructorSection['button2']['link']))
-                                    <a href="{{ empty($authUser) ? '/login' : (($authUser->isUser()) ? $becomeInstructorSection['button2']['link'] : '/panel/financial/registration-packages') }}" class="btn btn-outline-primary">{{ $becomeInstructorSection['button2']['title'] }}</a>
+                                    <a href="{{ $becomeInstructorSection['button2']['link'] }}" class="btn btn-outline-primary">{{ $becomeInstructorSection['button2']['title'] }}</a>
                                 @endif
                             </div>
                         </div>

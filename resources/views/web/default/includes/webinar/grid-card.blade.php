@@ -76,7 +76,7 @@
                     <span class="text-warning real font-14">{{ $webinar->points }} {{ trans('update.points') }}</span>
                 @elseif(!empty($webinar->price) and $webinar->price > 0)
                     @if($webinar->bestTicket() < $webinar->price)
-                        <span class="real">{{ handlePrice($webinar->bestTicket(), true, true, false, null, true) }}</span>
+                        <span class="real">{{ ($webinar->bestTicket() > 0) ? handlePrice($webinar->bestTicket(), true, true, false, null, true) : trans('public.free') }}</span>
                         <span class="off ml-10">{{ handlePrice($webinar->price, true, true, false, null, true) }}</span>
                     @else
                         <span class="real">{{ handlePrice($webinar->price, true, true, false, null, true) }}</span>

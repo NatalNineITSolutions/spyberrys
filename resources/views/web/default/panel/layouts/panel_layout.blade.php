@@ -93,6 +93,7 @@
     var generatedContentLang = '{{ trans('update.generated_content') }}';
     var copyLang = '{{ trans('public.copy') }}';
     var doneLang = '{{ trans('public.done') }}';
+    var priceInvalidHintLang = '{{ trans('update.price_invalid_hint') }}';
 </script>
 
 @if(session()->has('toast'))

@@ -140,6 +140,7 @@
     var generatedContentLang = '<?php echo e(trans('update.generated_content')); ?>';
     var copyLang = '<?php echo e(trans('public.copy')); ?>';
     var doneLang = '<?php echo e(trans('public.done')); ?>';
+    var priceInvalidHintLang = '<?php echo e(trans('update.price_invalid_hint')); ?>';
 </script>
 
 <script src="/assets/admin/js/custom.js"></script>

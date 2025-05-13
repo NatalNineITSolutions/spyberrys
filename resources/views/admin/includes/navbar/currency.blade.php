@@ -1,6 +1,13 @@
 @if(!empty($currencies) and count($currencies))
     @php
         $userCurrency = currency();
+        $matchesCurrency = $currencies->first();
+
+        foreach($currencies as $currencyItem) {
+            if($userCurrency == $currencyItem->currency) {
+                $matchesCurrency = $currencyItem;
+            }
+        }
     @endphp
 
     <div class="js-currency-select custom-dropdown position-relative admin-navbar-currency mr-2 mr-md-3">
@@ -11,16 +18,14 @@
                 <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
             @endif
 
-            @foreach($currencies as $currencyItem)
-                @if($userCurrency == $currencyItem->currency)
-                    <div class="custom-dropdown-toggle d-flex align-items-center cursor-pointer w-100">
-                        <div class="mr-1 text-black">
-                            <span class="js-lang-title font-14">{{ $currencyItem->currency }} ({{ currencySign($currencyItem->currency) }})</span>
-                        </div>
-                        <i class="fa fa-chevron-down"></i>
+            @if(!empty($matchesCurrency))
+                <div class="custom-dropdown-toggle d-flex align-items-center cursor-pointer w-100">
+                    <div class="mr-1 text-black">
+                        <span class="js-lang-title font-14">{{ $matchesCurrency->currency }} ({{ currencySign($matchesCurrency->currency) }})</span>
                     </div>
-                @endif
-            @endforeach
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+            @endif
         </form>
 
         <div class="custom-dropdown-body py-2">

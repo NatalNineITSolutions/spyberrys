@@ -77,7 +77,7 @@
                 @if(!empty($webinar->price) and $webinar->price > 0)
                     @if($webinar->bestTicket() < $webinar->price)
                         <span class="off">{{ handlePrice($webinar->price, true, true, false, null, true) }}</span>
-                        <span class="real">{{ handlePrice($webinar->bestTicket(), true, true, false, null, true) }}</span>
+                        <span class="real">{{ ($webinar->bestTicket() > 0) ? handlePrice($webinar->bestTicket(), true, true, false, null, true) : trans('public.free') }}</span>
                     @else
                         <span class="real">{{ handlePrice($webinar->price, true, true, false, null, true) }}</span>
                     @endif

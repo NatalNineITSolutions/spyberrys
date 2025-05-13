@@ -110,6 +110,7 @@
                                                             'deleteContentUrl' => "/panel/bundles/{$bundle->id}/delete",
                                                             'deleteContentClassName' => 'webinar-actions d-block mt-10 text-danger',
                                                             'deleteContentItem' => $bundle,
+                                                            'deleteContentItemType' => "bundle",
                                                         ])
                                                     @endcan
                                                 @endif

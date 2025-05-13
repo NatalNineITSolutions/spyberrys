@@ -35,7 +35,10 @@
                         <div class="form-group mt-3">
                             <label class="input-label">{{ trans('panel.webinar') }}</label>
                             <select name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][webinar_id]" class="js-ajax-webinar_id custom-select">
-                            <option>Paid plugin</option>
+                                <option {{ !empty($quiz) ? 'disabled' : 'selected disabled' }} value="">{{ trans('panel.choose_webinar') }}</option>
+                                @foreach($webinars as $webinar)
+                                    <option value="{{ $webinar->id }}" {{  (!empty($quiz) and $quiz->webinar_id == $webinar->id) ? 'selected' : '' }}>{{ $webinar->title }}</option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -135,7 +138,7 @@
                 <div class="form-group mt-4 d-flex align-items-center justify-content-between">
                     <label class="cursor-pointer" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.active_quiz') }}</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][status]" class="custom-control-input" id="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ !empty($quiz) && $quiz->status ? 'checked' : ''}}>
+                        <input type="checkbox" name="ajax[{{ !empty($quiz) ? $quiz->id : 'new' }}][status]" class="custom-control-input" id="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ (!empty($quiz) and $quiz->status == \App\Models\Quiz::ACTIVE) ? 'checked' : ''}}>
                         <label class="custom-control-label" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}"></label>
                     </div>
                 </div>
