@@ -91,6 +91,7 @@
     87 => 'MoemenGaballah\\Msegat\\MsegatServiceProvider',
     88 => 'Craftsys\\Msg91\\Msg91LaravelServiceProvider',
     89 => 'Kreait\\Laravel\\Firebase\\ServiceProvider',
+    90 => 'Paytabscom\\Laravel_paytabs\\PaypageServiceProvider',
   ),
   'eager' => 
   array (
@@ -167,6 +168,7 @@
     70 => 'MoemenGaballah\\Msegat\\MsegatServiceProvider',
     71 => 'Craftsys\\Msg91\\Msg91LaravelServiceProvider',
     72 => 'Kreait\\Laravel\\Firebase\\ServiceProvider',
+    73 => 'Paytabscom\\Laravel_paytabs\\PaypageServiceProvider',
   ),
   'deferred' => 
   array (

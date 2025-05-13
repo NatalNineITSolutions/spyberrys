@@ -2625,7 +2625,7 @@ function checkMobileNumber($phoneNumber)
         return true;
     }
 
-    return false;
+    return true;
 }
 
 function canDeleteContentDirectly()

@@ -29,7 +29,7 @@
                 <div class="col-12 col-md-8">
                     <div class="form-group">
                         <label class="input-label">{{ trans('quiz.question_title') }}</label>
-                        <input type="text" name="ajax[title]" class="js-ajax-title form-control" value="{{ !empty($question_edit) ? $question_edit->title : '' }}"/>
+                        <textarea type="text" name="ajax[title]" class="js-ajax-title form-control" rows="1">{{ !empty($question_edit) ? $question_edit->title : '' }}</textarea>
                         <span class="invalid-feedback"></span>
                     </div>
                 </div>

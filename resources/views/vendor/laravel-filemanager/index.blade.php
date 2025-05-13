@@ -14,9 +14,9 @@
 
   <title>{{ trans('laravel-filemanager::lfm.title-page') }}</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('vendor/laravel-filemanager/img/72px color.png') }}">
-  <link rel="stylesheet" href="/assets/admin/vendor/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="/assets/vendors/fontawesome/css/all.min.css">
-  <link rel="stylesheet" href="/assets/default/vendors/jquery-ui/jquery-ui.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.css">
   <link rel="stylesheet" href="{{ asset('vendor/laravel-filemanager/css/cropper.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/laravel-filemanager/css/dropzone.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/laravel-filemanager/css/mime-icons.min.css') }}">
@@ -141,6 +141,17 @@
         <div class="modal-body"></div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">{{ trans('laravel-filemanager::lfm.btn-close') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">{{ trans('laravel-filemanager::lfm.btn-close') }}</button>
           <button type="button" class="btn btn-primary w-100" data-dismiss="modal">{{ trans('laravel-filemanager::lfm.btn-confirm') }}</button>
         </div>
       </div>
@@ -188,10 +199,10 @@
     </a>
   </div>
 
-  <script src="/assets/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
-  <script src="/assets/admin/vendor/poper/popper.min.js"></script>
-  <script src="/assets/admin/vendor/bootstrap/bootstrap.min.js"></script>
-  <script src="/assets/default/vendors/jquery-ui/jquery-ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.js"></script>
   <script src="{{ asset('vendor/laravel-filemanager/js/cropper.min.js') }}"></script>
   <script src="{{ asset('vendor/laravel-filemanager/js/dropzone.min.js') }}"></script>
   <script>
@@ -203,12 +214,6 @@
       //   label: 'Confirm',
       //   multiple: true
       // },
-      {
-        name: 'rename',
-        icon: 'edit',
-        label: lang['menu-rename'],
-        multiple: false
-      },
       {
         name: 'download',
         icon: 'download',

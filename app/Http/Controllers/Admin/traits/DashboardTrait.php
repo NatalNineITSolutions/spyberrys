@@ -200,8 +200,13 @@ trait DashboardTrait
     {
         $this->authorize('admin_general_dashboard_new_tickets');
 
+        $time = time();
+        $beginOfDay = strtotime("today", $time);
+        $endOfDay = strtotime("tomorrow", $beginOfDay) - 1;
+
         return Support::whereNotNull('department_id')
-            ->where('status', 'replied')
+            ->whereIn('status', ['replied', 'open'])
+            ->whereBetween('updated_at', [$beginOfDay, $endOfDay])
             ->count();
     }
 

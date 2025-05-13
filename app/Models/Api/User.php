@@ -28,19 +28,24 @@ class User extends Model implements JWTSubject
 
     public function getBriefAttribute()
     {
+        $rate = $this->rates();
+
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
             'role_name' => $this->role_name,
             'bio' => $this->bio,
+            'email' => $this->email,
+            'mobile' => $this->mobile,
             'offline' => $this->offline,
             'offline_message' => $this->offline_message,
             'verified' => $this->verified,
-            'rate' => $this->rates(),
+            'rate' => ($rate > 0) ? (float)$rate : 0,
             'avatar' => url($this->getAvatar()),
             'meeting_status' => $this->meeting_status,
             'user_group' => $this->userGroup->brief ?? null,
             'address' => $this->address,
+            'status' => $this->status,
         ];
     }
 
@@ -63,8 +68,7 @@ class User extends Model implements JWTSubject
 
             'courses_count' => $this->webinars->count(),
             'reviews_count' => $this->reviewsCount(),
-            'appointments_count' => $this->appointments()->count()
-            ,
+            'appointments_count' => $this->appointments()->count(),
             'students_count' => $this->students->count(),
             'followers_count' => $this->followers()->count(),
             'following_count' => $this->following()->count(),
@@ -127,7 +131,7 @@ class User extends Model implements JWTSubject
 
         ];
 
-        return array_merge($this->brief, $details, $this->financial);;
+        return array_merge($this->brief, $details, $this->financial);
     }
 
 
@@ -215,12 +219,8 @@ class User extends Model implements JWTSubject
 
     public function getStudentsAttribute()
     {
-
-        return Sale::whereNull('refund_at')
-            ->where('seller_id', $this->id)
-            ->whereNotNull('webinar_id')
-            ->groupBy('buyer_id')->get()->map(function ($sale) {
-                return $sale->buyer->brief;
+        return $this->getOrganizationStudents()->get()->map(function ($user) {
+                return $user->brief;
             });
 
         //   ->pluck('buyer_id')

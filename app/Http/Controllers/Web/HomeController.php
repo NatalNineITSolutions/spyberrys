@@ -20,7 +20,6 @@ use App\Models\TrendCategory;
 use App\Models\UpcomingCourse;
 use App\Models\Webinar;
 use App\Models\Testimonial;
-use App\Models\Category;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -350,16 +349,6 @@ class HomeController extends Controller
             }
         }
 
-        $categories = Category::with('translations')->get();
-
-        $categoryData = $categories->map(function ($category) {
-            return [
-                'slug' => $category->slug,
-                'iconUrl' => $category->icon,
-                'title' => $category->title,
-            ];
-        })->toArray();
-
         $data = [
             'pageTitle' => $pageTitle,
             'pageDescription' => $pageDescription,
@@ -393,7 +382,7 @@ class HomeController extends Controller
             'forumSection' => $forumSection ?? null,
         ];
 
-        return view(getTemplate() . '.pages.home', $data, compact('categoryData'));
+        return view(getTemplate() . '.pages.home', $data);
     }
 
     private function getHomeDefaultStatistics()

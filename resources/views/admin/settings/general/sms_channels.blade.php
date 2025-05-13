@@ -61,7 +61,7 @@
                 <div class="mb-5">
                     <h5>{{ trans('update.msg91_settings') }}</h5>
 
-                    @foreach(['msg91_key']  as $msg91Conf)
+                    @foreach(['msg91_key', "msg91_flow_id"]  as $msg91Conf)
                         <div class="form-group">
                             <label>{{ trans("update.{$msg91Conf}") }}</label>
                             <input type="text" name="value[{{ $msg91Conf }}]" value="{{ (!empty($itemValue) and !empty($itemValue["{$msg91Conf}"])) ? $itemValue["{$msg91Conf}"] : old("{$msg91Conf}") }}" class="form-control "/>

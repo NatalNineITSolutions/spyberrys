@@ -28,7 +28,7 @@ class Channel extends BasePaymentChannel implements IChannel
     public function __construct(PaymentChannel $paymentChannel)
     {
         $this->order_session_key = 'xendit.payments.order_id';
-        $this->currency = currency();
+        $this->currency = currency(); // 'IDR'
         $this->setCredentialItems($paymentChannel);
     }
 
@@ -61,7 +61,7 @@ class Channel extends BasePaymentChannel implements IChannel
 
             $createInvoiceRequest = new CreateInvoiceRequest([
                 'amount' => $price,
-                'currency' => 'IDR',//$this->currency,
+                'currency' => $this->currency,
                 'external_id' => "order_{$order->id}",
                 'description' => $generalSettings['site_name'] . ' payment',
                 'payer_email' => $user->email,
@@ -77,7 +77,7 @@ class Channel extends BasePaymentChannel implements IChannel
 
             return $result['invoice_url'];
         } catch (\Throwable $e) {
-            //dd($e->getMessage());
+            dd($e->getMessage());
         }
 
         $toastData = [

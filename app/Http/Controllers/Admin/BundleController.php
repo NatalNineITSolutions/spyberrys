@@ -355,19 +355,8 @@ class BundleController extends Controller
 
         $tags = $bundle->tags->pluck('title')->toArray();
 
-        $userIds = [$bundle->creator_id, $bundle->teacher_id];
-        $userWebinars = Webinar::select('id', 'creator_id', 'teacher_id')
-            ->where('status', Webinar::$active)
-            ->where('private', false)
-            ->where(function ($query) use ($userIds) {
-                $query->whereIn('creator_id', $userIds)
-                    ->orWhereIn('teacher_id', $userIds);
-            })
-            ->get();
-
         $data = [
             'pageTitle' => trans('admin/main.edit') . ' | ' . $bundle->title,
-            'userWebinars' => $userWebinars,
             'categories' => $categories,
             'bundle' => $bundle,
             'bundleCategoryFilters' => !empty($bundle->category) ? $bundle->category->filters : null,

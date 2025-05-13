@@ -7,6 +7,21 @@
 <div class="row">
     <div class="col-12 col-md-6 mt-15">
 
+        @if(!empty(getCertificateMainSettings("status")))
+            <div class="form-group mt-30">
+                <div class="d-flex align-items-center justify-content-between">
+                    <label class="cursor-pointer input-label" for="certificateSwitch">{{ trans('update.bundle_completion_certificate') }}</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="certificate" class="custom-control-input" id="certificateSwitch" {{ ((!empty($bundle) && $bundle->certificate) or old('certificate') == 'on') ? 'checked' :  '' }}>
+                        <label class="custom-control-label" for="certificateSwitch"></label>
+                    </div>
+                </div>
+
+                <p class="mt-10 font-12 text-gray">- {{ trans('update.bundle_completion_certificate_hint') }}</p>
+            </div>
+        @endif
+
+
         <div class="form-group mt-15">
             <label class="input-label d-block">{{ trans('public.tags') }}</label>
             <input type="text" name="tags" data-max-tag="5" value="{{ !empty($bundle) ? implode(',',$bundleTags) : '' }}" class="form-control inputtags" placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('forms.max') }} : 5)"/>

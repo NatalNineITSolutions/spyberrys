@@ -343,7 +343,7 @@ class WebinarController extends Controller
             'category_id' => 'required',
             'duration' => 'required|numeric',
             'start_date' => 'required_if:type,webinar',
-            'capacity' => 'required_if:type,webinar|numeric|min:0',
+            'capacity' => 'nullable|numeric|min:0',
             'price' => 'nullable|numeric|min:0',
         ]);
 
@@ -586,7 +586,7 @@ class WebinarController extends Controller
         if ($webinar->isWebinar()) {
             $rules['start_date'] = 'required|date';
             $rules['duration'] = 'required';
-            $rules['capacity'] = 'numeric|min:0';
+            $rules['capacity'] = 'nullable|numeric|min:0';
         }
 
         $this->validate($request, $rules);

@@ -65,6 +65,8 @@ class BundleWebinarsController extends Controller
                 ->first();
 
             if (!empty($bundleWebinar)) {
+                $bundleWebinar->webinar_title = $bundleWebinar->webinar->title;
+
                 return response()->json([
                     'bundleWebinar' => $bundleWebinar
                 ], 200);

@@ -67,7 +67,8 @@ class RegisterController extends Controller
 
         $referralCode = Cookie::get('referral_code');
 
-        $formFields = $this->getFormFieldsByUserType($request, 'user', true);
+        $accountType = !empty($request->old('account_type')) ? $request->old('account_type') : "user";
+        $formFields = $this->getFormFieldsByUserType($request, $accountType, true);
 
         $data = [
             'pageTitle' => $pageTitle,

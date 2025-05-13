@@ -103,7 +103,9 @@
                                             </div>
                                         @endif
                                     @else
-                                        <span class="badge badge-secondary">{{ trans('update.bundle') }}</span>
+                                        <div class="badges-lists">
+                                            <span class="badge badge-secondary">{{ trans('update.bundle') }}</span>
+                                        </div>
                                     @endif
                                 </div>
 

@@ -12,7 +12,6 @@ use App\Models\Webinar;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -21,57 +20,58 @@ class DashboardController extends Controller
     public function index()
     {
         $this->authorize('admin_general_dashboard_show');
+        $user = auth()->user();
 
-        if (Gate::allows('admin_general_dashboard_daily_sales_statistics')) {
+        if ($user->can('admin_general_dashboard_daily_sales_statistics')) {
             $dailySalesTypeStatistics = $this->dailySalesTypeStatistics();
         }
 
-        if (Gate::allows('admin_general_dashboard_income_statistics')) {
+        if ($user->can('admin_general_dashboard_income_statistics')) {
             $getIncomeStatistics = $this->getIncomeStatistics();
         }
 
-        if (Gate::allows('admin_general_dashboard_total_sales_statistics')) {
+        if ($user->can('admin_general_dashboard_total_sales_statistics')) {
             $getTotalSalesStatistics = $this->getTotalSalesStatistics();
         }
 
-        if (Gate::allows('admin_general_dashboard_new_sales')) {
+        if ($user->can('admin_general_dashboard_new_sales')) {
             $getNewSalesCount = $this->getNewSalesCount();
         }
 
-        if (Gate::allows('admin_general_dashboard_new_comments')) {
+        if ($user->can('admin_general_dashboard_new_comments')) {
             $getNewCommentsCount = $this->getNewCommentsCount();
         }
 
-        if (Gate::allows('admin_general_dashboard_new_tickets')) {
+        if ($user->can('admin_general_dashboard_new_tickets')) {
             $getNewTicketsCount = $this->getNewTicketsCount();
         }
 
-        if (Gate::allows('admin_general_dashboard_new_reviews')) {
+        if ($user->can('admin_general_dashboard_new_reviews')) {
             $getPendingReviewCount = $this->getPendingReviewCount();
         }
 
-        if (Gate::allows('admin_general_dashboard_sales_statistics_chart')) {
+        if ($user->can('admin_general_dashboard_sales_statistics_chart')) {
             $getMonthAndYearSalesChart = $this->getMonthAndYearSalesChart('month_of_year');
             $getMonthAndYearSalesChartStatistics = $this->getMonthAndYearSalesChartStatistics();
         }
 
-        if (Gate::allows('admin_general_dashboard_recent_comments')) {
+        if ($user->can('admin_general_dashboard_recent_comments')) {
             $recentComments = $this->getRecentComments();
         }
 
-        if (Gate::allows('admin_general_dashboard_recent_tickets')) {
+        if ($user->can('admin_general_dashboard_recent_tickets')) {
             $recentTickets = $this->getRecentTickets();
         }
 
-        if (Gate::allows('admin_general_dashboard_recent_webinars')) {
+        if ($user->can('admin_general_dashboard_recent_webinars')) {
             $recentWebinars = $this->getRecentWebinars();
         }
 
-        if (Gate::allows('admin_general_dashboard_recent_courses')) {
+        if ($user->can('admin_general_dashboard_recent_courses')) {
             $recentCourses = $this->getRecentCourses();
         }
 
-        if (Gate::allows('admin_general_dashboard_users_statistics_chart')) {
+        if ($user->can('admin_general_dashboard_users_statistics_chart')) {
             $usersStatisticsChart = $this->usersStatisticsChart();
         }
 

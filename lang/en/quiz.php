@@ -42,7 +42,7 @@ return [
 
     'add_an_answer' => 'Add an answer',
     'answer_title' => 'Answer title',
-    'answer_image' => 'Answer image (Optional)',
+    'answer_image' => 'Answer image',
     'correct_answer' => 'Correct answer',
     'current_answer_required' => 'Please select a correct answer',
     'correct' => 'Correct',

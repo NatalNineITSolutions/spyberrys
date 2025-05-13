@@ -17,7 +17,7 @@ class PanelAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->user()){
+        if (!auth()->user() and !empty(apiAuth())) {
             auth()->setUser(apiAuth());
         }
 

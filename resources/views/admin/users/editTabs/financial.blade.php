@@ -61,16 +61,6 @@
                            placeholder="{{ trans('financial.address') }}"/>
                 </div>
 
-                @if(!$user->isUser())
-                    <div class="form-group">
-                        <label>{{ trans('admin/main.user_commission') }} (%)</label>
-                        <input type="text" name="commission"
-                               class="form-control "
-                               value="{{ !empty($user) ? $user->commission : old('commission') }}"
-                               placeholder="{{ trans('admin/main.user_commission_placeholder') }}"/>
-                    </div>
-                @endif
-
                 <div class="form-group mb-0 d-flex align-items-center">
                     <div class="custom-control custom-switch d-block">
                         <input type="checkbox" name="financial_approval" class="custom-control-input" id="verifySwitch" {{ (($user->financial_approval) or (old('financial_approval') == 'on')) ? 'checked' : '' }}>
@@ -118,6 +108,58 @@
                            value="{{ !empty($user) ? $user->registration_bonus_amount : old('registration_bonus_amount') }}"
                            placeholder="{{ trans('update.user_registration_bonus_amount_placeholder') }}"/>
                 </div>
+
+
+                @if(!$user->isUser())
+                    @php
+                        $commissions = $user->commissions;
+                    @endphp
+
+                    <h5 class="mb-2 font-16 text-dark">{{ trans('update.commissions') }}</h5>
+
+                    @foreach(\App\Models\UserCommission::$sources as $commissionSource)
+                        @php
+                            $commission = $commissions->where('source', $commissionSource)->first();
+                            $commissionValue = null;
+
+                            if (!empty($commission)) {
+                                $commissionValue = $commission->value;
+
+                                if ($commission->type == "fixed_amount") {
+                                    $commissionValue = convertPriceToUserCurrency($commissionValue);
+                                }
+                            }
+                        @endphp
+
+                        <div class="form-group">
+                            <label class="mb-0">{{ trans("update.{$commissionSource}_commission") }}</label>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="">{{ trans("admin/main.type") }}</label>
+                                    <select name="commissions[{{ $commissionSource }}][type]" class="js-commission-type-input form-control" data-currency="{{ $currency }}">
+                                        <option value="percent" {{ (!empty($commission) and $commission->type == "percent") ? 'selected' : '' }}>{{ trans('update.percent') }}</option>
+                                        <option value="fixed_amount" {{ (!empty($commission) and $commission->type == "fixed_amount") ? 'selected' : '' }}>{{ trans('update.fixed_amount') }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="">
+                                        <label class="">
+                                            {{ trans("update.value") }}
+
+                                            <span class="ml-1 js-commission-value-span">({{ !empty($commission) ? (($commission->type == "percent") ? '%' : $currency) : '%' }})</span>
+                                        </label>
+
+                                        <input type="number" name="commissions[{{ $commissionSource }}][value]" value="{{ (!empty($commissionValue)) ? $commissionValue : '' }}" class="js-commission-value-input form-control text-center" {{ (!empty($commission) and $commission->type == "percent") ? 'maxlength="3" min="0" max="100"' : '' }}/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-muted text-small mt-1">{{ trans("update.{$commissionSource}_commission_hint") }}</div>
+                        </div>
+                    @endforeach
+                @endif
 
                 <div class=" mt-4">
                     <button class="btn btn-primary">{{ trans('admin/main.submit') }}</button>

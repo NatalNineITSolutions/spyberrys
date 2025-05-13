@@ -50,6 +50,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link @if(request()->get('tab') == "user_banks") active @endif" id="user_banks-tab" href="{{ getAdminPanelUrl("/settings/financial?tab=user_banks") }}">{{ trans('update.user_banks') }}</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link @if(request()->get('tab') == "commissions") active @endif" id="commissions-tab" href="{{ getAdminPanelUrl("/settings/financial?tab=commissions") }}">{{ trans('update.commissions') }}</a>
+                                </li>
                             </ul>
 
                             <div class="tab-content" id="myTabContent2">
@@ -71,6 +75,10 @@
 
                                 @if(request()->get('tab') == "user_banks")
                                     @include('admin.settings.financial.user_banks.index',['itemValue' => (!empty($settings) and !empty($settings['user_banks'])) ? $settings['user_banks']->value : ''])
+                                @endif
+
+                                @if(request()->get('tab') == "commissions")
+                                    @include('admin.settings.financial.commission',['itemValue' => (!empty($settings) and !empty($settings[\App\Models\Setting::$commissionSettingsName])) ? $settings[\App\Models\Setting::$commissionSettingsName]->value : ''])
                                 @endif
                             </div>
 

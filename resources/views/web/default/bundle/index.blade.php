@@ -134,7 +134,7 @@
                                     <div class="form-check mt-20">
                                         <input class="form-check-input" @if(!$ticket->isValid()) disabled @endif type="radio"
                                                data-discount="{{ $ticket->discount }}"
-                                               data-currency
+                                               data-discount-price="{{ handleCoursePagePrice($ticket->getPriceWithDiscount($bundle->price, !empty($activeSpecialOffer) ? $activeSpecialOffer : null))['price'] }}"
                                                value="{{ ($ticket->isValid()) ? $ticket->id : '' }}"
                                                name="ticket_id"
                                                id="courseOff{{ $ticket->id }}">
@@ -154,6 +154,7 @@
                                         @php
                                             $realPrice = handleCoursePagePrice($bundle->price);
                                         @endphp
+
                                         <span id="realPrice" data-value="{{ $bundle->price }}"
                                               data-special-offer="{{ !empty($activeSpecialOffer) ? $activeSpecialOffer->percent : ''}}"
                                               class="d-block @if(!empty($activeSpecialOffer)) font-16 text-gray text-decoration-line-through @else font-30 text-primary @endif">
@@ -161,7 +162,7 @@
                                         </span>
 
                                         @if(!empty($realPrice['tax']) and empty($activeSpecialOffer))
-                                            <span class="d-block font-14 text-gray">+ {{ $realPrice['tax'] }} tax</span>
+                                            <span class="d-block font-14 text-gray">+ {{ $realPrice['tax'] }} {{ trans('cart.tax') }}</span>
                                         @endif
                                     </div>
 

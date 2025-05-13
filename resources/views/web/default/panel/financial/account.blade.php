@@ -133,7 +133,7 @@
                 @endif
             </div>
 
-            @if(!empty($invalidChannels))
+            @if(!empty($invalidChannels) and empty(getFinancialSettings("hide_disabled_payment_gateways")))
                 <div class="d-flex align-items-center rounded-lg border p-15">
                     <div class="size-40 d-flex-center rounded-circle bg-gray200">
                         <i data-feather="gift" class="text-gray" width="20" height="20"></i>

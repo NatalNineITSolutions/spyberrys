@@ -50,6 +50,9 @@ class Webinar extends Model
         $user = apiAuth();
         $hasBought = $this->checkUserHasBought($user);
         //  $sale = Sale::where('buyer_id', $user->id)->where('webinar_id', $this->id)->first();
+
+        $rate = $this->getRate();
+
         return [
             'image' => url($this->getImage()),
             'auth' => ($user) ? true : false,
@@ -69,7 +72,7 @@ class Webinar extends Model
             //   'expire_on' => ($sale and $this->getExpiredAccessDays($sale->created_at) ) ? $this->getExpiredAccessDays($sale->created_at) : null,
             //  'expired' => ($sale and $this->checkHasExpiredAccessDays($sale->created_at)) ?$this->getExpiredAccessDays($sale->created_at)  : false,
             'live_webinar_status' => $this->liveWebinarStatus(),
-            'auth_has_bought' => ($user) ? $hasBought : null,
+            'auth_has_bought' => $hasBought,
             'sales' => [
                 'count' => $this->sales->count(),
                 'amount' => $this->sales->sum('amount'),
@@ -107,7 +110,7 @@ class Webinar extends Model
             'duration' => $this->duration,
             'teacher' => $this->teacher->brief,
             'students_count' => $this->sales->count(),
-            'rate' => $this->getRate(),
+            'rate' => ($rate > 0) ? (float)$rate : 0,
             'rate_type' => [
                 'content_quality' => $this->reviews->count() > 0 ? round($this->reviews->avg('content_quality'), 1) : 0,
                 'instructor_skills' => $this->reviews->count() > 0 ? round($this->reviews->avg('instructor_skills'), 1) : 0,
@@ -263,9 +266,10 @@ class Webinar extends Model
                 }),
             'quizzes_count' => $this->quizzes->count(),
 
-            'certificate' => $this->quizzes->where('certificate', 1)->map(function ($quiz) {
+            'certificate' => $this->quizzes()->where('certificate', 1)->get()->map(function ($quiz) {
                 return $quiz->brief;
             }),
+
             'auth_certificates' => $user ? $user->achievement_certificates($this) : [],
 
             'reviews' => $this->reviews->where('status', 'active')->map(function ($review) {
@@ -292,7 +296,7 @@ class Webinar extends Model
             'can_add_to_cart' => $this->canAddToCart(),
             'can_buy_with_points' => ($this->canSale() and !$this->checkUserHasBought($user) and !empty($this->points) and $this->price > 0),
             'forum' => getFeaturesSettings("course_forum_status") == "1" ? $this->forum : 0,
-            'auth_has_bought' => ($user) ? $hasBought : null,
+            'auth_has_bought' => $hasBought,
             //////********************
         ];
 
@@ -631,19 +635,9 @@ class Webinar extends Model
         /* progressbar status */
         $hasBought = $this->checkUserHasBought($user);
         $progress = null;
+
         if ($hasBought or $this->isWebinar()) {
-
-            if ($this->isWebinar()) {
-
-                if ($hasBought and $this->isProgressing()) {
-                    $progress = $this->getProgress();
-
-                } else {
-                    $progress = ($this->capacity) ?: ($this->sales()->count() . '/' . $this->capacity);
-                }
-            } else {
-                $progress = $this->getProgress();
-            }
+            $progress = $this->getProgress();
         }
 
         return $progress;

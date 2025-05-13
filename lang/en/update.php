@@ -2526,6 +2526,9 @@ return [
 'translator_hint_3_desc' => 'The server internet speed and number of translation lines directly affect on the translation speed. Please be patient until you recive a success or faliure message from the system.',
 'translator_hint_4_title' => 'Translate Specific Files',
 'translator_hint_4_desc' => 'We suggest translating files separately instead of translating entire files to achieve more accurate results.',
+'direct_publication_of_bundles' => 'Bundles auto approval',
+'direct_publication_of_bundles_hint' => 'Bundles will be published without admin approval',
+'file_type_mkv' => 'MKV',
 
 
 ];

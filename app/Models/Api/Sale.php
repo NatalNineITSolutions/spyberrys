@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Models\Api ;
- use App\Models\Sale as WebSale ;
+namespace App\Models\Api;
 
- class Sale extends WebSale{
+use App\Models\Sale as WebSale;
 
-    public function getDetailsAttribute(){
+class Sale extends WebSale
+{
 
-        return[
-            'buyer' => $this->buyer->brief,
+    public function getDetailsAttribute()
+    {
+
+        return [
+            'buyer' => !empty($this->buyer) ? $this->buyer->brief : null,
             'type' => $this->type,
             'payment_method' => $this->payment_method,
             'created_at' => $this->created_at,
@@ -16,16 +19,15 @@ namespace App\Models\Api ;
             'discount' => $this->discount,
             'total_amount' => $this->total_amount,
             'income' => $this->getIncomeItem(),
-            'webinar' => ($this->webinar_id) ? $this->webinar->brief: null,
-            'meeting' => ($this->meeting_id) ? $this->meeting->details: null,
-      
-           
+            'webinar' => ($this->webinar_id and !empty($this->webinar)) ? $this->webinar->brief : null,
+            'meeting' => ($this->meeting_id and !empty($this->meeting)) ? $this->meeting->details : null,
         ];
     }
 
-    public function scopeHandleFilters($query){
+    public function scopeHandleFilters($query)
+    {
 
-        $request=request() ;
+        $request = request();
         $from = $request->input('from');
         $to = $request->input('to');
         $student_id = $request->input('student_id');
@@ -66,7 +68,8 @@ namespace App\Models\Api ;
 
     }
 
-    public function getItemTypeAttribute(){
+    public function getItemTypeAttribute()
+    {
 
         if ($this->webinar_id) {
             $type = 'class';
@@ -76,13 +79,18 @@ namespace App\Models\Api ;
             $type = null;
         }
 
-        return  $type ;
+        return $type;
     }
 
 
     public function webinar()
     {
         return $this->belongsTo('App\Models\Api\Webinar', 'webinar_id', 'id');
+    }
+
+    public function bundle()
+    {
+        return $this->belongsTo('App\Models\Api\Bundle', 'bundle_id', 'id');
     }
 
     public function buyer()
@@ -125,5 +133,9 @@ namespace App\Models\Api ;
         return $this->hasOne('App\Models\SaleLog', 'sale_id', 'id');
     }
 
+    public function gift()
+    {
+        return $this->belongsTo('App\Models\Api\Gift', 'gift_id', 'id');
+    }
 
- }
+}

@@ -15,7 +15,7 @@ mix
 // .js('resources/js/app.js', 'public/assets/default/js')
 //
 // scss
-.sass('resources/sass/app.scss', 'public/assets/default/css')
+// .sass('resources/sass/app.scss', 'public/assets/default/css')
 // .sass('resources/sass/panel.scss', 'public/assets/default/css')
 // .sass('resources/sass/rtl-app.scss', 'public/assets/default/css')
 

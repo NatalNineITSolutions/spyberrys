@@ -341,12 +341,14 @@ class JobsController extends Controller
         ]);
     }
 
-    /*public function testSMS(Request $request)
+    public function testSMS(Request $request)
     {
-        $to = '+989354626246'; //$request->get('to');
-        $content = 'hello word !'; //$request->get('content');
+        //"/jobs/testSMS?to=+601140017480&content?=12345";
+
+        $to = "+{$request->get('to')}";
+        $content = $request->get('content');
 
         $sendSMS = (new SendSMS($to, $content));
         $sendSMS->send();
-    }*/
+    }
 }

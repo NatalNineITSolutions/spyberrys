@@ -1,5 +1,3 @@
-
-
 <?php $__env->startPush('styles_top'); ?>
 
 <?php $__env->stopPush(); ?>

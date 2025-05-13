@@ -19,5 +19,7 @@ class VerifyCsrfToken extends Middleware
         '/payments/verify/Sslcommerz',
         '/payments/verify/Ipay88',
         '/payments/verify/TapPayment',
+        '/payments/verify/Paytr',
+        '/payments/verify/Paytabs',
     ];
 }

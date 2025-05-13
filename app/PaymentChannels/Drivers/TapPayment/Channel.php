@@ -14,15 +14,19 @@ class Channel extends BasePaymentChannel implements IChannel
     protected $currency;
     protected $test_mode;
     protected $secret_api_Key;
+    protected $merchant_id;
     protected $order_session_key;
 
+    public $show_test_mode_toggle = false;
 
     protected array $credentialItems = [
         'secret_api_Key',
+        'merchant_id',
     ];
 
     /**
-     * Channel constructor.
+     * https://github.com/sfwanessam/laravel-tap-payment
+     *
      * @param PaymentChannel $paymentChannel
      */
     public function __construct(PaymentChannel $paymentChannel)
@@ -64,6 +68,9 @@ class Channel extends BasePaymentChannel implements IChannel
                 ],
                 'post' => [
                     'url' => null
+                ],
+                'merchant' => [
+                    'id' => $this->merchant_id  //Include this when you are going to live
                 ],
                 'redirect' => [
                     'url' => $this->makeCallbackUrl()

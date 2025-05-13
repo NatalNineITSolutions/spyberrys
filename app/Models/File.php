@@ -33,6 +33,8 @@ class File extends Model implements TranslatableContract
     static $Inactive = 'inactive';
     static $fileStatus = ['active', 'inactive'];
 
+    static $ignoreVolumeFileSources = ['youtube', 'vimeo', 'iframe'];
+
     public $translatedAttributes = ['title', 'description'];
 
     public function getTitleAttribute()

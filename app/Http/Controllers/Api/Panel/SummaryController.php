@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Panel;
 
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\NotificationResource;
 use App\Models\Comment;
 use App\Models\Meeting;
 use App\Models\ReserveMeeting;
@@ -34,9 +35,10 @@ class SummaryController extends Controller
         // $nextBadge = $user->getBadges(true, true);
 
         $unreadNotification = $user->getUnReadNotifications();
+
         $data['unread_notifications'] = [
-            'count' => $unreadNotification->count(),
-            'notifications' => $unreadNotification
+            'count' => count($unreadNotification),
+            'notifications' => NotificationResource::collection($unreadNotification),
         ];
 
         $data['unread_noticeboards'] = $user->getUnreadNoticeboards();
@@ -122,7 +124,7 @@ class SummaryController extends Controller
             $data['commentsCount'] = count($comments);
         }
 
-        return $data;
+        return apiResponse2(1, 'retrieved', trans('api.public.retrieved'), $data);
     }
 
     private function getMonthlySalesOrPurchase($user)
@@ -145,7 +147,7 @@ class SummaryController extends Controller
                     ->whereBetween('created_at', [$start_date, $end_date])
                     ->sum('total_amount');
 
-                $data[] = round($monthlySales, 2);
+                $data[] = round($monthlySales, 0);
             } else {
                 $monthlyPurchase = Sale::where('buyer_id', $user->id)
                     ->whereNull('refund_at')

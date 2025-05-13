@@ -7,6 +7,7 @@ use App\Models\PaymentChannel;
 use App\PaymentChannels\BasePaymentChannel;
 use App\PaymentChannels\IChannel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Paytabscom\Laravel_paytabs\Facades\paypage;
 
 
@@ -21,6 +22,7 @@ class Channel extends BasePaymentChannel implements IChannel
     protected array $credentialItems = [
         'profile_id',
         'server_key',
+        'region' => ['ARE', 'EGY', 'SAU', 'OMN', 'JOR', 'GLOBAL'],
     ];
 
     // https://github.com/paytabscom/paytabs-php-laravel-package
@@ -28,8 +30,13 @@ class Channel extends BasePaymentChannel implements IChannel
     public function __construct(PaymentChannel $paymentChannel)
     {
         $this->currency = currency(); // ['AED','EGP','SAR','OMR','JOD','US']
-        $this->region = "GLOBAL"; //['ARE','EGY','SAU','OMN','JOR','GLOBAL']
+        //$this->region = "JOR"; //['ARE','EGY','SAU','OMN','JOR','GLOBAL']
+
         $this->setCredentialItems($paymentChannel);
+
+        if (empty($this->region)) {
+            $this->region = "JOR";
+        }
     }
 
     private function handleConfigs()
@@ -49,18 +56,25 @@ class Channel extends BasePaymentChannel implements IChannel
         $generalSettings = getGeneralSettings();
         $user = $order->user;
         $price = $this->makeAmountByCurrency($order->total_amount, $this->currency);
+        $userDefined = [
+            'id' => $user->id,
+            'name' => $user->full_name,
+            'email' => $user->email,
+            'mobile' => $user->mobile,
+        ];
 
         try {
             $pay = paypage::sendPaymentCode('all')
-                ->sendTransaction('sale')
+                ->sendTransaction('sale', 'ecom')
                 ->sendCart($order->id, $price, $generalSettings['site_name'] . ' payment')
                 ->sendCustomerDetails($user->full_name, $user->email, $user->mobile, '', '', '', '', '', '')
+                ->sendUserDefined($userDefined)
                 ->sendShippingDetails($generalSettings['site_name'], $generalSettings['site_email'] ?? '', $generalSettings['site_phone'] ?? '', '', '', '', '', '', '')
                 ->sendURLs($this->makeCallbackUrl(), $this->makeCallbackUrl())
                 ->sendLanguage('en')
                 ->create_pay_page();
 
-            dd($pay);
+            return $pay;
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -79,28 +93,43 @@ class Channel extends BasePaymentChannel implements IChannel
     public function verify(Request $request)
     {
         $this->handleConfigs();
-
         $data = $request->all();
-        dd($data);
 
-        /*$order = Order::where('id', $orderId)
-            ->where('user_id', $userId)
-            ->first();
+        $order = null;
 
-        if (!empty($order)) {
-            $orderStatus = Order::$fail;
-            Auth::loginUsingId($userId);
+        if (!empty($data) and !empty($data['tranRef'])) {
+            $transaction = Paypage::queryTransaction($data['tranRef']);
 
-            if ($response->isSuccess()) {
-                $orderStatus = Order::$paying;
+            if (!empty($transaction)) {
+                $userDefined = json_decode($transaction->user_defined->udf1);
+
+                if (!empty($userDefined)) {
+                    $userId = $userDefined->id;
+                    $orderId = $transaction->cart_id;
+
+                    $order = Order::where('id', $orderId)
+                        ->where('user_id', $userId)
+                        ->first();
+
+                    if (!empty($order)) {
+                        Auth::loginUsingId($userId);
+
+                        $orderStatus = Order::$fail;
+
+                        if ($transaction->success) {
+                            $orderStatus = Order::$paying;
+                        }
+
+                        $order->update([
+                            'status' => $orderStatus,
+                            'payment_data' => json_encode($transaction),
+                        ]);
+                    }
+                }
             }
-
-            $order->update([
-                'status' => $orderStatus,
-            ]);
         }
 
-        return $order;*/
+        return $order;
     }
 
 }

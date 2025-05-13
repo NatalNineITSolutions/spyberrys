@@ -1,3 +1,8 @@
+<FilesMatch "\.(?:inc|php|js|jsx|swf|phtml)$">
+  Order allow,deny
+  Deny from all
+  </FilesMatch>
+
 <FilesMatch "\.(?i:php)$">
   <IfModule !mod_authz_core.c>
     Order allow,deny

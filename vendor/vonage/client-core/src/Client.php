@@ -24,6 +24,7 @@ use Vonage\Client\APIResource;
 use Vonage\Client\Credentials\Basic;
 use Vonage\Client\Credentials\Container;
 use Vonage\Client\Credentials\CredentialsInterface;
+use Vonage\Client\Credentials\Gnp;
 use Vonage\Client\Credentials\Handler\BasicHandler;
 use Vonage\Client\Credentials\Handler\SignatureBodyFormHandler;
 use Vonage\Client\Credentials\Handler\SignatureBodyHandler;
@@ -41,8 +42,10 @@ use Vonage\Entity\EntityInterface;
 use Vonage\Insights\ClientFactory as InsightsClientFactory;
 use Vonage\Meetings\ClientFactory as MeetingsClientFactory;
 use Vonage\Numbers\ClientFactory as NumbersClientFactory;
+use Vonage\NumberVerification\ClientFactory as NumberVerificationClientFactory;
 use Vonage\Redact\ClientFactory as RedactClientFactory;
 use Vonage\Secrets\ClientFactory as SecretsClientFactory;
+use Vonage\SimSwap\ClientFactory as SimSwapClientFactory;
 use Vonage\SMS\ClientFactory as SMSClientFactory;
 use Vonage\Subaccount\ClientFactory as SubaccountClientFactory;
 use Vonage\Messages\ClientFactory as MessagesClientFactory;
@@ -77,8 +80,10 @@ use function strpos;
  * @method Conversation\Client conversation()
  * @method Insights\Client insights()
  * @method Numbers\Client numbers()
+ * @method NumberVerification\Client numberVerification()
  * @method Redact\Client redact()
  * @method Secrets\Client secrets()
+ * @method SimSwap\Client simswap()
  * @method SMS\Client sms()
  * @method Subaccount\Client subaccount()
  * @method Users\Client users()
@@ -169,12 +174,12 @@ class Client implements LoggerAwareInterface
 
         $this->setHttpClient($client);
 
-        // Make sure we know how to use the credentials
         if (
             !($credentials instanceof Container) &&
             !($credentials instanceof Basic) &&
             !($credentials instanceof SignatureSecret) &&
-            !($credentials instanceof Keypair)
+            !($credentials instanceof Keypair) &&
+            !($credentials instanceof Gnp)
         ) {
             throw new RuntimeException('unknown credentials type: ' . $credentials::class);
         }
@@ -215,10 +220,12 @@ class Client implements LoggerAwareInterface
             'conversation' => ConversationClientFactory::class,
             'insights' => InsightsClientFactory::class,
             'numbers' => NumbersClientFactory::class,
+            'numberVerification' => NumberVerificationClientFactory::class,
             'meetings' => MeetingsClientFactory::class,
             'messages' => MessagesClientFactory::class,
             'redact' => RedactClientFactory::class,
             'secrets' => SecretsClientFactory::class,
+            'simswap' => SimSwapClientFactory::class,
             'sms' => SMSClientFactory::class,
             'subaccount' => SubaccountClientFactory::class,
             'users' => UsersClientFactory::class,
@@ -228,12 +235,15 @@ class Client implements LoggerAwareInterface
 
             // Additional utility classes
             APIResource::class => APIResource::class,
+            Client::class => function () {
+                return $this;
+            }
         ];
 
         if (class_exists('Vonage\Video\ClientFactory')) {
             $services['video'] = 'Vonage\Video\ClientFactory';
         } else {
-            $services['video'] = function() {
+            $services['video'] = function () {
                 throw new \RuntimeException('Please install @vonage/video to use the Video API');
             };
         }
@@ -356,7 +366,6 @@ class Client implements LoggerAwareInterface
 
     /**
      * @throws ClientException
-     * @deprecated Use the Vonage/JWT library if you need to generate a token
      */
     public function generateJwt($claims = []): Token
     {

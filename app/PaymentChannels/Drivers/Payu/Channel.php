@@ -33,6 +33,8 @@ class Channel extends BasePaymentChannel implements IChannel
     ];
 
     /**
+     * https://payu.tzskr.com/5.x/introduction.html
+     *
      * Channel constructor.
      * @param PaymentChannel $paymentChannel
      */
@@ -56,8 +58,8 @@ class Channel extends BasePaymentChannel implements IChannel
 
             'biz' => new PayuBiz([
                 'mode' => $this->test_mode ? Gateway::TEST_MODE : Gateway::LIVE_MODE,
-                'key' => '',
-                'salt' => '',
+                'key' => $this->money_key,
+                'salt' => $this->money_salt,
             ]),
         ];
 
@@ -68,14 +70,20 @@ class Channel extends BasePaymentChannel implements IChannel
     public function paymentRequest(Order $order)
     {
         $this->handleConfigs();
+        $user = $order->user;
+
+        $generalSettings = getGeneralSettings();
+        $mobile = !empty($user->mobile) ? $user->mobile : (!empty($generalSettings['site_phone']) ? $generalSettings['site_phone'] : '0123456789');
+        $email = !empty($user->email) ? $user->email : (!empty($generalSettings['site_email']) ? $generalSettings['site_email'] : 'site_email@gmail.com');
 
         $customer = Customer::make()
-            ->firstName($order->user->full_name)
-            ->email(!empty($order->user->email) ? $order->user->email : 'john@example.com');
+            ->firstName($user->full_name)
+            ->phone($mobile)
+            ->email($email);
 
         $attributes = Attributes::make()
             ->udf1($order->id)
-            ->udf2($order->user->id);
+            ->udf2($user->id);
 
         $transaction = Transaction::make()
             ->charge($this->makeAmountByCurrency($order->total_amount, $this->currency))

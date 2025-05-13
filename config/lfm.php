@@ -42,71 +42,77 @@ return [
     'base_directory' => '/store',
     'files_url' => '/store',
 
-
-
     'disk' => 'upload',
+
     /*
     |--------------------------------------------------------------------------
     | Folder Names
     |--------------------------------------------------------------------------
      */
 
-    'max_image_size' => 2097152, //2G
-    'max_file_size' => 2097152,
-
     'folder_categories' => [
         'file' => [
             'folder_name' => '/',
             'startup_view' => 'list',
             'max_size' => 2097152, // size in KB
+            'thumb' => true,
+            'thumb_width' => 80,
+            'thumb_height' => 80,
             'valid_mime' => [
-                '.pdf',
-                '.doc',
-                '.docx',
-                '.ppt',
-                '.pptx',
-                '.jpeg',
-                '.jpg',
-                '.png',
-                '.rar',
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/gif',
+                'image/svg+xml', // 'svg'
+                'application/pdf', // 'pdf'
+                'application/msword', // 'doc'
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // 'docx'
+                'application/vnd.ms-powerpoint', // 'ppt'
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation', // 'pptx'
+                'application/x-rar-compressed', // 'rar'
+                'application/zip', // 'zip'
+                'video/mp4', // 'mp4'
+                'video/x-matroska', // 'mkv'
+                'video/x-msvideo', // 'avi'
+                'audio/mpeg', // 'mp3'
+                'font/woff', // 'woff'
+                'font/woff2', // 'woff2'
+                'font/ttf', // 'ttf'
+                'application/vnd.ms-fontobject', // 'eot'
+                'application/json', // 'json'
                 '.zip',
-                '.mp4',
-                '.mkv',
-                '.avi',
-                '.mp3',
-                '.woff',
-                '.woff2',
-                '.ttf',
-                '.eot',
-                '.svg',
-                '.json',
             ],
         ],
         'image' => [
             'folder_name' => '/',
             'startup_view' => 'list',
             'max_size' => 2097152, // size in KB
+            'thumb' => true,
+            'thumb_width' => 80,
+            'thumb_height' => 80,
             'valid_mime' => [
-                '.pdf',
-                '.doc',
-                '.docx',
-                '.ppt',
-                '.pptx',
-                '.jpeg',
-                '.jpg',
-                '.png',
-                '.rar',
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/gif',
+                'image/svg+xml', // 'svg'
+                'application/pdf', // 'pdf'
+                'application/msword', // 'doc'
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // 'docx'
+                'application/vnd.ms-powerpoint', // 'ppt'
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation', // 'pptx'
+                'application/x-rar-compressed', // 'rar'
+                'application/zip', // 'zip'
+                'video/mp4', // 'mp4'
+                'video/x-matroska', // 'mkv'
+                'video/x-msvideo', // 'avi'
+                'audio/mpeg', // 'mp3'
+                'font/woff', // 'woff'
+                'font/woff2', // 'woff2'
+                'font/ttf', // 'ttf'
+                'application/vnd.ms-fontobject', // 'eot'
+                'application/json', // 'json'
                 '.zip',
-                '.mp4',
-                '.mkv',
-                '.avi',
-                '.mp3',
-                '.woff',
-                '.woff2',
-                '.ttf',
-                '.eot',
-                '.svg',
-                '.json',
             ],
         ],
     ],
@@ -118,7 +124,7 @@ return [
      */
 
     'paginator' => [
-        'perPage' => 20,
+        'perPage' => 30,
     ],
 
     /*
@@ -129,18 +135,29 @@ return [
 
     'rename_file' => false,
 
+    'rename_duplicates' => false,
+
     'alphanumeric_filename' => false,
 
     'alphanumeric_directory' => false,
 
     'should_validate_size' => false,
 
-    'should_validate_mime' => false,
+    'should_validate_mime' => true,
 
     // behavior on files with identical name
     // setting it to true cause old file replace with new one
     // setting it to false show `error-file-exist` error and stop upload
     'over_write_on_duplicate' => false,
+
+    // mimetypes of executables to prevent from uploading
+    'disallowed_mimetypes' => ['text/x-php', 'text/html', 'text/javascript', 'application/x-shockwave-flash', 'text/plain'],
+
+    // extensions of executables to prevent from uploading
+    'disallowed_extensions' => ['php', 'html', 'js', 'jsx', 'swf', 'phtml'],
+
+    // Item Columns
+    'item_columns' => ['name', 'url', 'time', 'icon', 'is_file', 'is_image', 'thumb_url'],
 
     /*
     |--------------------------------------------------------------------------

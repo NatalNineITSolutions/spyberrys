@@ -15,20 +15,6 @@
 
 
                 <div class="form-group">
-                    <label>{{ trans('admin/main.default_commission') }}</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-percentage"></i>
-                            </div>
-                        </div>
-                        <input type="number" name="value[commission]" value="{{ (!empty($itemValue) and !empty($itemValue['commission'])) ? $itemValue['commission'] : old('commission') }}" class="form-control text-center" maxlength="3" min="0" max="100"/>
-                    </div>
-                    <div class="text-muted text-small mt-1">{{ trans('admin/main.default_commission_hint') }}</div>
-                </div>
-
-
-                <div class="form-group">
                     <label>{{ trans('admin/main.tax') }}</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -61,6 +47,15 @@
                         <option value="total_price" @if((!empty($itemValue) and !empty($itemValue['price_display'])) and $itemValue['price_display'] == 'total_price') selected @endif >{{ trans('update.display_total_price') }}</option>
                         <option value="price_and_tax" @if((!empty($itemValue) and !empty($itemValue['price_display'])) and $itemValue['price_display'] == 'price_and_tax') selected @endif >{{ trans('update.display_price_and_tax') }}</option>
                     </select>
+                </div>
+
+                <div class="form-group custom-switches-stacked">
+                    <label class="custom-switch pl-0 d-flex align-items-center">
+                        <input type="hidden" name="value[hide_disabled_payment_gateways]" value="0">
+                        <input type="checkbox" name="value[hide_disabled_payment_gateways]" id="hide_disabled_payment_gatewaysSwitch" value="1" {{ (!empty($itemValue) and !empty($itemValue['hide_disabled_payment_gateways']) and $itemValue['hide_disabled_payment_gateways']) ? 'checked="checked"' : '' }} class="custom-switch-input"/>
+                        <span class="custom-switch-indicator"></span>
+                        <label class="custom-switch-description mb-0 cursor-pointer" for="hide_disabled_payment_gatewaysSwitch">{{ trans('update.hide_disabled_payment_gateways') }}</label>
+                    </label>
                 </div>
 
                 <button type="submit" class="btn btn-success">{{ trans('admin/main.save_change') }}</button>

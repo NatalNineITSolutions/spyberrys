@@ -51,22 +51,20 @@
                     @break
 
                 @case(7)
-                    @include('web.default.panel.setting.setting_includes.identity_and_financial')
-                    @break
-
-                @case(8)
                     @if(!$user->isUser())
-                        @include('web.default.panel.setting.setting_includes.zoom_api')
+                        @include('web.default.panel.setting.setting_includes.identity_and_financial')
                     @else
                         @include('web.default.panel.setting.setting_includes.settings')
                     @endif
                     @break
 
-                @case(9)
+
+                @case(8)
                     @if(!$user->isUser())
                         @include('web.default.panel.setting.setting_includes.settings')
                     @endif
                     @break
+
             @endswitch
         @endif
     </form>
@@ -80,7 +78,7 @@
                     <a href="" class="btn btn-sm btn-primary disabled">{{ trans('webinars.previous') }}</a>
                 @endif
 
-                <button type="button" id="getNextStep" class="btn btn-sm btn-primary ml-15" @if(!empty($currentStep) and (($user->isUser() and $currentStep == 7) or (!$user->isUser() and $currentStep == 9))) disabled @endif>{{ trans('webinars.next') }}</button>
+                <button type="button" id="getNextStep" class="btn btn-sm btn-primary ml-15" @if(!empty($currentStep) and (($user->isUser() and $currentStep == 7) or (!$user->isUser() and $currentStep == 8))) disabled @endif>{{ trans('webinars.next') }}</button>
             @endif
         </div>
 

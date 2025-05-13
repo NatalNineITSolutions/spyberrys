@@ -37,10 +37,19 @@ class PayoutController extends Controller
         $getUserPayout = $user->getPayout();
         $getFinancialSettings = getFinancialSettings();
 
-        if ($getUserPayout < $getFinancialSettings['minimum_payout']) {
+        if (!empty($getFinancialSettings['minimum_payout']) and $getUserPayout < $getFinancialSettings['minimum_payout']) {
             $toastData = [
                 'title' => trans('public.request_failed'),
                 'msg' => trans('public.income_los_then_minimum_payout'),
+                'status' => 'error'
+            ];
+            return back()->with(['toast' => $toastData]);
+        }
+
+        if (!$user->financial_approval) {
+            $toastData = [
+                'title' => trans('public.request_failed'),
+                'msg' => trans('update.your_financial_information_has_not_been_approved_by_the_admin'),
                 'status' => 'error'
             ];
             return back()->with(['toast' => $toastData]);

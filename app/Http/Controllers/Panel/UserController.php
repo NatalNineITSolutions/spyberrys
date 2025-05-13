@@ -71,7 +71,7 @@ class UserController extends Controller
         $districts = null;
         $userLoginHistories = null;
 
-        if ($step == 9) {
+        if ($step == 8 and !$user->isUser()) {
             $countries = Region::select(DB::raw('*, ST_AsText(geo_center) as geo_center'))
                 ->where('type', Region::$country)
                 ->get();
@@ -104,7 +104,7 @@ class UserController extends Controller
         }
 
         $formFieldsHtml = null;
-        if (($step == 8 and $user->isUser()) or ($step == 9 and !$user->isUser())) {
+        if (($step == 7 and $user->isUser()) or ($step == 8 and !$user->isUser())) {
             $userType = "organization";
 
             if ($user->isTeacher()) {
@@ -234,117 +234,76 @@ class UserController extends Controller
                     'bio' => $data['bio'],
                 ];
             } elseif ($step == 6) {
-                UserOccupation::where('user_id', $user->id)->delete();
-                if (!empty($data['occupations'])) {
+                if (!$user->isUser()) {
+                    UserOccupation::where('user_id', $user->id)->delete();
+                    if (!empty($data['occupations'])) {
 
-                    foreach ($data['occupations'] as $category_id) {
-                        UserOccupation::create([
-                            'user_id' => $user->id,
-                            'category_id' => $category_id
-                        ]);
+                        foreach ($data['occupations'] as $category_id) {
+                            UserOccupation::create([
+                                'user_id' => $user->id,
+                                'category_id' => $category_id
+                            ]);
+                        }
                     }
+                } else {
+                    $updateData = $this->handleUserIdentityAndFinancial($user, $data);
                 }
             } elseif ($step == 7) {
-                $updateData = [
-                    'identity_scan' => $data['identity_scan'] ?? '',
-                    'certificate' => $data['certificate'] ?? '',
-                    'address' => $data['address'] ?? '',
-                ];
-
-                if (!empty($data['bank_id'])) {
-                    UserSelectedBank::query()->where('user_id', $user->id)->delete();
-
-                    $userSelectedBank = UserSelectedBank::query()->create([
-                        'user_id' => $user->id,
-                        'user_bank_id' => $data['bank_id']
-                    ]);
-
-                    if (!empty($data['bank_specifications'])) {
-                        $specificationInsert = [];
-
-                        foreach ($data['bank_specifications'] as $specificationId => $specificationValue) {
-                            if (!empty($specificationValue)) {
-                                $specificationInsert[] = [
-                                    'user_selected_bank_id' => $userSelectedBank->id,
-                                    'user_bank_specification_id' => $specificationId,
-                                    'value' => $specificationValue
-                                ];
-                            }
-                        }
-
-                        UserSelectedBankSpecification::query()->insert($specificationInsert);
-                    }
-                }
-
-            } elseif ($step == 8) {
                 if (!$user->isUser()) {
-                    if (!empty($data['zoom_api_key']) and !empty($data['zoom_api_secret'])) {
-                        UserZoomApi::updateOrCreate(
-                            [
-                                'user_id' => $user->id,
-                            ],
-                            [
-                                'api_key' => $data['zoom_api_key'] ?? null,
-                                'api_secret' => $data['zoom_api_secret'] ?? null,
-                                'account_id' => $data['zoom_account_id'] ?? null,
-                                'created_at' => time()
-                            ]
-                        );
-                    } else {
-                        UserZoomApi::where('user_id', $user->id)->delete();
-                    }
+                    $updateData = $this->handleUserIdentityAndFinancial($user, $data);
                 } else {
                     $handleUserExtraForm = $this->handleUserExtraForm($request, $user);
                     if ($handleUserExtraForm != "ok") {
                         return $handleUserExtraForm;
                     }
                 }
-            } elseif ($step == 9) {
-                $updateData = [
-                    "level_of_training" => !empty($data['level_of_training']) ? (new UserLevelOfTraining())->getValue($data['level_of_training']) : null,
-                    "meeting_type" => $data['meeting_type'] ?? null,
-                    "group_meeting" => (!empty($data['group_meeting']) and $data['group_meeting'] == 'on'),
-                    "country_id" => $data['country_id'] ?? null,
-                    "province_id" => $data['province_id'] ?? null,
-                    "city_id" => $data['city_id'] ?? null,
-                    "district_id" => $data['district_id'] ?? null,
-                    "location" => (!empty($data['latitude']) and !empty($data['longitude'])) ? DB::raw("POINT(" . $data['latitude'] . "," . $data['longitude'] . ")") : null,
-                ];
+            } elseif ($step == 8) {
+                if (!$user->isUser()) {
+                    $updateData = [
+                        "level_of_training" => !empty($data['level_of_training']) ? (new UserLevelOfTraining())->getValue($data['level_of_training']) : null,
+                        "meeting_type" => $data['meeting_type'] ?? null,
+                        "group_meeting" => (!empty($data['group_meeting']) and $data['group_meeting'] == 'on'),
+                        "country_id" => $data['country_id'] ?? null,
+                        "province_id" => $data['province_id'] ?? null,
+                        "city_id" => $data['city_id'] ?? null,
+                        "district_id" => $data['district_id'] ?? null,
+                        "location" => (!empty($data['latitude']) and !empty($data['longitude'])) ? DB::raw("POINT(" . $data['latitude'] . "," . $data['longitude'] . ")") : null,
+                    ];
 
-                $updateUserMeta = [
-                    "gender" => $data['gender'] ?? null,
-                    "age" => $data['age'] ?? null,
-                    "address" => $data['address'] ?? null,
-                    'live_chat_js_code' => !empty($data['live_chat_js_code']) ? $data['live_chat_js_code'] : null
-                ];
+                    $updateUserMeta = [
+                        "gender" => $data['gender'] ?? null,
+                        "age" => $data['age'] ?? null,
+                        "address" => $data['address'] ?? null,
+                        'live_chat_js_code' => !empty($data['live_chat_js_code']) ? $data['live_chat_js_code'] : null
+                    ];
 
-                foreach ($updateUserMeta as $name => $value) {
-                    $checkMeta = UserMeta::where('user_id', $user->id)
-                        ->where('name', $name)
-                        ->first();
+                    foreach ($updateUserMeta as $name => $value) {
+                        $checkMeta = UserMeta::where('user_id', $user->id)
+                            ->where('name', $name)
+                            ->first();
 
-                    if (!empty($checkMeta)) {
-                        if (!empty($value)) {
-                            $checkMeta->update([
+                        if (!empty($checkMeta)) {
+                            if (!empty($value)) {
+                                $checkMeta->update([
+                                    'value' => $value
+                                ]);
+                            } else {
+                                $checkMeta->delete();
+                            }
+                        } else if (!empty($value)) {
+                            UserMeta::create([
+                                'user_id' => $user->id,
+                                'name' => $name,
                                 'value' => $value
                             ]);
-                        } else {
-                            $checkMeta->delete();
                         }
-                    } else if (!empty($value)) {
-                        UserMeta::create([
-                            'user_id' => $user->id,
-                            'name' => $name,
-                            'value' => $value
-                        ]);
                     }
-                }
 
-                if (!$user->isUser()) {
                     $handleUserExtraForm = $this->handleUserExtraForm($request, $user);
                     if ($handleUserExtraForm != "ok") {
                         return $handleUserExtraForm;
                     }
+
                 }
             }
 
@@ -374,6 +333,42 @@ class UserController extends Controller
             return redirect($url)->with(['toast' => $toastData]);
         }
         abort(404);
+    }
+
+    private function handleUserIdentityAndFinancial($user, $data)
+    {
+        $updateData = [
+            'identity_scan' => $data['identity_scan'] ?? '',
+            'certificate' => $data['certificate'] ?? '',
+            'address' => $data['address'] ?? '',
+        ];
+
+        if (!empty($data['bank_id'])) {
+            UserSelectedBank::query()->where('user_id', $user->id)->delete();
+
+            $userSelectedBank = UserSelectedBank::query()->create([
+                'user_id' => $user->id,
+                'user_bank_id' => $data['bank_id']
+            ]);
+
+            if (!empty($data['bank_specifications'])) {
+                $specificationInsert = [];
+
+                foreach ($data['bank_specifications'] as $specificationId => $specificationValue) {
+                    if (!empty($specificationValue)) {
+                        $specificationInsert[] = [
+                            'user_selected_bank_id' => $userSelectedBank->id,
+                            'user_bank_specification_id' => $specificationId,
+                            'value' => $specificationValue
+                        ];
+                    }
+                }
+
+                UserSelectedBankSpecification::query()->insert($specificationInsert);
+            }
+        }
+
+        return $updateData;
     }
 
     private function handleUserExtraForm(Request $request, $user)

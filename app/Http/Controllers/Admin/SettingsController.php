@@ -148,10 +148,9 @@ class SettingsController extends Controller
             }
 
             if ($name == 'referral') {
-                $getFinancialCommission = getFinancialSettings('commission') ?? 0;
 
                 $validator = Validator::make($values, [
-                    'affiliate_user_commission' => 'nullable|numeric|max:' . $getFinancialCommission,
+                    'affiliate_user_commission' => 'nullable|numeric',
                 ]);
 
                 $validator->validate();

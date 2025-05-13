@@ -6,9 +6,7 @@ use App\Models\Order;
 use App\Models\PaymentChannel;
 use App\PaymentChannels\BasePaymentChannel;
 use App\PaymentChannels\IChannel;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Instamojo\Instamojo;
 
 class Channel extends BasePaymentChannel implements IChannel
 {
@@ -29,6 +27,8 @@ class Channel extends BasePaymentChannel implements IChannel
         $this->order_session_key = 'toyyibpay.payments.order_id';
         $this->setCredentialItems($paymentChannel);
     }
+
+    // Doc:: https://toyyibpay.com/apireference/#cb
 
     public function paymentRequest(Order $order)
     {
@@ -65,36 +65,71 @@ class Channel extends BasePaymentChannel implements IChannel
 
         $url = $site_url . 'index.php/api/createBill';
 
-        $client = new Client();
-        $response = $client->request('POST', $url, $data);
-        $obj = json_decode($response->getBody());
+        try {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
-        $billcode = $obj[0]['BillCode'];
+            $result = curl_exec($curl);
+            curl_close($curl);
+            $obj = json_decode($result, true);
 
-        return $site_url . $billcode;
+            $billcode = $obj[0]['BillCode'];
+
+            return $site_url . $billcode;
+        } catch (\Exception $e) {
+            //dd($e->getMessage());
+        }
+
+        $toastData = [
+            'title' => trans('cart.fail_purchase'),
+            'msg' => '',
+            'status' => 'error'
+        ];
+
+        return redirect()->back()->with(['toast' => $toastData])->withInput();
     }
 
     private function makeCallbackUrl($status)
     {
-        return url("/payments/verify/Payhere?status=$status");
+        return url("/payments/verify/Toyyibpay?status=$status");
     }
 
     public function verify(Request $request)
     {
         try {
-            $order_id = session()->get($this->order_session_key, null);
-            session()->forget($this->order_session_key);
-
             $user = auth()->user();
+            $orderId = $request->get('order_id');
+            $statusId = $request->get('status_id');
 
-            $order = Order::where('id', $order_id)
+            $order = Order::where('id', $orderId)
                 ->where('user_id', $user->id)
                 ->first();
 
             if (!empty($order)) {
+
+                $requestData = [
+                    'billCode' => $request->get('billcode'),
+                    'billpaymentStatus' => '1'
+                ];
+
+                $curl = curl_init();
+
+                curl_setopt($curl, CURLOPT_POST, 1);
+                curl_setopt($curl, CURLOPT_URL, 'https://toyyibpay.com/index.php/api/getBillTransactions');
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $requestData);
+
+                $result = curl_exec($curl);
+                $info = curl_getinfo($curl);
+                curl_close($curl);
+                $obj = json_decode($result, true);
+
                 $orderStatus = Order::$fail;
 
-                if ($request->get('status_id') == 1) {
+                if (!empty($obj) and $obj['billStatus'] == "1") {
                     $orderStatus = Order::$paying;
                 }
 
@@ -107,5 +142,7 @@ class Channel extends BasePaymentChannel implements IChannel
         } catch (\Exception $e) {
             print('Error: ' . $e->getMessage());
         }
+
+        return null;
     }
 }

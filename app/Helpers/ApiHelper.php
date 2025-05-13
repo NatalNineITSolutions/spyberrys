@@ -30,7 +30,13 @@ function apiAuth()
 
 function nicePrice($price)
 {
-    return round(handlePrice($price, false), 2);
+    $nice = handlePrice($price, false);
+
+    if (is_string($nice)) {
+        $nice = (float)$nice;
+    }
+
+    return round($nice, 2);
 }
 
 function nicePriceWithTax($price)

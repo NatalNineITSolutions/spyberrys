@@ -1719,6 +1719,15 @@
                 <li class="menu-header"><?php echo e(trans('admin/main.settings')); ?></li>
             <?php endif; ?>
 
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin_translator')): ?>
+                <li class="nav-item <?php echo e((request()->is(getAdminPanelUrl('/translator*', false))) ? 'active' : ''); ?>">
+                    <a href="<?php echo e(getAdminPanelUrl()); ?>/translator" class="nav-link">
+                        <i class="fa fa-language"></i>
+                        <span><?php echo e(trans('update.translator')); ?></span>
+                    </a>
+                </li>
+            <?php endif; ?>
+
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin_settings')): ?>
                 <?php
                     $settingClass ='';

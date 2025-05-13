@@ -17,20 +17,22 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label>{{ trans('/admin/main.role_name') }}</label>
-                    <select class="form-control @error('role_id') is-invalid @enderror" id="roleId" name="role_id">
-                        <option disabled {{ empty($user) ? 'selected' : '' }}>{{ trans('admin/main.select_role') }}</option>
-                        @foreach ($roles as $role)
-                            <option value="{{ $role->id }}" {{ (!empty($user) and $user->role_id == $role->id) ? 'selected' :''}}>{{ $role->caption }}</option>
-                        @endforeach
-                    </select>
-                    @error('role_id')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                @can('admin_update_user_role_in_edit_page')
+                    <div class="form-group">
+                        <label>{{ trans('/admin/main.role_name') }}</label>
+                        <select class="form-control @error('role_id') is-invalid @enderror" id="roleId" name="role_id">
+                            <option disabled {{ empty($user) ? 'selected' : '' }}>{{ trans('admin/main.select_role') }}</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}" {{ (!empty($user) and $user->role_id == $role->id) ? 'selected' :''}}>{{ $role->caption }}</option>
+                            @endforeach
+                        </select>
+                        @error('role_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
-                    @enderror
-                </div>
+                @endcan
 
                 <div class="form-group">
                     <label class="input-label">{{ trans('update.timezone') }}</label>

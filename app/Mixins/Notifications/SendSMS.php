@@ -42,8 +42,6 @@ class SendSMS
         if (!empty($smsSendingChannel)) {
             if ($smsSendingChannel == self::TWILIO) {
                 $this->sendByTwilio();
-            } else if ($smsSendingChannel == self::KAVENEGAR) {
-                $this->sendByKavenegar();
             } else if ($smsSendingChannel == self::MSEGAT) {
                 $this->sendByMsegat();
             } else if ($smsSendingChannel == self::VONAGE) {
@@ -171,18 +169,20 @@ class SendSMS
         $settings = getSMSChannelsSettings();
 
         $key = !empty($settings['msg91_key']) ? $settings['msg91_key'] : null;
+        $flowId = !empty($settings['msg91_flow_id']) ? $settings['msg91_flow_id'] : null;
 
-        if (!empty($key)) {
+        if (!empty($key) and !empty($flowId)) {
             \config()->set('services.msg91.key', $key);
 
             try {
 
-                Msg91::sms()
+                $res = Msg91::sms()
                     ->to($this->to)
-                    ->flow('dd')
+                    ->flow($flowId)
                     ->content($this->content)
                     ->send();
 
+                dd($res);
             } catch (\Exception $e) {
                 dd($e);
             }
@@ -202,14 +202,26 @@ class SendSMS
         if (!empty($api_key)) {
 
             try {
-                $response = Http::post('https://2factor.in/API/R1/', [
+                /*$response = Http::post('https://2factor.in/API/R1/', [
                     'module' => 'TRANS_SMS',
                     'apikey' => $api_key,
                     'to' => "{$this->to}",
                     'from' => 'HEADER',
                     'msg' => "{$this->content}",
-                ]);
+                ]);*/
 
+                $url = "https://2factor.in/API/V1/{$api_key}/SMS/{$this->to}/{$this->content}/OTP1";
+
+                $response = Http::withHeaders([
+                    'Accept' => 'application/json',
+                ])->get($url);
+
+
+                if ($response->successful()) {
+
+                } else {
+                    dd($response,$response->body());
+                }
             } catch (\Exception $e) {
                 dd($e);
             }

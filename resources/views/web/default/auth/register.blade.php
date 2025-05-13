@@ -26,18 +26,22 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         @if(!empty($selectRolesDuringRegistration) and count($selectRolesDuringRegistration))
+                            @php
+                                $oldAccountType = old("account_type");
+                            @endphp
+
                             <div class="form-group">
                                 <label class="input-label">{{ trans('financial.account_type') }}</label>
 
                                 <div class="d-flex align-items-center wizard-custom-radio mt-5">
                                     <div class="wizard-custom-radio-item flex-grow-1">
-                                        <input type="radio" name="account_type" value="user" id="role_user" class="" checked>
+                                        <input type="radio" name="account_type" value="user" id="role_user" class=""  {{ (empty($oldAccountType) or $oldAccountType == "user") ? 'checked' : '' }}>
                                         <label class="font-12 cursor-pointer px-15 py-10" for="role_user">{{ trans('update.role_user') }}</label>
                                     </div>
 
                                     @foreach($selectRolesDuringRegistration as $selectRole)
                                         <div class="wizard-custom-radio-item flex-grow-1">
-                                            <input type="radio" name="account_type" value="{{ $selectRole }}" id="role_{{ $selectRole }}" class="">
+                                            <input type="radio" name="account_type" value="{{ $selectRole }}" id="role_{{ $selectRole }}" class="" {{ ($oldAccountType == $selectRole) ? 'checked' : '' }}>
                                             <label class="font-12 cursor-pointer px-15 py-10" for="role_{{ $selectRole }}">{{ trans('update.role_'.$selectRole) }}</label>
                                         </div>
                                     @endforeach

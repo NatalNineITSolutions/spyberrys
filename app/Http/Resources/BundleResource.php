@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Mixins\Cashback\CashbackRules;
-use App\Models\Bundle;
+use App\Models\Api\Bundle;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BundleResource extends JsonResource
@@ -30,6 +30,17 @@ class BundleResource extends JsonResource
             $cashbackRulesMixin = new CashbackRules($user);
             $cashbackRules = $cashbackRulesMixin->getRules('bundles', $this->id, "bundle", $this->category->id, $this->teacher->id);
         }
+
+        $duration = $this->getBundleDuration();
+        $rate = $this->getRate();
+
+        $hasBought = $this->checkUserHasBought($user);
+        $canSale = ($this->canSale() and !$hasBought);
+        $can_buy_with_points = ($canSale and $this->price > 0 and !empty($bundle->points));
+        $can_buy_with_subscribe = ($canSale and $this->price > 0 and $this->subscribe);
+
+        $isExpired = (!empty($purchase) and $this->access_days and !$this->checkHasExpiredAccessDays($purchase->created_at));
+
         return [
             'id' => $this->id,
             'image' => url($this->getImage()),
@@ -39,7 +50,7 @@ class BundleResource extends JsonResource
             'link' => url($this->getUrl()),
             'title' => $this->title,
             'type' => 'bundle',
-            'rate' => $this->getRate(),
+            'rate' => ($rate > 0) ? (float)$rate : 0,
             'rates_count' => $this->reviews->pluck('creator_id')->count(),
             'reviews_count' => $this->reviews->count(),
             'price' => convertPriceToUserCurrency($this->price),
@@ -48,14 +59,11 @@ class BundleResource extends JsonResource
             'best_ticket' => $this->bestTicket(),
             'category' => $this->category->title ?? null,
             'access_days' => $this->access_days,
-            $this->mergeWhen($purchase, function () use ($purchase) {
-                return [
-                    'expired' => ($this->access_days and !$this->checkHasExpiredAccessDays($purchase->created_at)),
-                    'expire_on' => $this->getExpiredAccessDays($purchase->created_at) ?: null,
-                ];
-            }),
+            'expired' => $isExpired,
+            'expire_on' => (!empty($purchase) and $isExpired) ? $this->getExpiredAccessDays($purchase->created_at) : null,
+
             //  'ex' => $this->checkHasExpiredAccessDays($sale->created_at),
-            'duration' => $this->getBundleDuration(),
+            'duration' => ($duration > 0) ? (float)$duration : 0,
             'webinar_count' => $this->bundleWebinars->where('webinar.status', 'active')->count(),
             'teacher' => $this->teacher->brief,
             'sale_amount' => ($this->sales) ? convertPriceToUserCurrency($this->sales->sum('amount')) : 0,
@@ -64,6 +72,12 @@ class BundleResource extends JsonResource
             'cashbackRules' => $cashbackRules,
             'created_at' => $this->created_at,
             'badges' => $this->badges ?? [],
+            'auth_has_bought' => $hasBought,
+            'can_sale' => $canSale,
+            'can_buy_with_points' => $can_buy_with_points,
+            'can_buy_with_subscribe' => $can_buy_with_subscribe,
+            'is_favorite' => $this->is_favorite,
+
             $this->mergeWhen($this->show, function () {
                 return [
                     'rate_type' => [
@@ -83,16 +97,6 @@ class BundleResource extends JsonResource
                     'comments' => CommentResource::collection($this->comments),
                     'reviews' => ReviewResource::collection($this->reviews),
                     // bundleWebinars
-                    $this->mergeWhen((bool)apiAuth(), function () {
-                        return [
-                            'has_bought' => $this->checkUserHasBought(apiAuth()),
-                            'can_sale' => ($this->canSale() and !$this->checkUserHasBought(apiAuth())),
-                            'can_buy_with_points' => ($this->canSale() and !$this->checkUserHasBought(apiAuth()) and $this->price > 0 and !empty($bundle->points)),
-                            'can_buy_with_subscribe' => ($this->canSale() and !$this->checkUserHasBought(apiAuth()) and $this->price > 0 and $this->subscribe),
-                            'is_favorite' => $this->is_favorite,
-
-                        ];
-                    })
                 ];
             }),
         ];

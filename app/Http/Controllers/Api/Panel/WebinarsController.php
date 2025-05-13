@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api\Panel;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\BundleResource;
-use App\Http\Resources\WebinarResource;
+use App\Http\Resources\PurchaseResource;
 use App\Mixins\Cashback\CashbackRules;
 use App\Models\Api\Sale;
 use App\Models\Api\Webinar;
-use App\Models\Gift;
-use App\Models\WebinarChapter;
+use App\Models\Api\Gift;
 use App\Models\WebinarPartnerTeacher;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,142 +18,29 @@ class WebinarsController extends Controller
     public function show($id)
     {
         $user = apiAuth();
-        $user = apiAuth();
 
-        $webinarsQuery = Webinar::where('status', 'active')
-            ->where('private', true)->where('id', $id);
-
-        abort_unless($webinarsQuery->count(), 404);
-
-        $webinars = $webinarsQuery->orderBy('webinars.created_at', 'desc')
-            ->orderBy('webinars.updated_at', 'desc')
-            ->get()->map(function ($webinar) {
-                return $webinar->details;
+        $webinar = Webinar::query()->where('id', $id)
+            ->where(function (Builder $query) use ($user) {
+                $query->where('creator_id', $user->id);
+                $query->orWhere('teacher_id', $user->id);
             })->first();
 
-        $cashbackRules = null;
-        if (!empty($webinars["price"]) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
-            $cashbackRulesMixin = new CashbackRules($user);
-            $cashbackRules = $cashbackRulesMixin->getRules('courses', $webinars["id"], $webinars["type"], null, null);
+        if (!empty($webinar)) {
+            $cashbackRules = null;
+
+            $data = $webinar->brief;
+
+            if (!empty($data["price"]) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
+                $cashbackRulesMixin = new CashbackRules($user);
+                $cashbackRules = $cashbackRulesMixin->getRules('courses', $data["id"], $data["type"], null, null);
+            }
+
+            $data["cashbackRules"] = $cashbackRules;
+
+            return apiResponse2(1, 'retrieved', trans('api.public.retrieved'), $data);
         }
-        $webinars["cashbackRules"] = $cashbackRules;
 
-        return apiResponse2(1, 'retrieved', trans('api.public.retrieved'), $webinars);
-
-
-        /*$webinar = Webinar::where('id', $id)
-            ->with([
-                'quizzes' => function ($query) {
-                    $query->where('status', 'active')
-                        ->with(['quizResults', 'quizQuestions']);
-                },
-                'tags',
-                'prerequisites' => function ($query) {
-                    $query->with(['prerequisiteWebinar' => function ($query) {
-                        $query->with(['teacher' => function ($qu) {
-                            $qu->select('id', 'full_name', 'avatar');
-                        }]);
-                    }]);
-                    $query->orderBy('order', 'asc');
-                },
-                'faqs' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                },
-                'webinarExtraDescription' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                },
-                'chapters' => function ($query) use ($user) {
-                    $query->where('status', WebinarChapter::$chapterActive);
-                    $query->orderBy('order', 'asc');
-
-                    $query->with([
-                        'chapterItems' => function ($query) {
-                            $query->orderBy('order', 'asc');
-                        }
-                    ]);
-                },
-                'files' => function ($query) use ($user) {
-                    $query->join('webinar_chapters', 'webinar_chapters.id', '=', 'files.chapter_id')
-                        ->select('files.*', DB::raw('webinar_chapters.order as chapterOrder'))
-                        ->where('files.status', WebinarChapter::$chapterActive)
-                        ->orderBy('chapterOrder', 'asc')
-                        ->orderBy('files.order', 'asc')
-                        ->with([
-                            'learningStatus' => function ($query) use ($user) {
-                                $query->where('user_id', !empty($user) ? $user->id : null);
-                            }
-                        ]);
-                },
-                'textLessons' => function ($query) use ($user) {
-                    $query->where('status', WebinarChapter::$chapterActive)
-                        ->withCount(['attachments'])
-                        ->orderBy('order', 'asc')
-                        ->with([
-                            'learningStatus' => function ($query) use ($user) {
-                                $query->where('user_id', !empty($user) ? $user->id : null);
-                            }
-                        ]);
-                },
-                'sessions' => function ($query) use ($user) {
-                    $query->where('status', WebinarChapter::$chapterActive)
-                        ->orderBy('order', 'asc')
-                        ->with([
-                            'learningStatus' => function ($query) use ($user) {
-                                $query->where('user_id', !empty($user) ? $user->id : null);
-                            }
-                        ]);
-                },
-                'assignments' => function ($query) {
-                    $query->where('status', WebinarChapter::$chapterActive);
-                },
-                'tickets' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                },
-                'filterOptions',
-                'category',
-                //    'teacher',
-                'reviews' => function ($query) {
-                    $query->where('status', 'active');
-                    $query->with([
-                        'comments' => function ($query) {
-                            $query->where('status', 'active');
-                        },
-                        'creator' => function ($qu) {
-                            $qu->select('id', 'full_name', 'avatar');
-                        }
-                    ]);
-                },
-                'comments' => function ($query) {
-                    $query->where('status', 'active');
-                    $query->whereNull('reply_id');
-                    $query->with([
-                        'user' => function ($query) {
-                            $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
-                        },
-                        'replies' => function ($query) {
-                            $query->where('status', 'active');
-                            $query->with([
-                                'user' => function ($query) {
-                                    $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
-                                }
-                            ]);
-                        }
-                    ]);
-                    $query->orderBy('created_at', 'desc');
-                },
-            ])
-            ->withCount([
-                'sales' => function ($query) {
-                    $query->whereNull('refund_at');
-                },
-                'noticeboards'
-            ])
-            ->where('status', 'active')
-            ->get();
-        $webinar = $webinar->map(function ($webinar) {
-            return $webinar->brief;
-        });
-        return apiResponse2(1, 'retrieved', trans('api.public.retrieved'), $webinar);*/
+        return apiResponse2(0, 'invalid', trans('api.public.invalid'));
     }
 
     public function list(Request $request, $id = null)
@@ -189,7 +75,7 @@ class WebinarsController extends Controller
     {
         return apiResponse2(1, 'retrieved', trans('api.public.retrieved'),
             [
-                'webinars' => $this->purchases()
+                'purchases' => $this->purchases()
             ]);
     }
 
@@ -233,7 +119,23 @@ class WebinarsController extends Controller
     public function purchases()
     {
         $user = apiAuth();
-        $sales = Sale::where('sales.buyer_id', $user->id)
+
+        $giftsIds = Gift::query()->where('email', $user->email)
+            ->where('status', 'active')
+            ->whereNull('product_id')
+            ->where(function ($query) {
+                $query->whereNull('date');
+                $query->orWhere('date', '<', time());
+            })
+            ->whereHas('sale')
+            ->pluck('id')
+            ->toArray();
+
+        $query = Sale::query()
+            ->where(function ($query) use ($user, $giftsIds) {
+                $query->where('sales.buyer_id', $user->id);
+                $query->orWhereIn('sales.gift_id', $giftsIds);
+            })
             ->whereNull('sales.refund_at')
             ->where('access_to_purchased_item', true)
             ->where(function ($query) {
@@ -251,7 +153,15 @@ class WebinarsController extends Controller
                             $query->where('status', 'active');
                         });
                 });
-            })->with([
+                $query->orWhere(function ($query) {
+                    $query->whereNotNull('gift_id');
+                    $query->whereHas('gift');
+                });
+            });
+
+
+        $sales = deepClone($query)
+            ->with([
                 'webinar' => function ($query) {
                     $query->with([
                         'files',
@@ -281,13 +191,23 @@ class WebinarsController extends Controller
                     ]);
                 }
             ])
-            //  ->handleFilters()
             ->orderBy('created_at', 'desc')
             ->get();
+
+
+        $time = time();
+
+        $giftDurations = 0;
+        $giftUpcoming = 0;
+        $giftPurchasedCount = 0;
+
         foreach ($sales as $sale) {
+            $purchaseDate = $sale->created_at;
 
             if (!empty($sale->gift_id)) {
                 $gift = $sale->gift;
+
+                $purchaseDate = $gift->date;
 
                 $sale->webinar_id = $gift->webinar_id;
                 $sale->bundle_id = $gift->bundle_id;
@@ -297,10 +217,9 @@ class WebinarsController extends Controller
 
                 $sale->gift_recipient = !empty($gift->receipt) ? $gift->receipt->full_name : $gift->name;
                 $sale->gift_sender = $sale->buyer->full_name;
-                $sale->gift_date = $gift->date;
+                $sale->gift_date = $gift->date;;
 
-
-                $giftPurchasedCount += 1;
+                /*$giftPurchasedCount += 1;
 
                 if (!empty($sale->webinar)) {
                     $giftDurations += $sale->webinar->duration;
@@ -316,56 +235,30 @@ class WebinarsController extends Controller
                     foreach ($bundleWebinars as $bundleWebinar) {
                         $giftDurations += $bundleWebinar->webinar->duration;
                     }
-                }
+                }*/
             }
 
-            $purchaseDate = $sale->created_at;
-            if (!empty($sale->gift_id)) {
-                $gift = Gift::query()->where('id', $sale->gift_id)
-                    ->where('status', 'active')
-                    ->first();
-
-                if (!empty($gift) and !empty($gift->date)) {
-                    $purchaseDate = $gift->date;
-                }
-            }
-            $time = time();
             if (!empty($sale->webinar)) {
-                if ($sale->webinar->access_days > 0 ) {
+                if ($sale->webinar->access_days > 0) {
                     $sale->expired = strtotime("+{$sale->webinar->access_days} days", $purchaseDate) < $time;
                     $sale->expired_at = strtotime("+{$sale->webinar->access_days} days", $purchaseDate);
-                }
-                else{
+                } else {
                     $sale->expired = false;
                     $sale->expired_at = null;
                 }
-                $sale->webinarW = new WebinarResource($sale->webinar);
             } else if (!empty($sale->bundle)) {
-                if ($sale->bundle->access_days > 0 ) {
+                if ($sale->bundle->access_days > 0) {
                     $sale->expired = strtotime("+{$sale->bundle->access_days} days", $purchaseDate) < $time;
                     $sale->expired_at = strtotime("+{$sale->bundle->access_days} days", $purchaseDate);
-                }
-                else{
+                } else {
                     $sale->expired = false;
                     $sale->expired_at = null;
                 }
-                $sale->bundleW = new BundleResource($sale->bundle);
             }
-        }
-        $arr = $sales->toArray();
-        foreach ($arr as &$item){
-            if (isset($item["bundleW"])){
-                $item["bundle"] = $item["bundleW"];
-                unset($item["bundleW"]);
-            }
-            if (isset($item["webinarW"])) {
-                $item["webinar"] = $item["webinarW"];
-                unset($item["webinarW"]);
-            }
-        }
-        return $arr;
 
+        }
 
+         return PurchaseResource::collection($sales);
     }
 
     public function invitations(Request $request)

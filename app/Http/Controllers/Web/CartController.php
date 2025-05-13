@@ -825,7 +825,7 @@ class CartController extends Controller
             $totalDiscount = $subTotal;
         }
 
-        $commission = ($commissionPrice / $priceWithoutDiscount) * 100;
+        $commission = ($commissionPrice > 0 and $priceWithoutDiscount > 0) ? (($commissionPrice / $priceWithoutDiscount) * 100) : 0;
 
         return [
             'sub_total' => round($subTotal, 2),

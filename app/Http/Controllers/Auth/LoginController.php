@@ -64,6 +64,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $type = $request->get('type');
 
         if ($type == 'mobile') {
@@ -92,6 +93,7 @@ class LoginController extends Controller
 
         if ($type == 'mobile') {
             $value = $this->getUsernameValue($request);
+
             $checkIsValid = checkMobileNumber("+{$value}");
 
             if (!$checkIsValid) {
@@ -101,12 +103,11 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            return redirect()->intended('/');
+            return $this->afterLogged($request);
         }
 
         return $this->sendFailedLoginResponse($request);
     }
-
 
     public function logout(Request $request)
     {

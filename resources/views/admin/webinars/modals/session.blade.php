@@ -51,9 +51,9 @@
 
             <div class="invalid-feedback"></div>
 
-            <div class="js-zoom-not-complete-alert mt-10 text-danger d-none">
+            {{--<div class="js-zoom-not-complete-alert mt-10 text-danger d-none">
                 {{ trans('admin/main.teacher_zoom_jwt_token_invalid') }}
-            </div>
+            </div>--}}
         </div>
 
         <div class="form-group">

@@ -397,7 +397,7 @@ class Webinar extends Model implements TranslatableContract
         }
 
         if (empty($user)) {
-            $user =apiAuth();
+            $user = apiAuth();
         }
 
         if (!empty($user)) {

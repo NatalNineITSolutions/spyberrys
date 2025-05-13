@@ -37,4 +37,10 @@ class Bundle extends Model
     {
         return $this->belongsTo('App\Models\Api\User', 'teacher_id', 'id');
     }
+
+    public function tickets()
+    {
+        return $this->hasMany('App\Models\Api\Ticket', 'bundle_id', 'id');
+    }
+
 }

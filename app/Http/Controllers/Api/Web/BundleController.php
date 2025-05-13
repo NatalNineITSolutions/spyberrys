@@ -108,7 +108,7 @@ class BundleController extends Controller
                 ->first();
         }
 
-        $hasBought = $bundle->checkUserHasBought($user);
+
         $resource = new BundleResource($bundle);
         $resource->show = true;
 
@@ -117,17 +117,6 @@ class BundleController extends Controller
                 'bundle' => $resource,
 
             ]);
-        $data = [
-            'pageTitle' => $bundle->title,
-            'pageDescription' => $bundle->seo_description,
-            'bundle' => $bundle,
-            'isFavorite' => $isFavorite,
-            'hasBought' => $hasBought,
-            'user' => $user,
-            'activeSpecialOffer' => $bundle->activeSpecialOffer(),
-        ];
-
-        return view('web.default.bundle.index', $data);
     }
 
 }

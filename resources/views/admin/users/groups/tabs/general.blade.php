@@ -17,30 +17,6 @@
                 </div>
 
                 <div class="form-group ">
-                    <label>{{ trans('admin/main.user_group_commission_rate') }}</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-percentage"></i>
-                            </div>
-                        </div>
-
-                        <input type="number"
-                               name="commission"
-                               class="spinner-input form-control text-center @error('commission') is-invalid @enderror"
-                               value="{{ !empty($group) ? $group->commission : old('commission') }}"
-                               placeholder="{{ trans('admin/main.user_group_commission_rate_placeholder') }}" maxlength="3" min="0" max="100">
-
-                        @error('commission')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="text-muted text-small mt-1">{{ trans('admin/main.user_group_commission_rate_hint') }}</div>
-                </div>
-
-                <div class="form-group ">
                     <label>{{ trans('admin/main.user_group_discount_rate') }}</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -85,6 +61,59 @@
                         <label class="custom-switch-description mb-0 cursor-pointer" for="preloadingSwitch">{{ trans('admin/main.active') }}</label>
                     </label>
                 </div>
+
+
+                @php
+                    $commissions = !empty($group) ? $group->commissions : null;
+                @endphp
+
+                <div class="mb-2">
+                    <h5 class="font-16 text-dark">{{ trans('admin/main.user_group_commission_rate') }}</h5>
+                    <div class="text-muted text-small mt-1">{{ trans('admin/main.user_group_commission_rate_hint') }}</div>
+                </div>
+
+                @foreach(\App\Models\UserCommission::$sources as $commissionSource)
+                    @php
+                        $commission = !empty($commissions) ? $commissions->where('source', $commissionSource)->first() : null;
+                        $commissionValue = null;
+
+                        if (!empty($commission)) {
+                            $commissionValue = $commission->value;
+
+                            if ($commission->type == "fixed_amount") {
+                                $commissionValue = convertPriceToUserCurrency($commissionValue);
+                            }
+                        }
+                    @endphp
+
+                    <div class="form-group">
+                        <label class="mb-0">{{ trans("update.{$commissionSource}_commission") }}</label>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="">{{ trans("admin/main.type") }}</label>
+                                <select name="commissions[{{ $commissionSource }}][type]" class="js-commission-type-input form-control" data-currency="{{ $currency }}">
+                                    <option value="percent" {{ (!empty($commission) and $commission->type == "percent") ? 'selected' : '' }}>{{ trans('update.percent') }}</option>
+                                    <option value="fixed_amount" {{ (!empty($commission) and $commission->type == "fixed_amount") ? 'selected' : '' }}>{{ trans('update.fixed_amount') }}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="">
+                                    <label class="">
+                                        {{ trans("update.value") }}
+
+                                        <span class="ml-1 js-commission-value-span">({{ !empty($commission) ? (($commission->type == "percent") ? '%' : $currency) : '%' }})</span>
+                                    </label>
+
+                                    <input type="number" name="commissions[{{ $commissionSource }}][value]" value="{{ (!empty($commissionValue)) ? $commissionValue : '' }}" class="js-commission-value-input form-control text-center" {{ (!empty($commission) and $commission->type == "percent") ? 'maxlength="3" min="0" max="100"' : '' }}/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-muted text-small mt-1">{{ trans("update.{$commissionSource}_commission_hint") }}</div>
+                    </div>
+                @endforeach
 
                 <div class=" mt-4">
                     <button class="btn btn-primary">{{ trans('admin/main.submit') }}</button>

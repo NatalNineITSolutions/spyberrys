@@ -292,7 +292,7 @@ class CertificateController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'image' => 'required',
-            'type' => 'required|in:quiz,course',
+            'type' => 'required|in:quiz,course,bundle',
         ]);
 
         $data = $request->all();

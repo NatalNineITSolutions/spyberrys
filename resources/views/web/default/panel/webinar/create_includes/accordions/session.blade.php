@@ -57,10 +57,10 @@
 
                     <div class="invalid-feedback"></div>
 
-                    <div class="js-zoom-not-complete-alert mt-10 text-danger d-none">
-                        {{ trans('webinars.your_zoom_settings_are_not_complete') }}
-                        <a href="/panel/setting/step/8" class="text-primary" target="_blank">{{ trans('public.go_to_settings') }}</a>
-                    </div>
+                    {{--<div class="js-zoom-not-complete-alert mt-10 text-danger d-none">
+                        {{ trans('update.zoom_settings_are_not_complete_please_contact_with_admin') }}
+                        --}}{{--<a href="/panel/setting/step/8" class="text-primary" target="_blank">{{ trans('public.go_to_settings') }}</a>--}}{{--
+                    </div>--}}
                 </div>
 
 

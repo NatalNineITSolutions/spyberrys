@@ -6,6 +6,7 @@ namespace App\PaymentChannels;
 class BasePaymentChannel
 {
 
+    public $show_test_mode_toggle = true;
     protected array $credentialItems;
 
     public function makeAmountByCurrency($amount, $currency)
@@ -20,15 +21,26 @@ class BasePaymentChannel
         return $this->credentialItems ?? [];
     }
 
+    public function getShowTestModeToggle(): bool
+    {
+        return $this->show_test_mode_toggle;
+    }
+
     public function setCredentialItems($paymentChannel): void
     {
         $credentialItems = $this->credentialItems ?? [];
 
         if (!empty($credentialItems) and !empty($paymentChannel->credentials)) {
 
-            foreach ($credentialItems as $credentialItem) {
-                if (!empty($paymentChannel->credentials[$credentialItem])) {
-                    $this->{$credentialItem} = $paymentChannel->credentials[$credentialItem];
+            foreach ($credentialItems as $credentialKey => $credentialItem) {
+                if (is_array($credentialItem)) {
+                    if (!empty($paymentChannel->credentials[$credentialKey])) {
+                        $this->{$credentialKey} = $paymentChannel->credentials[$credentialKey];
+                    }
+                } else {
+                    if (!empty($paymentChannel->credentials[$credentialItem])) {
+                        $this->{$credentialItem} = $paymentChannel->credentials[$credentialItem];
+                    }
                 }
             }
 

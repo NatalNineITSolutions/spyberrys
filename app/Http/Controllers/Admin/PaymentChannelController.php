@@ -30,11 +30,13 @@ class PaymentChannelController extends Controller
         $paymentChannel = PaymentChannel::findOrFail($id);
         $channelManager = ChannelManager::makeChannel($paymentChannel);
         $credentialItems = $channelManager->getCredentialItems();
+        $showTestModeToggle = $channelManager->getShowTestModeToggle();
 
         $data = [
             'pageTitle' => trans('admin/pages/paymentChannels.payment_channel_edit'),
             'paymentChannel' => $paymentChannel,
             'credentialItems' => $credentialItems,
+            'showTestModeToggle' => $showTestModeToggle,
         ];
 
         return view('admin.settings.financial.payment_channel.create', $data);

@@ -972,34 +972,8 @@
             },
             width: '48rem',
             onOpen: () => {
-                $('.prerequisites-select2').select2({
-                    placeholder: $(this).data('placeholder'),
-                    minimumInputLength: 3,
-                    allowClear: true,
-                    ajax: {
-                        url: adminPanelPrefix + '/webinars/search',
-                        dataType: 'json',
-                        type: "POST",
-                        quietMillis: 50,
-                        data: function (params) {
-                            var queryParameters = {
-                                term: params.term,
-                                webinar_id: $(this).data('webinar-id')
-                            }
-                            return queryParameters;
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.title,
-                                        id: item.id
-                                    }
-                                })
-                            };
-                        }
-                    }
-                });
+                handleSearchableSelect2('prerequisites-select2', adminPanelPrefix + '/webinars/search', 'title');
+
             },
         });
     });
@@ -1603,34 +1577,7 @@
                             $('#addPrerequisitesModal').find('[name="required"]').prop('checked', true);
                         }
 
-                        $('.prerequisites-select2').select2({
-                            placeholder: $(this).data('placeholder'),
-                            minimumInputLength: 3,
-                            allowClear: true,
-                            ajax: {
-                                url: adminPanelPrefix + '/webinars/search',
-                                dataType: 'json',
-                                type: "POST",
-                                quietMillis: 50,
-                                data: function (params) {
-                                    var queryParameters = {
-                                        term: params.term,
-                                        webinar_id: $(this).data('webinar-id')
-                                    }
-                                    return queryParameters;
-                                },
-                                processResults: function (data) {
-                                    return {
-                                        results: $.map(data, function (item) {
-                                            return {
-                                                text: item.title,
-                                                id: item.id
-                                            }
-                                        })
-                                    };
-                                }
-                            }
-                        });
+                        handleSearchableSelect2('prerequisites-select2', adminPanelPrefix + '/webinars/search', 'title');
                     }
                 });
             }
@@ -1822,9 +1769,7 @@
             },
             width: '48rem',
             onOpen: () => {
-                $('.bundleWebinars-select2').select2({
-                    allowClear: false,
-                });
+                handleSearchableSelect2('bundleWebinars-select2', adminPanelPrefix + '/webinars/search', 'title');
             },
         });
     });
@@ -1853,9 +1798,13 @@
             if (result && result.bundleWebinar) {
                 const bundleWebinar = result.bundleWebinar;
 
+                const selectHtml = `<option value="${bundleWebinar.webinar_id}" selected>${bundleWebinar.webinar_title}</option>`;
+                $('#bundleWebinarsModal .bundleWebinars-select').html(selectHtml);
+
                 let html = '<div id="addBundleWebinarModal">';
                 html += $('#bundleWebinarsModal').html();
                 html += '</div>';
+
                 html = html.replaceAll('bundleWebinars-select', 'bundleWebinars-select2');
                 html = html.replaceAll(adminPanelPrefix + '/bundle-webinars/store', adminPanelPrefix + '/bundle-webinars/' + item_id + '/update');
                 html = html.replaceAll('str_', '');
@@ -1869,12 +1818,8 @@
                     },
                     width: '48rem',
                     onOpen: () => {
-                        var select = $('.bundleWebinars-select2');
 
-                        select.val(bundleWebinar.webinar_id);
-                        select.select2({
-                            allowClear: false,
-                        });
+                        handleSearchableSelect2('bundleWebinars-select2', adminPanelPrefix + '/webinars/search', 'title');
                     }
                 });
             }

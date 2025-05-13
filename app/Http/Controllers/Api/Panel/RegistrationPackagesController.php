@@ -37,11 +37,11 @@ class RegistrationPackagesController extends Controller
         $activePackage = $userPackage->getPackage();
         $activePackage = [
             'package_id' => $activePackage->package_id,
-            'instructors_count' => $activePackage->instructors_count,
-            'students_count' => $activePackage->students_count,
-            'meeting_count' => $activePackage->meeting_count,
-            'courses_capacity' => $activePackage->courses_capacity,
-            'courses_count' => $activePackage->courses_count,
+            'instructors_count' => !is_null($activePackage->instructors_count) ? (int)$activePackage->instructors_count : null,
+            'students_count' => !is_null($activePackage->students_count) ? (int)$activePackage->students_count : null,
+            'meeting_count' => !is_null($activePackage->meeting_count) ? (int)$activePackage->meeting_count : null,
+            'courses_capacity' => !is_null($activePackage->courses_capacity) ? (int)$activePackage->courses_capacity : null,
+            'courses_count' => !is_null($activePackage->courses_count) ? (int)$activePackage->courses_count : null,
             'title' => $activePackage->title,
             'activation_date' => $activePackage->activation_date,
             'days_remained' => $activePackage->days_remained ?? 'unlimited',

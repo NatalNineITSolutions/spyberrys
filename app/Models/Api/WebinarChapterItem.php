@@ -6,12 +6,17 @@ use App\Http\Resources\FileResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\TextLessonResource;
 use App\Http\Resources\WebinarAssignmentResource;
+use App\Models\File;
 use App\Models\WebinarChapterItem as Model;
 
 class WebinarChapterItem extends Model
 {
     public function getItemResource()
     {
+        if (empty($this->item)) {
+            return  [];
+        }
+
         $type = $this->type;
         if ($type == self::$chapterFile) {
             return [
@@ -19,7 +24,7 @@ class WebinarChapterItem extends Model
                 'title' => $this->item->title,
                 'file_type' => $this->item->file_type,
                 'storage' => $this->item->storage,
-                'volume' =>  $this->item->volume === "0 bytes" ? null : $this->item->volume,
+                'volume' => (empty($this->item->volume) or $this->item->volume === "0 bytes" or in_array($this->item->storage, File::$ignoreVolumeFileSources)) ? null : $this->item->volume,
                 'downloadable' => $this->item->downloadable,
                 'access_after_day' => $this->item->access_after_day,
                 'check_previous_parts' => $this->item->check_previous_parts,
@@ -86,7 +91,7 @@ class WebinarChapterItem extends Model
         } elseif ($type == self::$chapterAssignment) {
             return $this->assignment();
         }
-        return [];
+        return null;
     }
 
 

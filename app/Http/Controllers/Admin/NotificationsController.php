@@ -107,16 +107,20 @@ class NotificationsController extends Controller
         ]);
 
 
-        if (!empty($user_id) and env('APP_ENV') == 'production') {
-            $user = \App\User::where('id', $user_id)->first();
+        //if (!empty($user_id) and env('APP_ENV') == 'production') {
+        $user = \App\User::where('id', $user_id)->first();
 
-            if (!empty($user) and !empty($user->email)) {
+        if (!empty($user) and !empty($user->email)) {
+            try {
                 \Mail::to($user->email)->send(new SendNotifications(['title' => $data['title'], 'message' => $data['message']]));
+            } catch (\Exception $exception) {
+                // dd($exception)
             }
-
-            // Firebase Messages
-            $this->handleFirebaseMessages($data, $user_id, $group_id, $webinar_id);
         }
+
+        // Firebase Messages
+        $this->handleFirebaseMessages($data, $user_id, $group_id, $webinar_id);
+        //}
 
 
         return redirect(getAdminPanelUrl() . '/notifications/posted');
@@ -183,8 +187,10 @@ class NotificationsController extends Controller
             $fcmTokensQuery->whereIn('user_id', $usersIds);
         }
 
-        $deviceTokens = [];
+        $fcmTokensQuery->orderBy('created_at', 'desc');
+
         $fcmTokens = $fcmTokensQuery->get();
+        $deviceTokens = [];
 
         foreach ($fcmTokens as $fcmToken) {
             if ($fcmToken->fcm_token && strlen($fcmToken->fcm_token) > 0) {
@@ -224,7 +230,7 @@ class NotificationsController extends Controller
                 try {
                     $messageFCM->send($fcmMessage);
                 } catch (\Exception $exception) {
-
+                    //dd($exception);
                 }
             }
         }

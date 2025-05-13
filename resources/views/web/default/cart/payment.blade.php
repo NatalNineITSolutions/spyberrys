@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            @if(!empty($invalidChannels))
+            @if(!empty($invalidChannels) and empty(getFinancialSettings("hide_disabled_payment_gateways")))
                 <div class="d-flex align-items-center mt-30 rounded-lg border p-15">
                     <div class="size-40 d-flex-center rounded-circle bg-gray200">
                         <i data-feather="info" class="text-gray" width="20" height="20"></i>
@@ -114,7 +114,7 @@
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js"
-                        data-key="{{ env('RAZORPAY_API_KEY') }}"
+                        data-key="{{ getRazorpayApiKey()['api_key'] }}"
                         data-amount="{{ (int)($order->total_amount * 100) }}"
                         data-buttontext="product_price"
                         data-description="Rozerpay"

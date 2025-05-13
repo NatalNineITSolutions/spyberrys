@@ -95,6 +95,15 @@ class SessionController extends Controller
                     'created_at' => time()
                 ]);
 
+                if (!empty($session)) {
+                    SessionTranslation::updateOrCreate([
+                        'session_id' => $session->id,
+                        'locale' => mb_strtolower($data['locale']),
+                    ], [
+                        'title' => $data['title'],
+                        'description' => $data['description'],
+                    ]);
+                }
 
                 if ($data['session_api'] == 'big_blue_button') {
                     $this->handleBigBlueButtonApi($session, $teacher);
@@ -114,18 +123,8 @@ class SessionController extends Controller
                     $session->save();
                 }
 
-                if (!empty($session)) {
-                    SessionTranslation::updateOrCreate([
-                        'session_id' => $session->id,
-                        'locale' => mb_strtolower($data['locale']),
-                    ], [
-                        'title' => $data['title'],
-                        'description' => $data['description'],
-                    ]);
-
-                    if (!empty($session->chapter_id)) {
-                        WebinarChapterItem::makeItem($webinar->creator_id, $session->chapter_id, $session->id, WebinarChapterItem::$chapterSession);
-                    }
+                if (!empty($session) and !empty($session->chapter_id)) {
+                    WebinarChapterItem::makeItem($webinar->creator_id, $session->chapter_id, $session->id, WebinarChapterItem::$chapterSession);
                 }
 
                 return response()->json([
@@ -302,7 +301,7 @@ class SessionController extends Controller
         ]);
 
         $createMeeting->setDuration($session->duration);
-        \Bigbluebutton::create($createMeeting);
+        $response = \Bigbluebutton::create($createMeeting);
 
         return true;
     }

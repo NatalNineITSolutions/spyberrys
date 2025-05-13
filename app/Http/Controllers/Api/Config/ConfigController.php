@@ -40,9 +40,11 @@ class ConfigController extends Controller
         ];
         $showOtherRegisterMethod = getFeaturesSettings('show_other_register_method') ?? false;
 
+        $selectRolesDuringRegistration = getFeaturesSettings('select_the_role_during_registration') ?? null;
 
         $data = [
             'register_method' => $registerMethod,
+            'selectRolesDuringRegistration' => $selectRolesDuringRegistration,
             'offline_bank_account' => getOfflineBanksTitle() ?? null,
             'user_language' => $userLanguages,
             'payment_channels' => $paymentChannels,

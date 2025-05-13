@@ -14,17 +14,18 @@ class WebinarChapterItemsResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'can' => [
-                'view' => ($this->resource->item !== null && !$this->resource->item->canViewError() and (($this->type == 'file' and $this->item->user_has_access) or ($this->type != 'file'))),
+                'view' => (!empty($this->resource->item) && !$this->resource->item->canViewError() and (($this->type == 'file' and $this->resource->item->user_has_access) or ($this->type != 'file'))),
             ],
-            'can_view_error' => $this->resource->item !==null && $this->resource->item->canViewError(),
-            'auth_has_read' => $this->resource->item !==null && $this->item->read,
+            'can_view_error' => !empty($this->resource->item) && $this->resource->item->canViewError(),
+            'auth_has_read' => !empty($this->resource->item) && $this->resource->item->read,
             //    'ff' => $this->resource->item->checkSequenceContent(apiAuth()),
             //  'id' => $this->id,
             'type' => $this->type,
             'created_at' => $this->created_at,
-            'link' => route($this->type . '.show', $this->item->id),
+            'link' => !empty($this->resource->item) ? route($this->type . '.show', $this->resource->item->id) : null,
             $this->merge($this->resource->getItemResource()),
         ];
     }

@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Api\Panel\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -254,8 +255,8 @@ Route::group([], function () {
     //goToAgora Session
     Route::get('/webinars/session/agora/{id}', ['uses' => 'SessionController@agora'])->name("agora.api.join");
     //End New API
-    Route::put('/users/fcm', [UsersController::class,"fcm"]);
-    Route::get('/users/login/history', [UsersController::class,"loginHistory"]);
+    Route::put('/users/fcm', [UsersController::class, "fcm"]);
+    Route::get('/users/login/history', [UsersController::class, "loginHistory"]);
     Route::group(['prefix' => 'webinars'], function () {
         Route::group(['prefix' => 'personal-notes'], function () {
             Route::delete('/delete/{id}', 'CoursePersonalNotesController@destroy');
