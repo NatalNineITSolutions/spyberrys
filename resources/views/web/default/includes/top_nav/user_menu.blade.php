@@ -1,3 +1,19 @@
+<style>
+    .custom-login {
+        border: 1px solid rgba(234, 235, 239, 1);
+        border-radius: 7px;
+        margin-right: 20px;
+    }
+
+    .custom-register {
+        background-color: rgba(40, 40, 40, 1);
+        border-radius: 7px;
+        border: none;
+        outline: none;
+        color: white;
+    }
+</style>
+
 @if(!empty($authUser))
 
     <div class="custom-dropdown navbar-auth-user-dropdown position-relative ml-50">
@@ -95,8 +111,8 @@
         </div>
     </div>
 @else
-    <div class="d-flex align-items-center ml-md-50">
-        <a href="/login" class="py-5 px-10 mr-10 text-dark-blue font-14">{{ trans('auth.login') }}</a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14">{{ trans('auth.register') }}</a>
+    <div class="d-flex align-items-center">
+        <a href="/login" class="py-5 px-10 text-dark-blue font-14 custom-login">{{ trans('auth.login') }}</a>
+        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register">{{ trans('auth.register') }}</a>
     </div>
 @endif

@@ -1,3 +1,5 @@
+
+
 <?php $__env->startPush('styles_top'); ?>
     <link rel="stylesheet" href="/assets/default/vendors/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/owl-carousel2/owl.carousel.min.css">
@@ -912,6 +914,47 @@
         <?php endif; ?>
 
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+    <div class="footer container">
+        <div class="footer-subscribe d-block d-md-flex flex-column" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+
+            <div class="d-flex flex-column align-items-center mb-4">
+                <strong class="text-black"><?php echo e(trans('footer.join_us_today')); ?></strong>
+                <span class="d-block mt-5 text-black text-center"><?php echo e(trans('footer.subscribe_content')); ?></span>
+            </div>
+            <div class="subscribe-input bg-white p-10 flex-grow-1 mt-30 mt-md-0">
+                <form action="/newsletters" method="post">
+                    <?php echo e(csrf_field()); ?>
+
+
+                    <div class="form-group d-flex align-items-center m-0">
+                        <div class="w-100">
+                            <input type="text" name="newsletter_email" class="form-control border-0 <?php $__errorArgs = ['newsletter_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="<?php echo e(trans('footer.enter_email_here')); ?>"/>
+                            <?php $__errorArgs = ['newsletter_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                        <button type="submit" class="btn btn-primary rounded-pill"><?php echo e(trans('footer.join')); ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts_bottom'); ?>

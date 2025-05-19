@@ -909,6 +909,32 @@
         @endif
 
     @endforeach
+
+    <div class="footer container">
+        <div class="footer-subscribe d-block d-md-flex flex-column" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+
+            <div class="d-flex flex-column align-items-center mb-4">
+                <strong class="text-black">{{ trans('footer.join_us_today') }}</strong>
+                <span class="d-block mt-5 text-black text-center">{{ trans('footer.subscribe_content') }}</span>
+            </div>
+            <div class="subscribe-input bg-white p-10 flex-grow-1 mt-30 mt-md-0">
+                <form action="/newsletters" method="post">
+                    {{ csrf_field() }}
+
+                    <div class="form-group d-flex align-items-center m-0">
+                        <div class="w-100">
+                            <input type="text" name="newsletter_email" class="form-control border-0 @error('newsletter_email') is-invalid @enderror" placeholder="{{ trans('footer.enter_email_here') }}"/>
+                            @error('newsletter_email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary rounded-pill">{{ trans('footer.join') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 @endsection
 
 @push('scripts_bottom')

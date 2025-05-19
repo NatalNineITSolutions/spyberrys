@@ -1,0 +1,198 @@
+<style>
+
+    .header-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .logo img {
+        width: 90px;
+    }
+
+    .custom-search-wrapper {
+        position: relative;
+        width: 350px;
+    }
+
+    .custom-search-input {
+        width: 100%;
+        padding-right: 40px;
+        padding-left: 12px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background-color: #F1F1F1;
+    }
+
+    .custom-search-button {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    /* Mobile responsive */
+    .hamburger {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .header-container {
+            flex-wrap: wrap;
+        }
+
+        .nav-menu {
+            flex-direction: column;
+            width: 100%;
+            display: none; /* hidden by default */
+            background: white;
+            padding: 1rem;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .nav-menu.active {
+            display: flex; /* shown when toggled */
+        }
+
+        .navbar-search {
+            display: none;
+        }
+    }
+
+</style>
+
+<div class="header">
+    <div class="container header-container">
+        <div class="left">
+            <a class="logo <?php echo e((empty($navBtnUrl) and empty($navBtnText)) ? '' : ''); ?>" href="/">
+                <?php if(!empty($generalSettings['logo'])): ?>
+                    <img src="<?php echo e($generalSettings['logo']); ?>" class="img-cover" alt="site logo">
+                <?php endif; ?>
+            </a>
+
+            <form action="/search" method="get" class="navbar-search position-relative">
+                <div class="custom-search-wrapper">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        class="custom-search-input" 
+                        placeholder="<?php echo e(trans('navbar.search_anything')); ?>" 
+                        aria-label="Search"
+                    >
+                    <button type="submit" class="custom-search-button">
+                        <i data-feather="search" width="20" height="20"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+         <!-- Hamburger Button -->
+        <button class="hamburger d-md-none" id="hamburgerBtn" aria-label="Toggle menu">
+            <i data-feather="menu" width="24" height="24"></i>
+        </button>
+
+         <div class="right nav-menu" id="mobileNav">
+            <?php if(!empty($categories) and count($categories)): ?>
+                <li class="">
+                    <div class="menu-category">
+                        <ul>
+                            <li class="cursor-pointer user-select-none d-flex xs-categories-toggle text-black">
+                                <?php echo e(trans('categories.categories')); ?>
+
+
+                                <ul class="cat-dropdown-menu">
+                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li>
+                                            <a href="<?php echo e($category->getUrl()); ?>" class="<?php echo e((!empty($category->subCategories) and count($category->subCategories)) ? 'js-has-subcategory' : ''); ?>">
+                                                <div class="d-flex align-items-center">
+                                                    <?php if(!empty($category->icon)): ?>
+                                                        <img src="<?php echo e($category->icon); ?>" class="cat-dropdown-menu-icon mr-10" alt="<?php echo e($category->title); ?> icon">
+                                                    <?php endif; ?>
+
+                                                    <?php echo e($category->title); ?>
+
+                                                </div>
+
+                                                <?php if(!empty($category->subCategories) and count($category->subCategories)): ?>
+                                                    <i data-feather="chevron-right" width="20" height="20" class="d-none d-lg-inline-block ml-10"></i>
+                                                    <i data-feather="chevron-down" width="20" height="20" class="d-inline-block d-lg-none"></i>
+                                                <?php endif; ?>
+                                            </a>
+
+                                            <?php if(!empty($category->subCategories) and count($category->subCategories)): ?>
+                                                <ul class="sub-menu" data-simplebar <?php if((!empty($isRtl) and $isRtl)): ?> data-simplebar-direction="rtl" <?php endif; ?>>
+                                                    <?php $__currentLoopData = $category->subCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <li>
+                                                            <a href="<?php echo e($subCategory->getUrl()); ?>">
+                                                                <?php if(!empty($subCategory->icon)): ?>
+                                                                    <img src="<?php echo e($subCategory->icon); ?>" class="cat-dropdown-menu-icon mr-10" alt="<?php echo e($subCategory->title); ?> icon">
+                                                                <?php endif; ?>
+
+                                                                <?php echo e($subCategory->title); ?>
+
+                                                            </a>
+                                                        </li>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </ul>
+                                            <?php endif; ?>
+                                        </li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            <?php endif; ?>
+
+            <li class="nav-item">
+                <a class="text-black" href="<?php echo e(route('classes.index')); ?>">Top Course</a>
+            </li>
+
+            <?php echo $__env->make('web.default.includes.top_nav.user_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+            <?php echo $__env->make(getTemplate().'.includes.shopping-cart-dropdwon', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        feather.replace();
+
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const mobileNav = document.getElementById("mobileNav");
+
+        hamburgerBtn.addEventListener("click", function () {
+            mobileNav.classList.toggle("active");
+        });
+    });
+</script>
+<?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/includes/header.blade.php ENDPATH**/ ?>

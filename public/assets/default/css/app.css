@@ -6,6 +6,17 @@ $custom-control-indicator-bg:$primary;*/
 .btn-text-primary {
   color: #43d477 !important;
 }
+
+.text-black {
+  color: rgba(0, 0, 0, 1);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.text-secondary-black {
+  color: rgba(40, 40, 40, 1);
+}
+
 .btn-text-primary:hover {
   color: #ffffff !important;
   background-color: #43d477 !important;
@@ -15041,14 +15052,9 @@ p {
   position: relative;
   border-radius: 10px;
   font-weight: 500;
-  color: var(--secondary);
+  font-size: 17px;
 }
-@media (min-width: 991px) {
-  .menu-category > ul > li {
-    background-color: #f1f1f1;
-    padding: 12px 25px 12px 15px;
-  }
-}
+
 @media (max-width: 991px) {
   .menu-category > ul > li {
     flex-direction: column;
@@ -15294,11 +15300,9 @@ p {
 .footer .footer-subscribe {
   position: relative;
   top: -100px;
-  height: 200px;
-  background-image: url("/assets/default/img/footer/pattern.png");
-  background-color: var(--primary);
+  background-image: url("/assets/default/img/footer/gradient-bg.png");
   border-radius: 15px;
-  padding: 25px;
+  padding: 65px 25px;
 }
 @media (max-width: 767px) {
   .footer .footer-subscribe {
@@ -15309,7 +15313,7 @@ p {
   font-size: 30px;
   font-weight: bold;
   line-height: 1.22;
-  color: #ffffff;
+  text-align: center;
   pointer-events: none;
 }
 .footer .footer-subscribe .subscribe-input {
@@ -15790,10 +15794,11 @@ p {
 .user-inline-avatar .avatar img {
   border-radius: 50%;
 }
-.user-inline-avatar .user-name {
+.author-price-details .user-name {
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.19;
-  color: #818894;
+  color: rgba(40, 40, 40, 1);
 }
 
 .home-sections {
@@ -16525,7 +16530,6 @@ p {
 .webinar-card {
   position: relative;
   border-radius: 15px;
-  box-shadow: 0 5px 12px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   transition: all 0.5s ease;
 }
@@ -16535,7 +16539,7 @@ p {
   height: 250px;
 }
 .webinar-card .image-box img {
-  border-radius: 15px 15px 0 0;
+  border-radius: 10px 10px 0 0;
 }
 .webinar-card .image-box::after {
   content: "";
@@ -16640,6 +16644,8 @@ p {
 }
 .webinar-card .webinar-card-body {
   padding: 15px 10px 20px 15px;
+  background: rgba(234, 235, 239, 1);
+  border-radius: 0 0 10px 10px;
 }
 .rtl .webinar-card .webinar-card-body {
   padding: 15px 15px 20px 10px;
@@ -16662,6 +16668,8 @@ p {
   height: 48px;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
 }
 .webinar-card .duration, .webinar-card .date-published {
   font-weight: 500;

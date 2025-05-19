@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class=" footer-subscribe d-block d-md-flex align-items-center justify-content-between">
+                {{-- <div class=" footer-subscribe d-block d-md-flex align-items-center justify-content-between">
                     <div class="flex-grow-1">
                         <strong>{{ trans('footer.join_us_today') }}</strong>
                         <span class="d-block mt-5 text-white">{{ trans('footer.subscribe_content') }}</span>
@@ -31,7 +31,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
