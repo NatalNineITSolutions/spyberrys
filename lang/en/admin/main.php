@@ -28,6 +28,8 @@ return [
 'choose_title' => 'Title',
 'choose_category' => 'Select a category',
 'caption' => 'Caption',
+'is_featured' => 'Featured',
+'video' => 'Video',
 'actions' => 'Actions',
 'action' => 'Action',
 'status' => 'Status',

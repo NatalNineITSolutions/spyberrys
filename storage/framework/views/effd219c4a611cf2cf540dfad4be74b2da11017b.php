@@ -1,10 +1,12 @@
+
+
 <?php $__env->startPush('styles_top'); ?>
     <link rel="stylesheet" href="/assets/default/vendors/select2/select2.min.css">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
 
-    <div class="container">
+    <div class="">
         <?php if(!empty(session()->has('msg'))): ?>
             <div class="alert alert-info alert-dismissible fade show mt-30" role="alert">
                 <?php echo e(session()->get('msg')); ?>
@@ -17,7 +19,7 @@
 
         <div class="row login-container">
 
-            <div class="col-12 col-md-6 pl-0">
+            <div class="col-12 col-md-6 pl-0 login-img-section">
                 <img src="<?php echo e(getPageBackgroundSettings('login')); ?>" class="img-cover" alt="Login">
             </div>
             <div class="col-12 col-md-6">
@@ -97,9 +99,9 @@ unset($__errorArgs, $__bag); ?>
                         <a href="/forget-password" target="_blank"><?php echo e(trans('auth.forget_your_password')); ?></a>
                     </div>
 
-                    <div class="mt-20 text-center">
+                    <div class="mt-20 text-center sign-up-box">
                         <span><?php echo e(trans('auth.dont_have_account')); ?></span>
-                        <a href="/register" class="text-secondary font-weight-bold"><?php echo e(trans('auth.signup')); ?></a>
+                        <a href="/register" class="text-primary font-weight-bold"><?php echo e(trans('auth.signup')); ?></a>
                     </div>
                 </div>
             </div>

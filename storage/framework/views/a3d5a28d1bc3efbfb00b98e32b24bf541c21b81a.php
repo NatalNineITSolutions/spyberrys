@@ -1,7 +1,7 @@
 <style>
-    .stars-card {
+    /* .stars-card {
         display: none !important;
-    }
+    } */
 
     .author-price-details {
         width: 100%;

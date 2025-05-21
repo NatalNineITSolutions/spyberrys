@@ -165,6 +165,26 @@
                                     </ul>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input id="isFeatured" type="checkbox" name="is_featured" class="custom-control-input">
+                                        <label class="custom-control-label" for="isFeatured">{{ trans('admin/main.is_featured') }}</label>
+                                    </div>
+                                </div>
+
+                                <div id="videoInputWrapper" class="form-group d-none">
+                                    <label class="input-label">{{ trans('admin/main.video') }}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="input-group-text admin-file-manager" data-input="video" data-preview="holder">
+                                                <i class="fa fa-upload"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" name="video" id="video" value="{{ !empty($category) ? $category->video : old('video') }}" class="form-control @error('video') is-invalid @enderror"/>
+                                        <div class="invalid-feedback">@error('video') {{ $message }} @enderror</div>
+                                    </div>
+                                </div>
+
                                 <div class="text-right mt-4">
                                     <button class="btn btn-primary">{{ trans('admin/main.submit') }}</button>
                                 </div>
@@ -217,4 +237,27 @@
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
 
     <script src="/assets/default/js/admin/categories.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkbox = document.getElementById('isFeatured');
+            const videoWrapper = document.getElementById('videoInputWrapper');
+
+            function toggleVideoInput() {
+                if (checkbox.checked) {
+                    videoWrapper.classList.remove('d-none');
+                } else {
+                    videoWrapper.classList.add('d-none');
+                }
+            }
+
+            // Initial state
+            toggleVideoInput();
+
+            // Toggle on checkbox change
+            checkbox.addEventListener('change', toggleVideoInput);
+        });
+    </script>
+
+
 @endpush

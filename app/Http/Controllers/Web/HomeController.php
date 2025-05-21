@@ -324,7 +324,7 @@ class HomeController extends Controller
 
 
         $siteGeneralSettings = getGeneralSettings();
-        $heroSection = (!empty($siteGeneralSettings['hero_section2']) and $siteGeneralSettings['hero_section2'] == "1") ? "2" : "1";
+        $heroSection = (!empty($siteGeneralSettings['hero_section2']) and $siteGeneralSettings['hero_section2'] == "1") ? "1" : "1";
         $heroSectionData = getHomeHeroSettings($heroSection);
 
         if (in_array(HomeSection::$video_or_image_section, $selectedSectionsName)) {

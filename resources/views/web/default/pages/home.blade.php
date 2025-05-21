@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="/assets/default/vendors/owl-carousel2/owl.carousel.min.css">
 @endpush
 
+
+
 @section('content')
 
     @if(!empty($heroSectionData))
@@ -15,65 +17,80 @@
             @endpush
         @endif
 
-        <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('{{ $heroSectionData['hero_background'] }}')" @endif>
+        <div class="custom-banner-section">
+            <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('{{ $heroSectionData['hero_background'] }}')" @endif>
 
-            @if($heroSection == "1")
-                @if(!empty($heroSectionData['is_video_background']))
-                    <video playsinline autoplay muted loop id="homeHeroVideoBackground" class="img-cover">
-                        <source src="{{ $heroSectionData['hero_background'] }}" type="video/mp4">
-                    </video>
+                @if($heroSection == "1")
+                    @if(!empty($heroSectionData['is_video_background']))
+                        <video playsinline autoplay muted loop id="homeHeroVideoBackground" class="img-cover">
+                            <source src="{{ $heroSectionData['hero_background'] }}" type="video/mp4">
+                        </video>
+                    @endif
+
                 @endif
 
-                <div class="mask"></div>
-            @endif
+                <div class="user-select-none d-flex flex-column align-items-start">
 
-            <div class="container user-select-none">
+                    @if($heroSection == "2")
+                        <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
+                            <div class="col-12 col-md-7 col-lg-6">
+                                <h1 class="text-secondary font-weight-bold">{{ $heroSectionData['title'] }}</h1>
+                                <p class="slide-hint text-gray mt-20">{!! nl2br($heroSectionData['description']) !!}</p>
 
-                @if($heroSection == "2")
-                    <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
-                        <div class="col-12 col-md-7 col-lg-6">
-                            <h1 class="text-secondary font-weight-bold">{{ $heroSectionData['title'] }}</h1>
-                            <p class="slide-hint text-gray mt-20">{!! nl2br($heroSectionData['description']) !!}</p>
-
-                            <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
-                                <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
-                                    <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
-                                    <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-12 col-md-5 col-lg-6">
-                            @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
-                                <lottie-player src="{{ $heroSectionData['hero_vector'] }}" background="transparent" speed="1" class="w-100" loop autoplay></lottie-player>
-                            @else
-                                <img src="{{ $heroSectionData['hero_vector'] }}" alt="{{ $heroSectionData['title'] }}" class="img-cover">
-                            @endif
-                        </div>
-                    </div>
-                @else
-                    <div class="text-center slider-content">
-                        <h1>{{ $heroSectionData['title'] }}</h1>
-                        <div class="row h-100 align-items-center justify-content-center text-center">
-                            <div class="col-12 col-md-9 col-lg-7">
-                                <p class="mt-30 slide-hint">{!! nl2br($heroSectionData['description']) !!}</p>
-
-                                <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
                                     <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
                                         <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
                                         <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
                                     </div>
                                 </form>
                             </div>
+                            <div class="col-12 col-md-5 col-lg-6">
+                                @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
+                                    <lottie-player src="{{ $heroSectionData['hero_vector'] }}" background="transparent" speed="1" class="w-100" loop autoplay></lottie-player>
+                                @else
+                                    <img src="{{ $heroSectionData['hero_vector'] }}" alt="{{ $heroSectionData['title'] }}" class="img-cover">
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @endif
-            </div>
-        </section>
+                    @else
+                        <div class="text-center slider-content">
+                            <h1>{{ $heroSectionData['title'] }}</h1>
+                            <div class="row h-100 align-items-center text-center">
+                                <div class="col-12 col-md-9 col-lg-7">
+                                    <p class="mt-30 slide-hint">{!! nl2br($heroSectionData['description']) !!}</p>
+
+                                    <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                        <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
+                                            <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
+                                            <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+        </div>
+        
     @endif
 
+    <div class="section">
+        <h2>All the Skill you need in one Place</h2>
+        <p>From critical skills to technical topics, Spyberry supports your Professional development</p>
+
+        <div class="category-container">
+        <button class="category-button">Data Science</button>
+        <button class="category-button">IT Certifications</button>
+        <button class="category-button">Leadership</button>
+        <button class="category-button">Web Developement</button>
+        <button class="category-button">Communication</button>
+        <button class="category-button">Business Analytics & Intelligence</button>
+        </div>
+    </div>
 
     {{-- Statistics --}}
-    @include('web.default.pages.includes.home_statistics')
+    {{-- @include('web.default.pages.includes.home_statistics') --}}
 
 
     @foreach($homeSections as $homeSection)
@@ -466,16 +483,29 @@
                                 @foreach($testimonials as $testimonial)
                                     <div class="swiper-slide">
                                         <div class="testimonials-card position-relative py-15 py-lg-30 px-10 px-lg-20 rounded-sm shadow bg-white text-center">
-                                            <div class="d-flex flex-column align-items-center">
+
+                                            <div class="d-flex flex-column testimonial-box">
+                                                <div class="testimonial-user-details">
+                                                    <div class="testimonials-user-avatar">
+                                                        <img src="{{ $testimonial->user_avatar }}" alt="{{ $testimonial->user_name }}" class="img-cover rounded-circle">
+                                                    </div>
+                                                    <div class="user-details">
+                                                        <h4>{{ $testimonial->user_name }}</h4>
+                                                        <span class="d-block font-14 text-gray">{{ $testimonial->user_bio }}</span>
+                                                        @include('web.default.includes.webinar.rate',['rate' => $testimonial->rate, 'dontShowRate' => true])
+                                                    </div>
+                                                </div>
+                                                <p class="text-gray font-14">{!! nl2br($testimonial->comment) !!}</p>
+                                            </div>
+
+                                            {{-- <div class="d-flex flex-column align-items-center">
                                                 <div class="testimonials-user-avatar">
                                                     <img src="{{ $testimonial->user_avatar }}" alt="{{ $testimonial->user_name }}" class="img-cover rounded-circle">
                                                 </div>
                                                 <h4 class="font-16 font-weight-bold text-secondary mt-30">{{ $testimonial->user_name }}</h4>
                                                 <span class="d-block font-14 text-gray">{{ $testimonial->user_bio }}</span>
                                                 @include('web.default.includes.webinar.rate',['rate' => $testimonial->rate, 'dontShowRate' => true])
-                                            </div>
-
-                                            <p class="mt-25 text-gray font-14">{!! nl2br($testimonial->comment) !!}</p>
+                                            </div> --}}
 
                                             <div class="bottom-gradient"></div>
                                         </div>
@@ -911,26 +941,34 @@
     @endforeach
 
     <div class="footer container">
-        <div class="footer-subscribe d-block d-md-flex flex-column" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+        <div class="footer-subscribe d-block d-md-flex flex-column align-items-center" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
 
-            <div class="d-flex flex-column align-items-center mb-4">
-                <strong class="text-black">{{ trans('footer.join_us_today') }}</strong>
+            <div class="d-flex flex-column align-items-center mb-2">
+                <strong class="text-black mb-2">{{ trans('footer.join_us_today') }}</strong>
                 <span class="d-block mt-5 text-black text-center">{{ trans('footer.subscribe_content') }}</span>
             </div>
-            <div class="subscribe-input bg-white p-10 flex-grow-1 mt-30 mt-md-0">
-                <form action="/newsletters" method="post">
+            <div class="custom-subscribe-wrapper">
+                <form action="/newsletters" method="post" class="d-flex w-100 align-items-center" style="gap:10px;">
                     {{ csrf_field() }}
 
-                    <div class="form-group d-flex align-items-center m-0">
-                        <div class="w-100">
-                            <input type="text" name="newsletter_email" class="form-control border-0 @error('newsletter_email') is-invalid @enderror" placeholder="{{ trans('footer.enter_email_here') }}"/>
-                            @error('newsletter_email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">{{ trans('footer.join') }}</button>
+                    <div class="custom-subscribe-input-group flex-grow-1">
+                        <span class="custom-subscribe-icon">
+                            <i data-feather="mail"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            name="newsletter_email" 
+                            placeholder="{{ trans('footer.enter_email_here') }}" 
+                            class="custom-subscribe-input form-control border-0 @error('newsletter_email') is-invalid @enderror"
+                        >
                     </div>
+
+                    <button type="submit" class="custom-subscribe-button">Join Us</button>
                 </form>
+
+                @error('newsletter_email')
+                    <div class="invalid-feedback d-block mt-2">{{ $message }}</div>
+                @enderror
             </div>
         </div>
     </div>

@@ -12,9 +12,9 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('bundles', function (Blueprint $table) {
-            $table->boolean('certificate')->default(false)->after('subscribe');
-        });
+        // Schema::table('bundles', function (Blueprint $table) {
+        //     $table->boolean('certificate')->default(false)->after('subscribe');
+        // });
     }
 
 };

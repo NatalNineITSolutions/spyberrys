@@ -12,9 +12,9 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('sections', function (Blueprint $table) {
-            $table->enum('type', ['admin', 'panel'])->default('admin');
-        });
+        // Schema::table('sections', function (Blueprint $table) {
+        //     $table->enum('type', ['admin', 'panel'])->default('admin');
+        // });
     }
 
     /**

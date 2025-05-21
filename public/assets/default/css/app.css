@@ -9,7 +9,7 @@ $custom-control-indicator-bg:$primary;*/
 
 .text-black {
   color: rgba(0, 0, 0, 1);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -243,7 +243,7 @@ $custom-control-indicator-bg:$primary;*/
   --panel-bg: #fbfbfd;
   --success: #e7f4f0;
   --info: #ebf7ff;
-  --primary: #43d477;
+  --primary: rgba(77, 0, 255, 1);
   --secondary: #1f3b64;
   --success: #e7f4f0;
   --info: #ebf7ff;
@@ -256,9 +256,9 @@ $custom-control-indicator-bg:$primary;*/
   --gray300: #ececec;
   --gray200: #f1f1f1;
   --gray100: #f9f9f9;
-  --primary-hover: #1FB354;
-  --primary-border: #43d477;
-  --primary-border-hover: #2aba5e;
+  --primary-hover: rgb(56, 6, 173);
+  --primary-border:rgba(77, 0, 255, 1);
+  --primary-border-hover: rgb(109, 48, 253);
   --primary-btn-shadow: 0 3px 6px 0 rgb(64 213 125 / 30%);
   --primary-btn-shadow-hover: 0 3px 8px 0 rgb(64 213 125 / 30%);
   --primary-btn-color: #ffffff;
@@ -12939,7 +12939,7 @@ button.bg-gray100:focus {
 }
 
 .text-primary {
-  color: #43d477 !important;
+  color: var(--primary) !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -15052,7 +15052,7 @@ p {
   position: relative;
   border-radius: 10px;
   font-weight: 500;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 @media (max-width: 991px) {
@@ -15252,10 +15252,9 @@ p {
 .login-container {
   margin: 120px 0 70px;
   border-radius: 15px;
-  border: solid 1px #ececec;
 }
 .login-container img {
-  border-radius: 10px 0 0 10px;
+  border-radius: 0px 30px 30px 0px;
 }
 @media (max-width: 991px) {
   .login-container {
@@ -15535,7 +15534,6 @@ p {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 250px 0 350px 0;
 }
 .slider-container.slider-hero-section2 {
   padding: 100px 0 150px 0;
@@ -15555,7 +15553,6 @@ p {
   z-index: 5;
 }
 .slider-container .slider-content h1 {
-  font-size: 44px;
   line-height: 1.5;
   color: #ffffff;
   pointer-events: none;
@@ -15566,8 +15563,9 @@ p {
   }
 }
 .slider-container .slider-content .slide-hint {
-  font-size: 20px;
-  font-weight: normal;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
   line-height: 1.25;
   color: #ffffff;
   pointer-events: none;
@@ -15996,8 +15994,6 @@ p {
   background: linear-gradient(to left, #9effc1, var(--primary));
 }
 .testimonials-container .testimonials-card .testimonials-user-avatar {
-  position: absolute;
-  top: -40px;
   width: 80px;
   height: 80px;
 }
@@ -19655,7 +19651,6 @@ p {
   color: var(--primary-btn-color);
   background-color: var(--primary);
   border-color: var(--primary-border);
-  box-shadow: var(--primary-btn-shadow);
   transition: all 0.3s;
 }
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:not(:disabled):not(.disabled):active {
@@ -19741,4 +19736,66 @@ p {
 
 .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
   opacity: 0.6 !important;
+}
+
+
+/* Newsletter */
+.custom-subscribe-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between input and button */
+  max-width: 400px;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.custom-subscribe-input-group {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background-color: #fff;
+    border: 1px solid rgba(237, 237, 237, 1);
+    padding: 0 12px;
+    border-radius: 8px;
+    height: 44px;
+}
+
+.custom-subscribe-icon {
+    margin-right: 8px;
+    color: #999;
+    display: flex;
+    align-items: center;
+}
+
+.custom-subscribe-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    color: #333;
+}
+
+.custom-subscribe-button {
+    background-color: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-subscribe-button:hover {
+    background-color: #000;
+}
+
+@media (max-width:768px) {
+  .custom-subscribe-wrapper form {
+    flex-direction: column;
+  }
+
+  .custom-subscribe-input-group {
+    padding: 14px 20px;
+  }
 }

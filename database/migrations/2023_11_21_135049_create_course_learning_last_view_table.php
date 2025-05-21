@@ -12,15 +12,15 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('course_learning_last_views', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('item_id')->unsigned();
-            $table->enum('item_type', ['file', 'session', 'text_lesson', 'assignment', 'quiz']);
-            $table->bigInteger('visited_at')->unsigned();
+        // Schema::create('course_learning_last_views', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->integer('user_id')->unsigned();
+        //     $table->integer('item_id')->unsigned();
+        //     $table->enum('item_type', ['file', 'session', 'text_lesson', 'assignment', 'quiz']);
+        //     $table->bigInteger('visited_at')->unsigned();
 
-            $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete();
-        });
+        //     $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete();
+        // });
     }
 
     /**

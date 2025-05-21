@@ -12,9 +12,9 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table("files", function (Blueprint $table) {
-            $table->enum('secure_host_upload_type', ['direct', 'manual'])->nullable()->after('file_type');
-        });
+        // Schema::table("files", function (Blueprint $table) {
+        //     $table->enum('secure_host_upload_type', ['direct', 'manual'])->nullable()->after('file_type');
+        // });
     }
 
     /**

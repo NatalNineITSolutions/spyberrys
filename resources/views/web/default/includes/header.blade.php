@@ -1,5 +1,24 @@
 <style>
 
+    .header {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background-color: #fff;
+        transition: box-shadow 0.3s ease;
+        padding: 0rem 3rem;
+    }
+
+    .header.scrolled {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header.sticky.sticky-visible {
+        transform: translateY(0); /* Slide down into view */
+    }
+
     .header-container {
         width: 100%;
         display: flex;
@@ -62,7 +81,78 @@
         gap: 20px;
     }
 
-    @media (max-width: 768px) {
+    .search-toggle-button {
+        display: none;
+    }
+
+    .navbar-search {
+        display: block;
+    }
+
+    /* Seaarch bar mobile overlay */
+    .mobile-search-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+        padding: 10px 15px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-search-overlay.active {
+        display: block;
+    }
+
+    .overlay-search-form {
+        width: 100%;
+    }
+
+    .overlay-search-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .overlay-search-input {
+        width: 100%;
+        height: 42px;
+        padding: 0 40px 0 36px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background-color: #F1F1F1;
+        font-size: 16px;
+    }
+
+    .overlay-search-submit {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .overlay-search-close {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    @media (max-width: 991px) {
+
+        .header {
+            padding: 10px 20px;
+        }
+
         .header-container {
             flex-wrap: wrap;
         }
@@ -84,13 +174,37 @@
 
         .navbar-search {
             display: none;
+            width: 100%;
+            margin-top: 10px;
         }
+
+        .navbar-search.active {
+            display: block;
+        }
+
+        .search-toggle-button {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-toggle-button.hidden {
+            display: none;
+        }
+
+        .custom-search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
     }
 
 </style>
 
 <div class="header">
-    <div class="container header-container">
+    <div class="header-container">
         <div class="left">
             <a class="logo {{ (empty($navBtnUrl) and empty($navBtnText)) ? '' : '' }}" href="/">
                 @if(!empty($generalSettings['logo']))
@@ -114,10 +228,17 @@
             </form>
         </div>
 
-         <!-- Hamburger Button -->
-        <button class="hamburger d-md-none" id="hamburgerBtn" aria-label="Toggle menu">
-            <i data-feather="menu" width="24" height="24"></i>
-        </button>
+        <div class="d-flex align-items-center" style="gap: 20px;">
+            <!-- Search Toggle Button (Mobile Only) -->
+            <button class="search-toggle-button d-lg-none" id="searchToggleBtn" aria-label="Toggle search">
+                <i data-feather="search" width="24" height="24"></i>
+            </button>   
+
+            <!-- Hamburger Button -->
+            <button class="hamburger d-lg-none" id="hamburgerBtn" aria-label="Toggle menu">
+                <i data-feather="menu" width="24" height="24"></i>
+            </button>
+        </div>
 
          <div class="right nav-menu" id="mobileNav">
             @if(!empty($categories) and count($categories))
@@ -180,15 +301,68 @@
     </div>
 </div>
 
+<!-- Fullscreen Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay">
+    <form action="/search" method="get" class="overlay-search-form">
+        <div class="overlay-search-wrapper">
+            <input 
+                type="text" 
+                name="search" 
+                class="overlay-search-input" 
+                placeholder="{{ trans('navbar.search_anything') }}" 
+                aria-label="Search"
+            >
+            <button type="submit" class="overlay-search-submit">
+                <i data-feather="search" width="20" height="20"></i>
+            </button>
+            <button type="button" class="overlay-search-close" id="mobileSearchCloseBtn">
+                <i data-feather="x" width="24" height="24"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+{{-- Header sticky --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        feather.replace();
+    feather.replace();
 
-        const hamburgerBtn = document.getElementById("hamburgerBtn");
-        const mobileNav = document.getElementById("mobileNav");
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileNav = document.getElementById("mobileNav");
+    const header = document.querySelector(".header");
 
+    const searchToggleBtn = document.getElementById("searchToggleBtn");
+    const mobileSearchOverlay = document.getElementById("mobileSearchOverlay");
+    const mobileSearchCloseBtn = document.getElementById("mobileSearchCloseBtn");
+
+    if (hamburgerBtn && mobileNav) {
         hamburgerBtn.addEventListener("click", function () {
             mobileNav.classList.toggle("active");
         });
+    }
+
+    if (searchToggleBtn && mobileSearchOverlay) {
+        searchToggleBtn.addEventListener("click", function () {
+            mobileSearchOverlay.classList.add("active");
+
+            // Optional: Focus the input
+            const input = mobileSearchOverlay.querySelector('input');
+            if (input) input.focus();
+        });
+    }
+
+    if (mobileSearchCloseBtn) {
+        mobileSearchCloseBtn.addEventListener("click", function () {
+            mobileSearchOverlay.classList.remove("active");
+        });
+    }
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > 10) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
     });
+});
 </script>
