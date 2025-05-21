@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/assets/default/vendors/toast/jquery.toast.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/simplebar/simplebar.css">
     <link rel="stylesheet" href="/assets/default/css/app.css">
+    <link rel="stylesheet" href="/assets/default/css/style.css">
 
     @if($isRtl)
         <link rel="stylesheet" href="/assets/default/css/rtl-app.css">
@@ -46,8 +47,9 @@
     @endif
 
     @if(!isset($appHeader))
-        @include('web.default.includes.top_nav')
-        @include('web.default.includes.navbar')
+        {{-- @include('web.default.includes.top_nav')
+        @include('web.default.includes.navbar') --}}
+        @include('web.default.includes.header')
     @endif
 
     @if(!empty($justMobileApp))

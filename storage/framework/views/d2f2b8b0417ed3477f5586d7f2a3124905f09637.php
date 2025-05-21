@@ -1,7 +1,11 @@
+
+
 <?php $__env->startPush('styles_top'); ?>
     <link rel="stylesheet" href="/assets/default/vendors/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/owl-carousel2/owl.carousel.min.css">
 <?php $__env->stopPush(); ?>
+
+
 
 <?php $__env->startSection('content'); ?>
 
@@ -13,65 +17,80 @@
             <?php $__env->stopPush(); ?>
         <?php endif; ?>
 
-        <section class="slider-container  <?php echo e(($heroSection == "2") ? 'slider-hero-section2' : ''); ?>" <?php if(empty($heroSectionData['is_video_background'])): ?> style="background-image: url('<?php echo e($heroSectionData['hero_background']); ?>')" <?php endif; ?>>
+        <div class="custom-banner-section">
+            <section class="slider-container  <?php echo e(($heroSection == "2") ? 'slider-hero-section2' : ''); ?>" <?php if(empty($heroSectionData['is_video_background'])): ?> style="background-image: url('<?php echo e($heroSectionData['hero_background']); ?>')" <?php endif; ?>>
 
-            <?php if($heroSection == "1"): ?>
-                <?php if(!empty($heroSectionData['is_video_background'])): ?>
-                    <video playsinline autoplay muted loop id="homeHeroVideoBackground" class="img-cover">
-                        <source src="<?php echo e($heroSectionData['hero_background']); ?>" type="video/mp4">
-                    </video>
+                <?php if($heroSection == "1"): ?>
+                    <?php if(!empty($heroSectionData['is_video_background'])): ?>
+                        <video playsinline autoplay muted loop id="homeHeroVideoBackground" class="img-cover">
+                            <source src="<?php echo e($heroSectionData['hero_background']); ?>" type="video/mp4">
+                        </video>
+                    <?php endif; ?>
+
                 <?php endif; ?>
 
-                <div class="mask"></div>
-            <?php endif; ?>
+                <div class="user-select-none d-flex flex-column align-items-start">
 
-            <div class="container user-select-none">
+                    <?php if($heroSection == "2"): ?>
+                        <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
+                            <div class="col-12 col-md-7 col-lg-6">
+                                <h1 class="text-secondary font-weight-bold"><?php echo e($heroSectionData['title']); ?></h1>
+                                <p class="slide-hint text-gray mt-20"><?php echo nl2br($heroSectionData['description']); ?></p>
 
-                <?php if($heroSection == "2"): ?>
-                    <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
-                        <div class="col-12 col-md-7 col-lg-6">
-                            <h1 class="text-secondary font-weight-bold"><?php echo e($heroSectionData['title']); ?></h1>
-                            <p class="slide-hint text-gray mt-20"><?php echo nl2br($heroSectionData['description']); ?></p>
-
-                            <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
-                                <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
-                                    <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="<?php echo e(trans('home.slider_search_placeholder')); ?>"/>
-                                    <button type="submit" class="btn btn-primary rounded-pill"><?php echo e(trans('home.find')); ?></button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-12 col-md-5 col-lg-6">
-                            <?php if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1"): ?>
-                                <lottie-player src="<?php echo e($heroSectionData['hero_vector']); ?>" background="transparent" speed="1" class="w-100" loop autoplay></lottie-player>
-                            <?php else: ?>
-                                <img src="<?php echo e($heroSectionData['hero_vector']); ?>" alt="<?php echo e($heroSectionData['title']); ?>" class="img-cover">
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php else: ?>
-                    <div class="text-center slider-content">
-                        <h1><?php echo e($heroSectionData['title']); ?></h1>
-                        <div class="row h-100 align-items-center justify-content-center text-center">
-                            <div class="col-12 col-md-9 col-lg-7">
-                                <p class="mt-30 slide-hint"><?php echo nl2br($heroSectionData['description']); ?></p>
-
-                                <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
                                     <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
                                         <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="<?php echo e(trans('home.slider_search_placeholder')); ?>"/>
                                         <button type="submit" class="btn btn-primary rounded-pill"><?php echo e(trans('home.find')); ?></button>
                                     </div>
                                 </form>
                             </div>
+                            <div class="col-12 col-md-5 col-lg-6">
+                                <?php if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1"): ?>
+                                    <lottie-player src="<?php echo e($heroSectionData['hero_vector']); ?>" background="transparent" speed="1" class="w-100" loop autoplay></lottie-player>
+                                <?php else: ?>
+                                    <img src="<?php echo e($heroSectionData['hero_vector']); ?>" alt="<?php echo e($heroSectionData['title']); ?>" class="img-cover">
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </section>
+                    <?php else: ?>
+                        <div class="text-center slider-content">
+                            <h1><?php echo e($heroSectionData['title']); ?></h1>
+                            <div class="row h-100 align-items-center text-center">
+                                <div class="col-12 col-md-9 col-lg-7">
+                                    <p class="mt-30 slide-hint"><?php echo nl2br($heroSectionData['description']); ?></p>
+
+                                    <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                        <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
+                                            <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="<?php echo e(trans('home.slider_search_placeholder')); ?>"/>
+                                            <button type="submit" class="btn btn-primary rounded-pill"><?php echo e(trans('home.find')); ?></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </div>
+        
     <?php endif; ?>
 
+    <div class="section">
+        <h2>All the Skill you need in one Place</h2>
+        <p>From critical skills to technical topics, Spyberry supports your Professional development</p>
+
+        <div class="category-container">
+        <button class="category-button">Data Science</button>
+        <button class="category-button">IT Certifications</button>
+        <button class="category-button">Leadership</button>
+        <button class="category-button">Web Developement</button>
+        <button class="category-button">Communication</button>
+        <button class="category-button">Business Analytics & Intelligence</button>
+        </div>
+    </div>
 
     
-    <?php echo $__env->make('web.default.pages.includes.home_statistics', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    
 
 
     <?php $__currentLoopData = $homeSections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $homeSection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -466,16 +485,22 @@
                                 <?php $__currentLoopData = $testimonials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $testimonial): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="swiper-slide">
                                         <div class="testimonials-card position-relative py-15 py-lg-30 px-10 px-lg-20 rounded-sm shadow bg-white text-center">
-                                            <div class="d-flex flex-column align-items-center">
-                                                <div class="testimonials-user-avatar">
-                                                    <img src="<?php echo e($testimonial->user_avatar); ?>" alt="<?php echo e($testimonial->user_name); ?>" class="img-cover rounded-circle">
+
+                                            <div class="d-flex flex-column testimonial-box">
+                                                <div class="testimonial-user-details">
+                                                    <div class="testimonials-user-avatar">
+                                                        <img src="<?php echo e($testimonial->user_avatar); ?>" alt="<?php echo e($testimonial->user_name); ?>" class="img-cover rounded-circle">
+                                                    </div>
+                                                    <div class="user-details">
+                                                        <h4><?php echo e($testimonial->user_name); ?></h4>
+                                                        <span class="d-block font-14 text-gray"><?php echo e($testimonial->user_bio); ?></span>
+                                                        <?php echo $__env->make('web.default.includes.webinar.rate',['rate' => $testimonial->rate, 'dontShowRate' => true], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                                    </div>
                                                 </div>
-                                                <h4 class="font-16 font-weight-bold text-secondary mt-30"><?php echo e($testimonial->user_name); ?></h4>
-                                                <span class="d-block font-14 text-gray"><?php echo e($testimonial->user_bio); ?></span>
-                                                <?php echo $__env->make('web.default.includes.webinar.rate',['rate' => $testimonial->rate, 'dontShowRate' => true], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                                <p class="text-gray font-14"><?php echo nl2br($testimonial->comment); ?></p>
                                             </div>
 
-                                            <p class="mt-25 text-gray font-14"><?php echo nl2br($testimonial->comment); ?></p>
+                                            
 
                                             <div class="bottom-gradient"></div>
                                         </div>
@@ -912,6 +937,55 @@
         <?php endif; ?>
 
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+    <div class="footer container">
+        <div class="footer-subscribe d-block d-md-flex flex-column align-items-center" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+
+            <div class="d-flex flex-column align-items-center mb-2">
+                <strong class="text-black mb-2"><?php echo e(trans('footer.join_us_today')); ?></strong>
+                <span class="d-block mt-5 text-black text-center"><?php echo e(trans('footer.subscribe_content')); ?></span>
+            </div>
+            <div class="custom-subscribe-wrapper">
+                <form action="/newsletters" method="post" class="d-flex w-100 align-items-center" style="gap:10px;">
+                    <?php echo e(csrf_field()); ?>
+
+
+                    <div class="custom-subscribe-input-group flex-grow-1">
+                        <span class="custom-subscribe-icon">
+                            <i data-feather="mail"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            name="newsletter_email" 
+                            placeholder="<?php echo e(trans('footer.enter_email_here')); ?>" 
+                            class="custom-subscribe-input form-control border-0 <?php $__errorArgs = ['newsletter_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                        >
+                    </div>
+
+                    <button type="submit" class="custom-subscribe-button">Join Us</button>
+                </form>
+
+                <?php $__errorArgs = ['newsletter_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback d-block mt-2"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+        </div>
+    </div>
+    
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts_bottom'); ?>
@@ -920,5 +994,4 @@
     <script src="/assets/default/vendors/parallax/parallax.min.js"></script>
     <script src="/assets/default/js/parts/home.min.js"></script>
 <?php $__env->stopPush(); ?>
-
 <?php echo $__env->make(getTemplate().'.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/pages/home.blade.php ENDPATH**/ ?>

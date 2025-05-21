@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('certificate_template_translations', function (Blueprint $table) {
-            $table->longText('elements')->nullable();
-        });
+        // Schema::table('certificate_template_translations', function (Blueprint $table) {
+        //     $table->longText('elements')->2024_05_19_131041_add_certificate_column_to_bundles_tablenullable();
+        // });
     }
 
     /**

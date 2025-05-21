@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="">
         @if(!empty(session()->has('msg')))
             <div class="alert alert-info alert-dismissible fade show mt-30" role="alert">
                 {{ session()->get('msg') }}
@@ -18,7 +18,7 @@
 
         <div class="row login-container">
 
-            <div class="col-12 col-md-6 pl-0">
+            <div class="col-12 col-md-6 pl-0 login-img-section">
                 <img src="{{ getPageBackgroundSettings('login') }}" class="img-cover" alt="Login">
             </div>
             <div class="col-12 col-md-6">
@@ -83,9 +83,9 @@
                         <a href="/forget-password" target="_blank">{{ trans('auth.forget_your_password') }}</a>
                     </div>
 
-                    <div class="mt-20 text-center">
+                    <div class="mt-20 text-center sign-up-box">
                         <span>{{ trans('auth.dont_have_account') }}</span>
-                        <a href="/register" class="text-secondary font-weight-bold">{{ trans('auth.signup') }}</a>
+                        <a href="/register" class="text-primary font-weight-bold">{{ trans('auth.signup') }}</a>
                     </div>
                 </div>
             </div>

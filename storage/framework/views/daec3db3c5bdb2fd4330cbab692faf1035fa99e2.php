@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/assets/default/vendors/toast/jquery.toast.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/simplebar/simplebar.css">
     <link rel="stylesheet" href="/assets/default/css/app.css">
+    <link rel="stylesheet" href="/assets/default/css/style.css">
 
     <?php if($isRtl): ?>
         <link rel="stylesheet" href="/assets/default/css/rtl-app.css">
@@ -49,8 +50,8 @@
     <?php endif; ?>
 
     <?php if(!isset($appHeader)): ?>
-        <?php echo $__env->make('web.default.includes.top_nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <?php echo $__env->make('web.default.includes.navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        
+        <?php echo $__env->make('web.default.includes.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php endif; ?>
 
     <?php if(!empty($justMobileApp)): ?>

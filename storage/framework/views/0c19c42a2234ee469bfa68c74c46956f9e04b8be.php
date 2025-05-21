@@ -1,3 +1,19 @@
+<style>
+    .custom-login {
+        border: 1px solid rgba(234, 235, 239, 1);
+        border-radius: 7px;
+        margin-right: 20px;
+    }
+
+    .custom-register {
+        background-color: rgba(40, 40, 40, 1);
+        border-radius: 7px;
+        border: none;
+        outline: none;
+        color: white;
+    }
+</style>
+
 <?php if(!empty($authUser)): ?>
 
     <div class="custom-dropdown navbar-auth-user-dropdown position-relative ml-50">
@@ -95,9 +111,8 @@
         </div>
     </div>
 <?php else: ?>
-    <div class="d-flex align-items-center ml-md-50">
-        <a href="/login" class="py-5 px-10 mr-10 text-dark-blue font-14"><?php echo e(trans('auth.login')); ?></a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14"><?php echo e(trans('auth.register')); ?></a>
+    <div class="d-flex align-items-center">
+        <a href="/login" class="py-5 px-10 text-dark-blue font-14 custom-login"><?php echo e(trans('auth.login')); ?></a>
+        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register"><?php echo e(trans('auth.register')); ?></a>
     </div>
-<?php endif; ?>
-<?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/includes/top_nav/user_menu.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/includes/top_nav/user_menu.blade.php ENDPATH**/ ?>

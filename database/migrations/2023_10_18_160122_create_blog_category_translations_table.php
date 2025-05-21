@@ -12,20 +12,20 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('blog_category_translations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('blog_category_id');
-            $table->string('locale', 191)->index();
-            $table->string('title');
+        // Schema::create('blog_category_translations', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->unsignedInteger('blog_category_id');
+        //     $table->string('locale', 191)->index();
+        //     $table->string('title');
 
-            $table->foreign('blog_category_id')->references('id')->on('blog_categories')->onDelete('cascade');
-        });
+        //     $table->foreign('blog_category_id')->references('id')->on('blog_categories')->onDelete('cascade');
+        // });
 
-        $this->moveTitles();
+        // $this->moveTitles();
 
-        Schema::table('blog_categories', function (Blueprint $table) {
-            $table->dropColumn('title');
-        });
+        // Schema::table('blog_categories', function (Blueprint $table) {
+        //     $table->dropColumn('title');
+        // });
     }
 
     private function moveTitles()

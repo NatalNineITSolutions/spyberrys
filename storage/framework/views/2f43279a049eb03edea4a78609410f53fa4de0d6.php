@@ -1,11 +1,18 @@
-<div class="dropdown">
+<style>
+    .custom-dropdown {
+        background: rgba(234, 235, 239, 1);
+        border-radius: 7px;
+    }
+</style>
+
+<div class="custom-dropdown py-2 px-2">
 
     <?php if((empty($userCarts) or count($userCarts) < 1) and !empty($userCartDiscount)): ?>
-        <a href="/cart" class="btn btn-transparent">
+        <a href="/cart" class="btn-transparent">
             <i data-feather="shopping-cart" width="20" height="20" class="mr-10"></i>
         </a>
     <?php else: ?>
-        <button type="button" <?php echo e((empty($userCarts) or count($userCarts) < 1) ? 'disabled' : ''); ?> class="btn btn-transparent dropdown-toggle" id="navbarShopingCart" data-toggle="dropdown"
+        <button type="button" <?php echo e((empty($userCarts) or count($userCarts) < 1) ? 'disabled' : ''); ?> class="btn-transparent dropdown-toggle" id="navbarShopingCart" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
             <i data-feather="shopping-cart" width="20" height="20" class="mr-10"></i>
 
