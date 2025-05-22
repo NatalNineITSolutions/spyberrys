@@ -80,13 +80,13 @@
         <p>From critical skills to technical topics, Spyberry supports your professional development</p>
 
         <div class="category-container">
-            <?php $__currentLoopData = $categories->where('is_featured', 1); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="category-button">
+            <?php $__currentLoopData = $featuredCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <a href="<?php echo e($category->getUrl()); ?>" class="category-button">
                     <video muted playsinline preload="none">
                         <source src="<?php echo e(asset($category->video)); ?>" type="video/mp4">
                     </video>
                     <span><?php echo e($category->title); ?></span>
-                </div>
+                </a>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
@@ -94,7 +94,6 @@
 
     
     
-
 
     <?php $__currentLoopData = $homeSections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $homeSection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 

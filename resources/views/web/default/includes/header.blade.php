@@ -8,7 +8,7 @@
         z-index: 999;
         background-color: #fff;
         transition: box-shadow 0.3s ease;
-        padding: 0rem 3rem;
+        padding: 1rem 3rem;
     }
 
     .header.scrolled {
@@ -30,10 +30,6 @@
         display: flex;
         align-items: center;
         gap: 20px;
-    }
-
-    .logo img {
-        width: 90px;
     }
 
     .custom-search-wrapper {
@@ -208,7 +204,9 @@
         <div class="left">
             <a class="logo {{ (empty($navBtnUrl) and empty($navBtnText)) ? '' : '' }}" href="/">
                 @if(!empty($generalSettings['logo']))
-                    <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
+                    <div class="glitch-wrapper">
+                        <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
+                    </div>
                 @endif
             </a>
 

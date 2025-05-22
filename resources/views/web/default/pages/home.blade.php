@@ -81,15 +81,16 @@
 
         <div class="category-container">
             @foreach($featuredCategories as $category)
-                <div class="category-button">
+                <a href="{{ $category->getUrl() }}" class="category-button">
                     <video muted playsinline preload="none">
                         <source src="{{ asset($category->video) }}" type="video/mp4">
                     </video>
                     <span>{{ $category->title }}</span>
-                </div>
+                </a>
             @endforeach
         </div>
     </div>
+
 
     {{-- Statistics --}}
     {{-- @include('web.default.pages.includes.home_statistics') --}}
