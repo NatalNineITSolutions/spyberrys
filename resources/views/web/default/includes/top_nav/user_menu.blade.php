@@ -12,12 +12,16 @@
         outline: none;
         color: white;
     }
+
+    .custom-register:hover {
+        color: white;
+    }
 </style>
 
 @if(!empty($authUser))
 
     <div class="custom-dropdown navbar-auth-user-dropdown position-relative ml-50">
-        <div class="custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer">
+        <div class="custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer user-menu">
             <img src="{{ $authUser->getAvatar() }}" class="rounded-circle" alt="{{ $authUser->full_name }}">
             <span class="font-16 user-name ml-10 text-dark-blue font-14">{{ $authUser->full_name }}</span>
         </div>
@@ -113,6 +117,6 @@
 @else
     <div class="d-flex align-items-center">
         <a href="/login" class="py-5 px-10 text-dark-blue font-14 custom-login">{{ trans('auth.login') }}</a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register">{{ trans('auth.register') }}</a>
+        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register">{{ trans('auth.sign_up') }}</a>
     </div>
 @endif

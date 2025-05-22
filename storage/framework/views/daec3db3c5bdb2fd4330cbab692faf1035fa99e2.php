@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="/assets/default/css/app.css">
     <link rel="stylesheet" href="/assets/default/css/style.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+
     <?php if($isRtl): ?>
         <link rel="stylesheet" href="/assets/default/css/rtl-app.css">
     <?php endif; ?>
@@ -72,6 +76,7 @@
 </div>
 <!-- Template JS File -->
 <script src="/assets/default/js/app.js"></script>
+<script src="/assets/default/js/script.js"></script>
 <script src="/assets/default/vendors/feather-icons/dist/feather.min.js"></script>
 <script src="/assets/default/vendors/moment.min.js"></script>
 <script src="/assets/default/vendors/sweetalert2/dist/sweetalert2.min.js"></script>

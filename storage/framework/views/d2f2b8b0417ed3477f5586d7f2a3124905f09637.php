@@ -76,18 +76,21 @@
     <?php endif; ?>
 
     <div class="section">
-        <h2>All the Skill you need in one Place</h2>
-        <p>From critical skills to technical topics, Spyberry supports your Professional development</p>
+        <h2>All the Skills You Need in One Place</h2>
+        <p>From critical skills to technical topics, Spyberry supports your professional development</p>
 
         <div class="category-container">
-        <button class="category-button">Data Science</button>
-        <button class="category-button">IT Certifications</button>
-        <button class="category-button">Leadership</button>
-        <button class="category-button">Web Developement</button>
-        <button class="category-button">Communication</button>
-        <button class="category-button">Business Analytics & Intelligence</button>
+            <?php $__currentLoopData = $categories->where('is_featured', 1); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="category-button">
+                    <video muted playsinline preload="none">
+                        <source src="<?php echo e(asset($category->video)); ?>" type="video/mp4">
+                    </video>
+                    <span><?php echo e($category->title); ?></span>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
+
 
     
     
@@ -994,4 +997,6 @@ unset($__errorArgs, $__bag); ?>
     <script src="/assets/default/vendors/parallax/parallax.min.js"></script>
     <script src="/assets/default/js/parts/home.min.js"></script>
 <?php $__env->stopPush(); ?>
+
+
 <?php echo $__env->make(getTemplate().'.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/pages/home.blade.php ENDPATH**/ ?>

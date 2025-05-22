@@ -26,6 +26,7 @@ return [
     'login' => 'Login',
     'signup' => 'Signup',
     'register' => 'Register',
+    'sign_up' => 'Sign Up',
     'remember_me' => 'Remember me',
     'forget_password' => 'Password Recovery',
     'forget_your_password' => 'Forgot your password?',

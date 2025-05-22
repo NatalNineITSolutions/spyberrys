@@ -76,18 +76,21 @@
     @endif
 
     <div class="section">
-        <h2>All the Skill you need in one Place</h2>
-        <p>From critical skills to technical topics, Spyberry supports your Professional development</p>
+        <h2>All the Skills You Need in One Place</h2>
+        <p>From critical skills to technical topics, Spyberry supports your professional development</p>
 
         <div class="category-container">
-        <button class="category-button">Data Science</button>
-        <button class="category-button">IT Certifications</button>
-        <button class="category-button">Leadership</button>
-        <button class="category-button">Web Developement</button>
-        <button class="category-button">Communication</button>
-        <button class="category-button">Business Analytics & Intelligence</button>
+            @foreach($categories->where('is_featured', 1) as $category)
+                <div class="category-button">
+                    <video muted playsinline preload="none">
+                        <source src="{{ asset($category->video) }}" type="video/mp4">
+                    </video>
+                    <span>{{ $category->title }}</span>
+                </div>
+            @endforeach
         </div>
     </div>
+
 
     {{-- Statistics --}}
     {{-- @include('web.default.pages.includes.home_statistics') --}}
@@ -981,3 +984,4 @@
     <script src="/assets/default/vendors/parallax/parallax.min.js"></script>
     <script src="/assets/default/js/parts/home.min.js"></script>
 @endpush
+

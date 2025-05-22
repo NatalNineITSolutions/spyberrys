@@ -325,6 +325,10 @@
     </form>
 </div>
 
+<?php $__env->startPush('scripts_bottom'); ?>
+    <script src="/assets/default/js/parts/navbar.min.js"></script>
+<?php $__env->stopPush(); ?>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
