@@ -235,7 +235,9 @@ unset($__errorArgs, $__bag); ?></div>
 
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input id="isFeatured" type="checkbox" name="is_featured" class="custom-control-input">
+                                                <input id="isFeatured" type="checkbox" name="is_featured" class="custom-control-input"
+                                                <?php echo e(old('is_featured', !empty($category) ? $category->is_featured : false) ? 'checked' : ''); ?>>
+
                                         <label class="custom-control-label" for="isFeatured"><?php echo e(trans('admin/main.is_featured')); ?></label>
                                     </div>
                                 </div>
@@ -343,5 +345,4 @@ unset($__errorArgs, $__bag); ?></div>
 
 
 <?php $__env->stopPush(); ?>
-
 <?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\spyberrys\resources\views/admin/categories/create.blade.php ENDPATH**/ ?>
