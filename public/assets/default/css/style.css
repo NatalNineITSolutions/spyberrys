@@ -421,7 +421,9 @@
   z-index: 1;
   position: relative;
   padding: 0 0.5rem;
+  font-size: 20px;
   text-align: center;
+  font-family: "Poetsen One", sans-serif;
 }
 
 /* Hover Effect */
