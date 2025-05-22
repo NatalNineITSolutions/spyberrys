@@ -20,6 +20,7 @@ use App\Models\TrendCategory;
 use App\Models\UpcomingCourse;
 use App\Models\Webinar;
 use App\Models\Testimonial;
+use App\Models\Category;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -349,8 +350,11 @@ class HomeController extends Controller
             }
         }
 
+        $featuredCategories = Category::where('is_featured', 1)->get();
+
         $data = [
             'pageTitle' => $pageTitle,
+            'featuredCategories' => $featuredCategories,
             'pageDescription' => $pageDescription,
             'pageRobot' => $pageRobot,
             'heroSection' => $heroSection,

@@ -167,7 +167,9 @@
 
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input id="isFeatured" type="checkbox" name="is_featured" class="custom-control-input">
+                                                <input id="isFeatured" type="checkbox" name="is_featured" class="custom-control-input"
+                                                {{ old('is_featured', !empty($category) ? $category->is_featured : false) ? 'checked' : '' }}>
+
                                         <label class="custom-control-label" for="isFeatured">{{ trans('admin/main.is_featured') }}</label>
                                     </div>
                                 </div>

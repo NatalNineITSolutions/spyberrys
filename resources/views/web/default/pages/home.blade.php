@@ -80,13 +80,13 @@
         <p>From critical skills to technical topics, Spyberry supports your professional development</p>
 
         <div class="category-container">
-            @foreach($categories->where('is_featured', 1) as $category)
-                <div class="category-button">
+            @foreach($featuredCategories as $category)
+                <a href="{{ $category->getUrl() }}" class="category-button">
                     <video muted playsinline preload="none">
                         <source src="{{ asset($category->video) }}" type="video/mp4">
                     </video>
                     <span>{{ $category->title }}</span>
-                </div>
+                </a>
             @endforeach
         </div>
     </div>
@@ -94,7 +94,6 @@
 
     {{-- Statistics --}}
     {{-- @include('web.default.pages.includes.home_statistics') --}}
-
 
     @foreach($homeSections as $homeSection)
 

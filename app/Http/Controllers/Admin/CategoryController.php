@@ -43,53 +43,52 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request)
-{
-    $this->authorize('admin_categories_create');
+    {
+        $this->authorize('admin_categories_create');
 
-    $this->validate($request, [
-        'title' => 'required|min:3|max:128',
-        'slug' => 'nullable|max:255|unique:categories,slug',
-        'video' => 'nullable|string|max:255',
-        'icon' => 'nullable|string|max:255',
-    ]);
+        $this->validate($request, [
+            'title' => 'required|min:3|max:128',
+            'slug' => 'nullable|max:255|unique:categories,slug',
+            'video' => 'nullable|string|max:255',
+            'icon' => 'nullable|string|max:255',
+        ]);
 
-    $data = $request->all();
+        $data = $request->all();
 
-    // Check if is_featured limit has been reached
-    if (!empty($data['is_featured']) && $data['is_featured']) {
-        $featuredCount = Category::where('is_featured', true)->count();
+        // Check if is_featured limit has been reached
+        if (!empty($data['is_featured']) && $data['is_featured']) {
+            $featuredCount = Category::where('is_featured', true)->count();
 
-        if ($featuredCount >= 4) {
-            return back()->withErrors(['is_featured' => 'Only 4 categories can be featured at a time.'])->withInput();
+            if ($featuredCount >= 4) {
+                return back()->withErrors(['is_featured' => 'Only 4 categories can be featured at a time.'])->withInput();
+            }
         }
+
+        $order = !empty($data['order']) ? $data['order'] : (Category::whereNull('parent_id')->count() + 1);
+
+        $category = Category::create([
+            'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
+            'icon' => $data['icon'] ?? null,
+            'order' => $order,
+            'video' => $data['video'] ?? null,
+            'is_featured' => !empty($data['is_featured']) ? true : false,
+        ]);
+
+        CategoryTranslation::updateOrCreate([
+            'category_id' => $category->id,
+            'locale' => mb_strtolower($data['locale']),
+        ], [
+            'title' => $data['title'],
+        ]);
+
+        $hasSubCategories = (!empty($request->get('has_sub')) && $request->get('has_sub') === 'on');
+        $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale']);
+
+        cache()->forget(Category::$cacheKey);
+        removeContentLocale();
+
+        return redirect(getAdminPanelUrl() . '/categories');
     }
-
-    $order = !empty($data['order']) ? $data['order'] : (Category::whereNull('parent_id')->count() + 1);
-
-    $category = Category::create([
-        'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
-        'icon' => $data['icon'] ?? null,
-        'order' => $order,
-        'video' => $data['video'] ?? null,
-        'is_featured' => !empty($data['is_featured']) ? true : false,
-    ]);
-
-    CategoryTranslation::updateOrCreate([
-        'category_id' => $category->id,
-        'locale' => mb_strtolower($data['locale']),
-    ], [
-        'title' => $data['title'],
-    ]);
-
-    $hasSubCategories = (!empty($request->get('has_sub')) && $request->get('has_sub') === 'on');
-    $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale']);
-
-    cache()->forget(Category::$cacheKey);
-    removeContentLocale();
-
-    return redirect(getAdminPanelUrl() . '/categories');
-}
-
 
     public function edit(Request $request, $id)
     {
@@ -113,55 +112,54 @@ class CategoryController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $this->authorize('admin_categories_edit');
+    {
+        $this->authorize('admin_categories_edit');
 
-    $category = Category::findOrFail($id);
+        $category = Category::findOrFail($id);
 
-    $this->validate($request, [
-        'title' => 'required|min:3|max:255',
-        'slug' => 'nullable|max:255|unique:categories,slug,' . $category->id,
-        'video' => 'nullable|string|max:255',
-        'icon' => 'nullable|string|max:255',
-    ]);
+        $this->validate($request, [
+            'title' => 'required|min:3|max:255',
+            'slug' => 'nullable|max:255|unique:categories,slug,' . $category->id,
+            'video' => 'nullable|string|max:255',
+            'icon' => 'nullable|string|max:255',
+        ]);
 
-    $data = $request->all();
+        $data = $request->all();
 
-    // Check if is_featured limit has been reached
-    if (!empty($data['is_featured']) && $data['is_featured']) {
-        $featuredCount = Category::where('is_featured', true)
-            ->where('id', '!=', $category->id)
-            ->count();
+        // Check if is_featured limit has been reached
+        if (!empty($data['is_featured']) && $data['is_featured']) {
+            $featuredCount = Category::where('is_featured', true)
+                ->where('id', '!=', $category->id)
+                ->count();
 
-        if ($featuredCount >= 4) {
-            return back()->withErrors(['is_featured' => 'Only 4 categories can be featured at a time.'])->withInput();
+            if ($featuredCount >= 4) {
+                return back()->withErrors(['is_featured' => 'Only 4 categories can be featured at a time.'])->withInput();
+            }
         }
+
+        $category->update([
+            'icon' => !empty($data['icon']) ? $data['icon'] : null,
+            'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
+            'order' => $data['order'] ?? $category->order,
+            'video' => $data['video'] ?? null,
+            'is_featured' => !empty($data['is_featured']) ? true : false,
+        ]);
+
+        CategoryTranslation::updateOrCreate([
+            'category_id' => $category->id,
+            'locale' => mb_strtolower($data['locale']),
+        ], [
+            'title' => $data['title'],
+        ]);
+
+        $hasSubCategories = (!empty($request->get('has_sub')) && $request->get('has_sub') === 'on');
+        $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale']);
+
+        cache()->forget(Category::$cacheKey);
+        removeContentLocale();
+
+        return redirect(getAdminPanelUrl() . '/categories');
     }
-
-    $category->update([
-        'icon' => !empty($data['icon']) ? $data['icon'] : null,
-        'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
-        'order' => $data['order'] ?? $category->order,
-        'video' => $data['video'] ?? null,
-        'is_featured' => !empty($data['is_featured']) ? true : false,
-    ]);
-
-    CategoryTranslation::updateOrCreate([
-        'category_id' => $category->id,
-        'locale' => mb_strtolower($data['locale']),
-    ], [
-        'title' => $data['title'],
-    ]);
-
-    $hasSubCategories = (!empty($request->get('has_sub')) && $request->get('has_sub') === 'on');
-    $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale']);
-
-    cache()->forget(Category::$cacheKey);
-    removeContentLocale();
-
-    return redirect(getAdminPanelUrl() . '/categories');
-}
-
 
     public function destroy(Request $request, $id)
     {

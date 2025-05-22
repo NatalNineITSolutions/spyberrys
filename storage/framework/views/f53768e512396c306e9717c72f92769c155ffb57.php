@@ -8,7 +8,7 @@
         z-index: 999;
         background-color: #fff;
         transition: box-shadow 0.3s ease;
-        padding: 0rem 3rem;
+        padding: 1rem 3rem;
     }
 
     .header.scrolled {
@@ -30,10 +30,6 @@
         display: flex;
         align-items: center;
         gap: 20px;
-    }
-
-    .logo img {
-        width: 90px;
     }
 
     .custom-search-wrapper {
@@ -208,9 +204,60 @@
         <div class="left">
             <a class="logo <?php echo e((empty($navBtnUrl) and empty($navBtnText)) ? '' : ''); ?>" href="/">
                 <?php if(!empty($generalSettings['logo'])): ?>
-                    <img src="<?php echo e($generalSettings['logo']); ?>" class="img-cover" alt="site logo">
+                    <div class="glitch-wrapper">
+                        <img src="<?php echo e($generalSettings['logo']); ?>" class="img-cover" alt="site logo">
+                    </div>
                 <?php endif; ?>
             </a>
+
+        
+
+<svg width="50" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Horror RGB Glitch Logo with Rotation and Glow">
+  <defs>
+    <filter id="glitchEffect" x="-100%" y="-100%" width="300%" height="300%">
+      <!-- RGB Channels -->
+      <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red"/>
+      <feOffset in="red" dx="-1" dy="0" result="rShift">
+        <animate attributeName="dx" values="-1;1;-2;2;0" dur="0.15s" repeatCount="indefinite"/>
+      </feOffset>
+
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green"/>
+      <feOffset in="green" dx="1" dy="0" result="gShift">
+        <animate attributeName="dx" values="1;-1;2;-2;0" dur="0.17s" repeatCount="indefinite"/>
+      </feOffset>
+
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue"/>
+      <feOffset in="blue" dx="0" dy="2" result="bShift">
+        <animate attributeName="dy" values="2;-2;1;-1;0" dur="0.13s" repeatCount="indefinite"/>
+      </feOffset>
+
+      <!-- Merge RGB shifts -->
+      <feMerge result="merged">
+        <feMergeNode in="rShift"/>
+        <feMergeNode in="gShift"/>
+        <feMergeNode in="bShift"/>
+      </feMerge>
+
+      <!-- Add glow -->
+      <feGaussianBlur in="merged" stdDeviation="1.5" result="blurred"/>
+      <feMerge>
+        <feMergeNode in="blurred"/>
+        <feMergeNode in="merged"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#glitchEffect)">
+    <g>
+      <animateTransform attributeName="transform" type="rotate"
+        dur="0.3s" repeatCount="indefinite"
+        values="0 100 100; 3 100 100; -3 100 100; 1 100 100; -1 100 100; 0 100 100"/>
+
+      <circle cx="100" cy="100" r="80" fill="none" stroke="#fff" stroke-width="16"/>
+      <circle cx="100" cy="100" r="35" fill="#fff"/>
+    </g>
+  </g>
+</svg>
 
             <form action="/search" method="get" class="navbar-search position-relative">
                 <div class="custom-search-wrapper">
