@@ -117,6 +117,6 @@
 <?php else: ?>
     <div class="d-flex align-items-center">
         <a href="/login" class="py-5 px-10 text-dark-blue font-14 custom-login"><?php echo e(trans('auth.login')); ?></a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register"><?php echo e(trans('auth.register')); ?></a>
+        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register"><?php echo e(trans('auth.sign_up')); ?></a>
     </div>
 <?php endif; ?><?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/includes/top_nav/user_menu.blade.php ENDPATH**/ ?>

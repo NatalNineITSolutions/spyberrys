@@ -117,6 +117,6 @@
 @else
     <div class="d-flex align-items-center">
         <a href="/login" class="py-5 px-10 text-dark-blue font-14 custom-login">{{ trans('auth.login') }}</a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register">{{ trans('auth.register') }}</a>
+        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register">{{ trans('auth.sign_up') }}</a>
     </div>
 @endif
