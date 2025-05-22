@@ -322,6 +322,10 @@
     </form>
 </div>
 
+@push('scripts_bottom')
+    <script src="/assets/default/js/parts/navbar.min.js"></script>
+@endpush
+
 {{-- Header sticky --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
