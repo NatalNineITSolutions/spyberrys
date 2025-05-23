@@ -202,13 +202,34 @@
 <div class="header">
     <div class="header-container">
         <div class="left">
-            <a class="logo {{ (empty($navBtnUrl) and empty($navBtnText)) ? '' : '' }}" href="/">
+            {{-- <a class="logo {{ (empty($navBtnUrl) and empty($navBtnText)) ? '' : '' }}" href="/">
                 @if(!empty($generalSettings['logo']))
                     <div class="glitch-wrapper">
                         <img src="{{ $generalSettings['logo'] }}" class="img-cover" alt="site logo">
                     </div>
                 @endif
-            </a>
+            </a> --}}
+
+            <div class="glitch-container">
+                <!-- Glitch Target Disk -->
+                <div class="glitch glitch-disk">
+                    <div class="outer-ring"></div>
+                    <div class="middle-ring"></div>
+                    <div class="center-dot"></div>
+
+                    <!-- Glitch layers -->
+                    <span aria-hidden="true" class="glitch-layer"></span>
+                    <span aria-hidden="true" class="glitch-layer"></span>
+                </div>
+
+                <!-- Glitch Text -->
+                <h1 class="glitch">
+                    <span aria-hidden="true">SPYBERRYS</span>
+                    SPYBERRYS
+                    <span aria-hidden="true">SPYBERRYS</span>
+                </h1>
+            </div>
+
 
             <form action="/search" method="get" class="navbar-search position-relative">
                 <div class="custom-search-wrapper">
