@@ -528,3 +528,15 @@ body {
     height: 24px;
     border-radius: 50%;
 }
+
+@media (max-width: 767px) {
+    .learning-content-video-player,
+    .plyr__video-embed,
+    .plyr,
+    .learning-content-video-player video,
+    .learning-content-video-player iframe {
+        height: 30vh !important; /* or adjust as needed for your UI */
+        min-height: 200px;
+        max-height: 60vw;
+    }
+}
