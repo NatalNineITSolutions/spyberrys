@@ -15809,7 +15809,7 @@ p {
   font-size: 24px;
   font-weight: bold;
   line-height: 1.5;
-  color: var(--secondary);
+  color: var(--primary);
   pointer-events: none;
 }
 @media (max-width: 991px) {

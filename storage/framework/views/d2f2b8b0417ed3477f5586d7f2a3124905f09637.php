@@ -94,6 +94,48 @@
         </div>
     </div>
 
+    <?php if(!empty($liveWebinars) && $liveWebinars->isNotEmpty()): ?>
+        <div class="live-classes-section">
+            <div class="live-classes-container">
+                <div class="live-classes-header">On going Live Classes</div>
+
+                <?php if($liveWebinars->count() > 3): ?>
+                    <div class="live-classes-arrows">
+                        <button class="arrow-btn">←</button>
+                        <button class="arrow-btn">→</button>
+                    </div>
+                <?php endif; ?>
+
+                <div class="live-classes">
+                    <?php $__currentLoopData = $liveWebinars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $webinar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="live-class-card">
+                            <div class="thumbnail-wrapper" style="background-image: url('<?php echo e(asset($webinar->thumbnail)); ?>');">
+                                <button class="play-btn"
+                                    onclick="openVideoModal(
+                                        '<?php echo e(addslashes($webinar->title)); ?>',
+                                        '<?php echo e($webinar->video_demo); ?>',
+                                        '<?php echo e($webinar->video_demo_source); ?>'
+                                    )">
+                                </button>
+                            </div>
+                            <div class="info">
+                                <h4><?php echo e($webinar->teacher->full_name ?? 'Unknown'); ?></h4>
+                                <p><?php echo e($webinar->category->title ?? 'Instructor'); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div id="videoModal" class="video-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeVideoModal()">&times;</span>
+            <h3 id="videoTitle"></h3>
+            <div id="videoContainer"></div>
+        </div>
+    </div>
 
     
     
@@ -269,7 +311,7 @@
                     </div>
                 </div>
             </section>
-        <?php endif; ?>
+        <?php endif; ?>      
 
         <?php if($homeSection->name == \App\Models\HomeSection::$best_rates and !empty($bestRateWebinars) and !$bestRateWebinars->isEmpty()): ?>
             <section class="home-sections home-sections-swiper container">
@@ -849,7 +891,7 @@
                 </div>
 
                 <div class="text-center mt-5">
-                    <a href="/instructors" class="btn btn-dark text-white d-inline-flex align-items-center px-4 py-2 rounded-pill gap-2">
+                    <a href="/instructors" class="btn btn-dark text-white d-inline-flex align-items-center px-4 py-2 rounded-pill" style="gap: 10px;">
                         <?php echo e(trans('home.all_instructors')); ?>
 
                         <i class="fas fa-arrow-right"></i>
