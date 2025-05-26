@@ -807,7 +807,7 @@
             </section>
         @endif
 
-        @if($homeSection->name == \App\Models\HomeSection::$instructors and !empty($instructors) and !$instructors->isEmpty())
+        {{-- @if($homeSection->name == \App\Models\HomeSection::$instructors and !empty($instructors) and !$instructors->isEmpty())
             <section class="home-sections container">
                 <div class="d-flex justify-content-between">
                     <div>
@@ -826,7 +826,18 @@
                                 <div class="shadow-effect">
                                     <div class="instructors-card d-flex flex-column align-items-center justify-content-center">
                                         <div class="instructors-card-avatar">
-                                            <img src="{{ $instructor->getAvatar(108) }}" alt="{{ $instructor->full_name }}" class="rounded-circle img-cover">
+                                            <img src="{{ $instructor->getAvatar(108) }}" alt="{{ $instructor->full_name }}" class="rounded-circle img-cover instructor-profile">
+                                        </div>
+                                        <div class="stars-card d-flex align-items-center justify-content-center mt-10">
+                                            @php
+                                                $i = 5;
+                                            @endphp
+                                            @while(--$i >= 5 - $instructor->rates())
+                                                <i data-feather="star" width="20" height="20" class="active"></i>
+                                            @endwhile
+                                            @while($i-- >= 0)
+                                                <i data-feather="star" width="20" height="20" class=""></i>
+                                            @endwhile
                                         </div>
                                         <div class="instructors-card-info mt-10 text-center">
                                             <a href="{{ $instructor->getProfileUrl() }}" target="_blank">
@@ -834,17 +845,7 @@
                                             </a>
 
                                             <p class="font-14 text-gray mt-5">{{ $instructor->bio }}</p>
-                                            <div class="stars-card d-flex align-items-center justify-content-center mt-10">
-                                                @php
-                                                    $i = 5;
-                                                @endphp
-                                                @while(--$i >= 5 - $instructor->rates())
-                                                    <i data-feather="star" width="20" height="20" class="active"></i>
-                                                @endwhile
-                                                @while($i-- >= 0)
-                                                    <i data-feather="star" width="20" height="20" class=""></i>
-                                                @endwhile
-                                            </div>
+                                            
 
                                             @if(!empty($instructor->hasMeeting()))
                                                 <a href="{{ $instructor->getProfileUrl() }}?tab=appointments" class="btn btn-primary btn-sm rounded-pill mt-15">{{ trans('home.reserve_a_live_class') }}</a>
@@ -858,6 +859,53 @@
                         @endforeach
 
                     </div>
+                </div>
+            </section>
+        @endif --}}
+
+        @if($homeSection->name == \App\Models\HomeSection::$instructors and !empty($instructors) and !$instructors->isEmpty())
+            <section class="home-sections container py-5 instructor-section">
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                    <div>
+                        <h2 class="section-title">{{ trans('home.instructors') }}</h2>
+                        <p class="section-hint">{{ trans('home.instructors_hint') }}</p>
+                    </div>
+                </div>
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                    @foreach($instructors as $instructor)
+                        <div class="col">
+                            <div class="card h-100 text-center p-3 shadow-sm rounded-4">
+                                <img src="{{ $instructor->getAvatar(108) }}" alt="{{ $instructor->full_name }}" class="rounded-circle mx-auto mb-3" width="80" height="80">
+                                
+                                <div class="mb-2">
+                                    @php $i = 5; @endphp
+                                    @while(--$i >= 5 - $instructor->rates())
+                                        <i class="fas fa-star text-warning"></i>
+                                    @endwhile
+                                    @while($i-- >= 0)
+                                        <i class="far fa-star text-muted"></i>
+                                    @endwhile
+                                </div>
+
+                                <h5 class="mb-1 instructor-name">{{ $instructor->full_name }}</h5>
+                                <p class="instructor-bio">{{ $instructor->bio }}</p>
+
+                                @if(!empty($instructor->hasMeeting()))
+                                    <a href="{{ $instructor->getProfileUrl() }}?tab=appointments" class="btn btn-primary btn-sm rounded-pill mt-auto">{{ trans('home.reserve_a_live_class') }}</a>
+                                @else
+                                    <a href="{{ $instructor->getProfileUrl() }}" class="btn btn-outline-primary btn-sm rounded-pill mt-auto">{{ trans('public.profile') }}</a>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="/instructors" class="btn btn-dark text-white d-inline-flex align-items-center px-4 py-2 rounded-pill gap-2">
+                        {{ trans('home.all_instructors') }}
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </section>
         @endif

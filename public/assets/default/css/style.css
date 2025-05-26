@@ -713,3 +713,27 @@
     transition-delay: 0s !important;
   }
 }
+
+/* Menu Hover */
+.nav-item {
+  padding: 10px 15px;
+  transition: 0.3s all;
+}
+
+
+/* Instructors */
+.instructor-section .card {
+  border-radius: 20px !important;
+}
+
+.instructor-name {
+  font-size:16px;
+  font-weight:600;
+}
+
+.instructor-bio {
+  color: rgba(71, 85, 105, 1);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}

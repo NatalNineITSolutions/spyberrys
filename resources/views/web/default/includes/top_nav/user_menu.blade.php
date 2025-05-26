@@ -1,16 +1,19 @@
 <style>
     .custom-login {
         border: 1px solid rgba(234, 235, 239, 1);
-        border-radius: 7px;
-        margin-right: 20px;
+        border-radius: 0.4rem;
+        margin-right: 0.5rem;
+        padding: 10px 15px;
+        font-weight: 700;
     }
 
     .custom-register {
-        background-color: rgba(40, 40, 40, 1);
-        border-radius: 7px;
+        border-radius: 0.4rem;
         border: none;
         outline: none;
         color: white;
+        padding: 10px 15px;
+        font-weight: 700;
     }
 
     .custom-register:hover {
@@ -116,7 +119,7 @@
     </div>
 @else
     <div class="d-flex align-items-center">
-        <a href="/login" class="py-5 px-10 text-dark-blue font-14 custom-login">{{ trans('auth.login') }}</a>
-        <a href="/register" class="py-5 px-10 text-dark-blue font-14 custom-register">{{ trans('auth.sign_up') }}</a>
+        <a href="/login" class="text-dark-blue font-14 custom-login btn-text-primary">{{ trans('auth.login') }}</a>
+        <a href="/register" class="text-dark-blue font-14 custom-register btn-primary">{{ trans('auth.sign_up') }}</a>
     </div>
 @endif

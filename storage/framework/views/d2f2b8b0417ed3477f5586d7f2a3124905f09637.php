@@ -805,57 +805,52 @@
             </section>
         <?php endif; ?>
 
+        
+
         <?php if($homeSection->name == \App\Models\HomeSection::$instructors and !empty($instructors) and !$instructors->isEmpty()): ?>
-            <section class="home-sections container">
-                <div class="d-flex justify-content-between">
+            <section class="home-sections container py-5 instructor-section">
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
                     <div>
                         <h2 class="section-title"><?php echo e(trans('home.instructors')); ?></h2>
                         <p class="section-hint"><?php echo e(trans('home.instructors_hint')); ?></p>
                     </div>
-
-                    <a href="/instructors" class="btn btn-border-white"><?php echo e(trans('home.all_instructors')); ?></a>
                 </div>
 
-                <div class="position-relative mt-20 ltr">
-                    <div class="owl-carousel customers-testimonials instructors-swiper-container">
-
-                        <?php $__currentLoopData = $instructors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $instructor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="item">
-                                <div class="shadow-effect">
-                                    <div class="instructors-card d-flex flex-column align-items-center justify-content-center">
-                                        <div class="instructors-card-avatar">
-                                            <img src="<?php echo e($instructor->getAvatar(108)); ?>" alt="<?php echo e($instructor->full_name); ?>" class="rounded-circle img-cover">
-                                        </div>
-                                        <div class="instructors-card-info mt-10 text-center">
-                                            <a href="<?php echo e($instructor->getProfileUrl()); ?>" target="_blank">
-                                                <h3 class="font-16 font-weight-bold text-dark-blue"><?php echo e($instructor->full_name); ?></h3>
-                                            </a>
-
-                                            <p class="font-14 text-gray mt-5"><?php echo e($instructor->bio); ?></p>
-                                            <div class="stars-card d-flex align-items-center justify-content-center mt-10">
-                                                <?php
-                                                    $i = 5;
-                                                ?>
-                                                <?php while(--$i >= 5 - $instructor->rates()): ?>
-                                                    <i data-feather="star" width="20" height="20" class="active"></i>
-                                                <?php endwhile; ?>
-                                                <?php while($i-- >= 0): ?>
-                                                    <i data-feather="star" width="20" height="20" class=""></i>
-                                                <?php endwhile; ?>
-                                            </div>
-
-                                            <?php if(!empty($instructor->hasMeeting())): ?>
-                                                <a href="<?php echo e($instructor->getProfileUrl()); ?>?tab=appointments" class="btn btn-primary btn-sm rounded-pill mt-15"><?php echo e(trans('home.reserve_a_live_class')); ?></a>
-                                            <?php else: ?>
-                                                <a href="<?php echo e($instructor->getProfileUrl()); ?>" class="btn btn-primary btn-sm rounded-pill mt-15"><?php echo e(trans('public.profile')); ?></a>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                    <?php $__currentLoopData = $instructors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $instructor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="col">
+                            <div class="card h-100 text-center p-3 shadow-sm rounded-4">
+                                <img src="<?php echo e($instructor->getAvatar(108)); ?>" alt="<?php echo e($instructor->full_name); ?>" class="rounded-circle mx-auto mb-3" width="80" height="80">
+                                
+                                <div class="mb-2">
+                                    <?php $i = 5; ?>
+                                    <?php while(--$i >= 5 - $instructor->rates()): ?>
+                                        <i class="fas fa-star text-warning"></i>
+                                    <?php endwhile; ?>
+                                    <?php while($i-- >= 0): ?>
+                                        <i class="far fa-star text-muted"></i>
+                                    <?php endwhile; ?>
                                 </div>
-                            </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                    </div>
+                                <h5 class="mb-1 instructor-name"><?php echo e($instructor->full_name); ?></h5>
+                                <p class="instructor-bio"><?php echo e($instructor->bio); ?></p>
+
+                                <?php if(!empty($instructor->hasMeeting())): ?>
+                                    <a href="<?php echo e($instructor->getProfileUrl()); ?>?tab=appointments" class="btn btn-primary btn-sm rounded-pill mt-auto"><?php echo e(trans('home.reserve_a_live_class')); ?></a>
+                                <?php else: ?>
+                                    <a href="<?php echo e($instructor->getProfileUrl()); ?>" class="btn btn-outline-primary btn-sm rounded-pill mt-auto"><?php echo e(trans('public.profile')); ?></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="/instructors" class="btn btn-dark text-white d-inline-flex align-items-center px-4 py-2 rounded-pill gap-2">
+                        <?php echo e(trans('home.all_instructors')); ?>
+
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </section>
         <?php endif; ?>
