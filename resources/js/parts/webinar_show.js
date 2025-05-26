@@ -37,8 +37,9 @@
     $('body').on('click', '#webinarDemoVideoBtn', function (e) {
         e.preventDefault();
 
-        if (courseDemoVideoPlayer !== undefined) {
-            courseDemoVideoPlayer.dispose();
+        // Destroy previous Plyr instance if exists
+        if (window.courseDemoVideoPlayer && window.courseDemoVideoPlayer.destroy) {
+            window.courseDemoVideoPlayer.destroy();
         }
 
         let path = $(this).attr('data-video-path');
@@ -65,7 +66,11 @@
             },
             width: '48rem',
             onOpen: () => {
-                courseDemoVideoPlayer = videojs(videoTagId, options);
+                const videoElement = document.getElementById(videoTagId);
+                if (videoElement) {
+                    window.courseDemoVideoPlayer = new window.Plyr(videoElement, options);
+                    window.courseDemoVideoPlayer.play();
+                }
             }
         });
     });
@@ -392,7 +397,7 @@
         }, 100);
 
         // make video player html
-        console.log($modalVideoContent)
+        console.log("dd",$modalVideoContent)
         handleVideoByFileId(file_id, $modalVideoContent, function () {
             $modalLoading.addClass('d-none');
             $modalVideoContent.removeClass('d-none');

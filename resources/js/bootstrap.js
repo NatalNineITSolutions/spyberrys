@@ -1,5 +1,8 @@
 window._ = require('lodash');
+window.Plyr = require('plyr'); 
+require('plyr/dist/plyr.css');
 
+console.log('Plyr d:', window.Plyr);
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
