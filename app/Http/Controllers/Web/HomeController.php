@@ -366,8 +366,7 @@ class HomeController extends Controller
                 'tickets',
                 'feature'
             ])
-            ->limit(6)
-            ->get();
+            ->paginate(6);
 
         $data = [
             'pageTitle' => $pageTitle,

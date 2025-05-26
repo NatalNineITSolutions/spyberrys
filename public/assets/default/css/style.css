@@ -91,7 +91,7 @@
   font-size: 16px;
   font-weight: 500;
   color: black;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 25px;
@@ -115,12 +115,13 @@
 /* Hover effect */
 .find-course-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (min-width: 2000px) {
   .custom-banner-section {
-    max-width: 1140px; /* or match Bootstrap's container width */
+    max-width: 1140px;
+    /* or match Bootstrap's container width */
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
@@ -128,7 +129,8 @@
   }
 
   .section {
-    max-width: 1140px; /* or match Bootstrap's container width */
+    max-width: 1140px;
+    /* or match Bootstrap's container width */
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
@@ -205,7 +207,7 @@
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 15px;
-  color:rgba(152, 162, 179, 1);
+  color: rgba(152, 162, 179, 1);
 }
 
 .custom-footer-column ul {
@@ -357,7 +359,7 @@
   text-align: left;
   color: rgba(26, 36, 52, 1);
   font-size: 14px;
-  font-weight:400;
+  font-weight: 400;
 }
 
 /* Login */
@@ -373,7 +375,7 @@
 }
 
 .sign-up-box span {
-  color : rgba(148, 163, 184, 1);
+  color: rgba(148, 163, 184, 1);
 }
 
 @media(max-width: 768px) {
@@ -444,7 +446,8 @@
 
 .category-button {
   position: relative;
-  flex: 0 1 calc(25% - 0.75rem); /* 4 per row with gap */
+  flex: 0 1 calc(25% - 0.75rem);
+  /* 4 per row with gap */
   height: 150px;
   background-color: #1e1e1e;
   color: white;
@@ -457,7 +460,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: 
+  transition:
     transform 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
     box-shadow 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
     border-color 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -497,7 +500,8 @@
 
 @media (max-width: 992px) {
   .category-button {
-    flex: 0 1 calc(50% - 0.75rem); /* 2 per row on tablet */
+    flex: 0 1 calc(50% - 0.75rem);
+    /* 2 per row on tablet */
   }
 }
 
@@ -507,7 +511,8 @@
   }
 
   .category-button {
-    flex: 0 1 100%; /* 1 per row on mobile */
+    flex: 0 1 100%;
+    /* 1 per row on mobile */
     font-size: 0.85rem;
     height: 120px;
   }
@@ -532,7 +537,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('{{ $generalSettings['logo'] }}');
+  background-image: url('{{ $generalSettings[' logo'] }}');
   background-size: cover;
   background-position: center;
   opacity: 0.8;
@@ -555,18 +560,23 @@
   0% {
     clip: rect(0, 9999px, 0, 0);
   }
+
   20% {
     clip: rect(5px, 9999px, 15px, 0);
   }
+
   40% {
     clip: rect(10px, 9999px, 25px, 0);
   }
+
   60% {
     clip: rect(15px, 9999px, 30px, 0);
   }
+
   80% {
     clip: rect(0, 9999px, 10px, 0);
   }
+
   100% {
     clip: rect(0, 9999px, 0, 0);
   }
@@ -576,18 +586,23 @@
   0% {
     clip: rect(0, 9999px, 0, 0);
   }
+
   15% {
     clip: rect(10px, 9999px, 20px, 0);
   }
+
   30% {
     clip: rect(5px, 9999px, 15px, 0);
   }
+
   50% {
     clip: rect(8px, 9999px, 18px, 0);
   }
+
   70% {
     clip: rect(2px, 9999px, 12px, 0);
   }
+
   100% {
     clip: rect(0, 9999px, 0, 0);
   }
@@ -597,9 +612,11 @@
   0% {
     transform: skew(0deg);
   }
+
   50% {
     transform: skew(1deg);
   }
+
   100% {
     transform: skew(-1deg);
   }
@@ -610,7 +627,8 @@
 .glitch-container {
   display: flex;
   align-items: center;
-  gap: 10px; /* Space between disk and text */
+  gap: 10px;
+  /* Space between disk and text */
 }
 
 .glitch {
@@ -709,11 +727,27 @@
 }
 
 @keyframes glitchDisk {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-1px, 1px); }
-  40% { transform: translate(1px, -1px); }
-  60% { transform: translate(-1px, -1px); }
-  80% { transform: translate(1px, 1px); }
+
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-1px, 1px);
+  }
+
+  40% {
+    transform: translate(1px, -1px);
+  }
+
+  60% {
+    transform: translate(-1px, -1px);
+  }
+
+  80% {
+    transform: translate(1px, 1px);
+  }
 }
 
 
@@ -725,29 +759,35 @@
       -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
       -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
   }
+
   14% {
     text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
       -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
       -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
   }
+
   15% {
     text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
       0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
       -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
   }
+
   49% {
     text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
       0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
       -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
   }
+
   50% {
     text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
       0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
   }
+
   99% {
     text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
       0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
   }
+
   100% {
     text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
       -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
@@ -756,6 +796,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   ::before,
   ::after {
@@ -779,7 +820,7 @@
   color: white !important;
 }
 
-.nav-item:hover .menu-category > ul > li {
+.nav-item:hover .menu-category>ul>li {
   color: white !important;
 }
 
@@ -790,8 +831,8 @@
 }
 
 .instructor-name {
-  font-size:16px;
-  font-weight:600;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .instructor-bio {
@@ -822,7 +863,7 @@
 }
 
 .course-description.expanded {
-  max-height: 2000px; 
+  max-height: 2000px;
 }
 
 .rotate-180 {
@@ -842,7 +883,7 @@
   color: black !important;
   font-size: 14px;
   font-weight: 500;
-} 
+}
 
 .course-description-section {
   border: 3px dotted rgba(234, 235, 239, 1);
@@ -852,7 +893,8 @@
 
 .course-rightbar {
   border-top: 1px solid rgba(143, 146, 161, 1) !important;
-  min-height: 1px; /* Ensure it has some height */
+  min-height: 1px;
+  /* Ensure it has some height */
 }
 
 .align-self-start {
@@ -869,9 +911,12 @@
 
 .course-content-sidebar {
   position: sticky;
-  top: 0px; /* distance from top when scrolling, adjust as needed */
-  height: fit-content; /* ensures it only sticks as tall as its content */
-  z-index: 10; /* make sure it's above other content if needed */
+  top: 0px;
+  /* distance from top when scrolling, adjust as needed */
+  height: fit-content;
+  /* ensures it only sticks as tall as its content */
+  z-index: 10;
+  /* make sure it's above other content if needed */
 }
 
 .custom-dropdown:hover svg {
@@ -893,9 +938,16 @@
 
 .live-classes-header {
   font-size: 24px;
-  margin-bottom: 20px;
-  padding-left: 10px;
   font-weight: bold;
+  line-height: 1.5;
+  color: var(--secondary);
+  pointer-events: none;
+}
+
+@media (max-width: 991px) {
+  .live-classes-header {
+    font-size: 18px;
+  }
 }
 
 .live-classes-arrows {
@@ -938,9 +990,8 @@
 .live-class-card .info {
   position: absolute;
   bottom: 10px;
-  left: 15px;
   color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .live-class-card .info h4 {
@@ -954,7 +1005,6 @@
 }
 
 .play-btn {
-  position: absolute;
   bottom: 10px;
   right: 15px;
   background-color: #5D5FEF;
@@ -968,12 +1018,12 @@
   cursor: pointer;
 }
 
-.play-btn::before {
+/* .play-btn::before {
   content: '▶';
   color: white;
   font-size: 14px;
   margin-left: 2px;
-}
+} */
 
 .thumbnail-wrapper {
   width: 100%;
@@ -984,36 +1034,37 @@
 }
 
 .video-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
 .modal-content {
-    background: #fff;
-    padding: 20px;
-    width: 80%;
-    max-width: 800px;
-    border-radius: 8px;
-    position: relative;
+  background: #fff;
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 8px;
+  position: relative;
 }
 
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-#videoContainer iframe, #videoContainer video {
-    width: 100%;
-    height: 400px;
+#videoContainer iframe,
+#videoContainer video {
+  width: 100%;
+  height: 400px;
 }

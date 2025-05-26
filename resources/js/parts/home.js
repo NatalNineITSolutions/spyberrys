@@ -169,3 +169,193 @@
         }
     });
 })(jQuery);
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.Plyr) {
+        console.log('Initializing Plyr for video players');
+        document.querySelectorAll('.plyr, .plyr__video-embed').forEach(function (el) {
+            console.log('Initializing Plyr for element:', el);
+            new window.Plyr(el, {
+                controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
+            });
+        });
+    }
+});
+
+
+window.toggleLiveWebinarVideo = function(id, source) {
+    var player = document.getElementById('liveWebinarPlayer' + id);
+    var btn = document.getElementById('playPauseBtn' + id);
+
+    if (!player) return;
+
+    if (player.tagName.toLowerCase() === 'video') {
+        // Attach handlers BEFORE toggling
+        player.onplay = function() {
+            if (btn) btn.innerHTML = '<i class="fa fa-pause"></i>';
+        };
+        player.onpause = function() {
+            if (btn) btn.innerHTML = '<i class="fa fa-play"></i>';
+        };
+
+        if (player.paused) {
+            player.play();
+            if (btn) btn.innerHTML = '<i class="fa fa-pause"></i>';
+        } else {
+            player.pause();
+            if (btn) btn.innerHTML = '<i class="fa fa-play"></i>';
+        }
+    } else if (source === 'youtube') {
+        var iframe = player;
+        if (btn && btn.innerHTML.includes('fa-play')) {
+            btn.innerHTML = '<i class="fa fa-pause"></i>';
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        } else {
+            btn.innerHTML = '<i class="fa fa-play"></i>';
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+    } else if (source === 'vimeo') {
+        var iframe = player;
+        if (btn && btn.innerHTML.includes('fa-play')) {
+            btn.innerHTML = '<i class="fa fa-pause"></i>';
+            iframe.contentWindow.postMessage('{"method":"play"}', '*');
+        } else {
+            btn.innerHTML = '<i class="fa fa-play"></i>';
+            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+        }
+    }
+};
+// document.addEventListener('DOMContentLoaded', function () {
+//     if (window.Swiper) {
+//         new Swiper('.live-webinars-swiper', {
+//             slidesPerView: 1.5,
+//             centeredSlides: false,
+//             spaceBetween: 100, // Adjust as needed
+//             loop: true, // Enable infinite loop
+//             navigation: {
+//                 nextEl: '.live-webinars-next',
+//                 prevEl: '.live-webinars-prev',
+//             },
+//             pagination: {
+//                 el: '.swiper-pagination',
+//                 clickable: true,
+//             },
+//             breakpoints: {
+//                 576: { slidesPerView: 1.5, centeredSlides: false, spaceBetween: 20 },
+//                 768: { slidesPerView: 2, centeredSlides: false, spaceBetween: 24 },
+//                 992: { slidesPerView: 3, centeredSlides: false, spaceBetween: 28 },
+//                 1200: { slidesPerView: 4, centeredSlides: false, spaceBetween: 100 }
+//             }
+//         });
+//     }
+// });
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.Swiper) {
+        var swiper = new Swiper('.live-webinars-swiper', {
+            slidesPerView: 1.5,
+            centeredSlides: false,
+            spaceBetween: 120, // Adjust as needed
+            loop: false,
+            navigation: {
+                nextEl: '.live-webinars-next',
+                prevEl: '.live-webinars-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                576: { slidesPerView: 1.5, centeredSlides: false, spaceBetween: 20 },
+                768: { slidesPerView: 2, centeredSlides: false, spaceBetween: 24 },
+                992: { slidesPerView: 3, centeredSlides: false, spaceBetween: 28 },
+                1200: { slidesPerView: 4, centeredSlides: false, spaceBetween: 100 }
+            },
+            on: {
+                slideChange: function () {
+                    lazyLoadActiveVideo();
+                },
+                init: function () {
+                    lazyLoadActiveVideo();
+                }
+            }
+        });
+
+        function lazyLoadActiveVideo() {
+            document.querySelectorAll('.swiper-slide').forEach(function (slide) {
+                var placeholder = slide.querySelector('.video-placeholder');
+                if (placeholder && slide.classList.contains('swiper-slide-active')) {
+                    if (!placeholder.dataset.loaded) {
+                        var type = placeholder.dataset.type;
+                        var src = placeholder.dataset.src;
+                        var id = placeholder.dataset.id;
+                        if (type === 'youtube' || type === 'vimeo') {
+                            var iframe = document.createElement('iframe');
+                            iframe.id = 'liveWebinarPlayer' + id;
+                            iframe.src = src;
+                            iframe.frameBorder = 0;
+                            iframe.allow = 'autoplay; encrypted-media';
+                            iframe.allowFullscreen = true;
+                            iframe.tabIndex = -1;
+                            iframe.style = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;';
+                            placeholder.innerHTML = '';
+                            placeholder.appendChild(iframe);
+                        } else if (type && src) {
+                            var video = document.createElement('video');
+                            video.id = 'liveWebinarPlayer' + id;
+                            video.className = 'video-bg';
+                            video.autoplay = true;
+                            video.muted = true;
+                            video.loop = true;
+                            video.playsInline = true;
+                            video.tabIndex = -1;
+                            video.style = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;';
+                            var source = document.createElement('source');
+                            source.src = src;
+                            source.type = 'video/mp4';
+                            video.appendChild(source);
+                            placeholder.innerHTML = '';
+                            placeholder.appendChild(video);
+                        }
+                        placeholder.dataset.loaded = '1';
+                    }
+                }
+            });
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.swiper-slide').forEach(function (slide) {
+        // For HTML5 video
+        var video = slide.querySelector('video.video-bg');
+        if (video) {
+            slide.addEventListener('mouseenter', function () {
+                video.play().catch(function(){});
+            });
+            slide.addEventListener('mouseleave', function () {
+                video.pause();
+            });
+        }
+        // For YouTube iframe
+        var yt = slide.querySelector('iframe[src*="youtube.com"]');
+        if (yt) {
+            slide.addEventListener('mouseenter', function () {
+                yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            });
+            slide.addEventListener('mouseleave', function () {
+                yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            });
+        }
+        // For Vimeo iframe
+        var vimeo = slide.querySelector('iframe[src*="vimeo.com"]');
+        if (vimeo) {
+            slide.addEventListener('mouseenter', function () {
+                vimeo.contentWindow.postMessage('{"method":"play"}', '*');
+            });
+            slide.addEventListener('mouseleave', function () {
+                vimeo.contentWindow.postMessage('{"method":"pause"}', '*');
+            });
+        }
+    });
+});
