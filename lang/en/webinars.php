@@ -16,6 +16,7 @@ return [
     'webinars' => 'Live Classes',
   	'class' => 'course',
   	'classes' => 'Courses',
+    'instructions' => 'Instructor Details',
     'webinar_page' => 'Course page',
     'title' => 'Title',
     'start_date' => 'Start Date',

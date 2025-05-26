@@ -81,6 +81,53 @@
   object-fit: contain;
 }
 
+.find-course-btn {
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 25px;
+}
+
+.find-course-btn .icon {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 6px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.find-course-btn .icon i {
+  font-size: 12px;
+}
+
+/* Hover effect */
+.find-course-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+@media (min-width: 2000px) {
+    .custom-banner-section {
+        max-width: 1140px; /* or match Bootstrap's container width */
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
 /* Tablet view */
 @media (max-width: 991px) {
   .custom-banner {
@@ -720,6 +767,14 @@
   transition: 0.3s all;
 }
 
+.nav-item:hover a {
+  color: white !important;
+}
+
+.nav-item:hover .menu-category > ul > li {
+  color: white !important;
+}
+
 
 /* Instructors */
 .instructor-section .card {
@@ -736,4 +791,81 @@
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 20px;
+}
+
+/* Course details */
+.course-cover-container {
+  background-color: #16161d;
+}
+
+.course-about {
+  margin-top: 190px;
+}
+
+.course-learn-title {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.course-description.collapsed {
+  max-height: 120px;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.course-description.expanded {
+  max-height: 2000px; 
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.course-show-more {
+  background-color: transparent;
+  color: rgba(80, 34, 195, 1);
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.course-description p {
+  color: black !important;
+  font-size: 14px;
+  font-weight: 500;
+} 
+
+.course-description-section {
+  border: 3px dotted rgba(234, 235, 239, 1);
+  border-radius: 20px;
+  padding: 20px 25px;
+}
+
+.course-rightbar {
+  border-top: 1px solid rgba(143, 146, 161, 1) !important;
+  min-height: 1px; /* Ensure it has some height */
+}
+
+.align-self-start {
+  align-self: flex-start;
+}
+
+.course-content-sidebar .sidebar {
+  background-color: white;
+}
+
+.row {
+  overflow: visible !important;
+}
+
+.course-content-sidebar {
+  position: sticky;
+  top: 0px; /* distance from top when scrolling, adjust as needed */
+  height: fit-content; /* ensures it only sticks as tall as its content */
+  z-index: 10; /* make sure it's above other content if needed */
+}
+
+.custom-dropdown:hover svg {
+  fill: white !important;
 }

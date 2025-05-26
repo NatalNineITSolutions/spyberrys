@@ -3,9 +3,7 @@
 $custom-control-indicator-checked-border-color: $gray-300;
 $custom-control-indicator-checked-bg: #ffffff;
 $custom-control-indicator-bg:$primary;*/
-.btn-text-primary {
-  color: #43d477 !important;
-}
+
 
 .text-black {
   color: rgba(0, 0, 0, 1);
@@ -19,8 +17,7 @@ $custom-control-indicator-bg:$primary;*/
 
 .btn-text-primary:hover {
   color: #ffffff !important;
-  background-color: #43d477 !important;
-  border-color: #43d477 !important;
+  background-color: black !important;
 }
 .btn-text-primary:focus, .btn-text-primary.focus {
   box-shadow: 0 0 0 0 rgba(67, 212, 119, 0.5) !important;
@@ -4414,13 +4411,13 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #ffffff;
-  background-color: #43d477;
+  background-color: black;
   border-color: #43d477;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(52, 52, 52, 0.075);
 }
 .btn-primary:hover {
   color: #ffffff;
-  background-color: #2dc463;
+  background-color: black;
   border-color: #2aba5e;
 }
 .btn-primary:focus, .btn-primary.focus {
@@ -14355,13 +14352,6 @@ p {
   flex: 1;
   align-items: center;
 }
-.section-title.after-line:after {
-  content: "";
-  flex: 1 0 20px;
-  height: 2px;
-  background-color: #f1f1f1;
-  margin-left: 10px;
-}
 
 .date-input {
   display: flex;
@@ -15053,6 +15043,10 @@ p {
   border-radius: 10px;
   font-weight: 500;
   font-size: 14px;
+}
+
+.menu-category > ul > li:hover {
+  color: white;
 }
 
 @media (max-width: 991px) {
@@ -16885,7 +16879,7 @@ p {
 
 .course-content-section {
   position: relative;
-  top: -250px;
+  top: -350px;
   margin-bottom: -250px;
 }
 .course-content-section .instructor-discount-card {
@@ -17020,15 +17014,7 @@ p {
   position: relative;
   pointer-events: none;
 }
-.course-content-sidebar .sidebar-title:after {
-  content: "";
-  width: 35px;
-  height: 3px;
-  background-color: var(--primary);
-  position: absolute;
-  bottom: -7px;
-  left: 0;
-}
+
 .rtl .course-content-sidebar .sidebar-title:after {
   right: 0;
   left: auto;

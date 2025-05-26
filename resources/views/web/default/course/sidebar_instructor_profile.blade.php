@@ -1,4 +1,6 @@
-<div class="rounded-lg shadow-sm mt-35 p-20 course-teacher-card d-flex align-items-center flex-column">
+<div class="mt-35 py-20 course-teacher-card d-flex align-items-center flex-column course-rightbar">
+
+    <h3 class="sidebar-title font-16 text-secondary font-weight-bold align-self-start mb-3">{{ trans('webinars.'.$course->type) .' '. trans('webinars.instructions') }}</h3>
 
     @if(!empty($webinarPartnerTeacher))
         <span class="user-select-none px-15 py-10 bg-gray200 off-label text-gray text-white font-12 rounded-sm ml-auto">{{ trans('public.invited') }}</span>
@@ -34,7 +36,7 @@
         $hasMeeting = !empty($courseTeacher->hasMeeting());
     @endphp
 
-    <div class="mt-25 d-flex flex-row align-items-center justify-content-center w-100">
+    <div class="d-flex flex-row align-items-center justify-content-center w-100">
         <a href="{{ $courseTeacher->getProfileUrl() }}" target="_blank" class="btn btn-sm btn-primary {{ $hasMeeting ? 'teacher-btn-action' : 'btn-block' }}">{{ trans('public.profile') }}</a>
 
         @if($hasMeeting)

@@ -17,7 +17,7 @@
             @endpush
         @endif
 
-        <div class="custom-banner-section">
+        <div class="custom-banner-section container-lg-xxl">
             <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('{{ $heroSectionData['hero_background'] }}')" @endif>
 
                 @if($heroSection == "1")
@@ -56,15 +56,23 @@
                         <div class="text-center slider-content">
                             <h1>{{ $heroSectionData['title'] }}</h1>
                             <div class="row h-100 align-items-center text-center">
-                                <div class="col-12 col-md-9 col-lg-7">
+                                <div class="col-12 col-md-9 col-lg-7 d-flex flex-column align-items-start">
                                     <p class="mt-30 slide-hint">{!! nl2br($heroSectionData['description']) !!}</p>
 
-                                    <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                    {{-- <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
                                         <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
                                             <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
                                             <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
                                         </div>
-                                    </form>
+                                    </form> --}}
+                                    <a href="/classes" class="text-decoration-none">
+                                        <button class="find-course-btn">
+                                            <span class="text">Find Course</span>
+                                            <span class="icon">
+                                            <i class="fas fa-arrow-right"></i>
+                                            </span>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

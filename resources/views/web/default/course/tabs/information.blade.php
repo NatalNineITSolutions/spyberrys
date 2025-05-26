@@ -27,11 +27,17 @@
 
 {{--course description--}}
 @if($course->description)
-    <div class="mt-20">
-        <h2 class="section-title after-line">{{ trans('product.Webinar_description') }}</h2>
-        <div class="mt-15 course-description">
+    <div class="mt-20 course-description-section">
+        <h2 class="section-title after-line course-learn-title">{{ trans('product.Webinar_description') }}</h2>
+        <div class="mt-15 course-description collapsed" id="courseDescription">
             {!! nl2br($course->description) !!}
         </div>
+
+        <button id="toggleDescription" class="mt-2 course-show-more p-0 flex items-center gap-1 text-blue-600">
+            <span>Show More</span>
+            <i id="chevronIcon" class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+
     </div>
 @endif
 {{-- ./ course description--}}
@@ -130,10 +136,21 @@
     @endforeach
 @endif
 
-{{-- course Comments --}}
-@include('web.default.includes.comments',[
-        'comments' => $course->comments,
-        'inputName' => 'webinar_id',
-        'inputValue' => $course->id
-    ])
-{{-- ./ course Comments --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const desc = document.getElementById("courseDescription");
+        const toggleBtn = document.getElementById("toggleDescription");
+        const toggleText = toggleBtn.querySelector("span");
+        const chevronIcon = document.getElementById("chevronIcon");
+
+        toggleBtn.addEventListener("click", function () {
+            const isCollapsed = desc.classList.contains("collapsed");
+
+            desc.classList.toggle("collapsed", !isCollapsed);
+            desc.classList.toggle("expanded", isCollapsed);
+            toggleText.textContent = isCollapsed ? "Show Less" : "Show More";
+
+            chevronIcon.classList.toggle("rotate-180", isCollapsed);
+        });
+    });
+</script>
