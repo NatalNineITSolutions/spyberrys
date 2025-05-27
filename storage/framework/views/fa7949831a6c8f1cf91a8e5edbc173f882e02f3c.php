@@ -61,7 +61,6 @@
             <?php endif; ?>
         </div>
     </div>
-
 </footer>
 
 <?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/includes/footer.blade.php ENDPATH**/ ?>

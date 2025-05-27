@@ -325,37 +325,65 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.swiper-slide').forEach(function (slide) {
-        // For HTML5 video
-        var video = slide.querySelector('video.video-bg');
-        if (video) {
-            slide.addEventListener('mouseenter', function () {
-                video.play().catch(function(){});
-            });
-            slide.addEventListener('mouseleave', function () {
-                video.pause();
-            });
-        }
-        // For YouTube iframe
-        var yt = slide.querySelector('iframe[src*="youtube.com"]');
-        if (yt) {
-            slide.addEventListener('mouseenter', function () {
-                yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            });
-            slide.addEventListener('mouseleave', function () {
-                yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-            });
-        }
-        // For Vimeo iframe
-        var vimeo = slide.querySelector('iframe[src*="vimeo.com"]');
-        if (vimeo) {
-            slide.addEventListener('mouseenter', function () {
-                vimeo.contentWindow.postMessage('{"method":"play"}', '*');
-            });
-            slide.addEventListener('mouseleave', function () {
-                vimeo.contentWindow.postMessage('{"method":"pause"}', '*');
-            });
-        }
-    });
+const slider = document.getElementById('liveClassesSlider');
+
+document.querySelector('.live-webinars-next')?.addEventListener('click', () => {
+    slider.scrollBy({ left: 320, behavior: 'smooth' });
 });
+
+document.querySelector('.live-webinars-prev')?.addEventListener('click', () => {
+    slider.scrollBy({ left: -320, behavior: 'smooth' });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const slider = document.getElementById('liveClassesSlider');
+    const nextBtn = document.querySelector('.live-webinars-next');
+    const prevBtn = document.querySelector('.live-webinars-prev');
+
+    if (window.innerWidth < 992 && slider && nextBtn && prevBtn) {
+      const cardWidth = slider.querySelector('.live-class-card')?.offsetWidth || 0;
+
+      nextBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: cardWidth + 10, behavior: 'smooth' });
+      });
+
+      prevBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: -(cardWidth + 10), behavior: 'smooth' });
+      });
+    }
+  });
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     document.querySelectorAll('.swiper-slide').forEach(function (slide) {
+//         // For HTML5 video
+//         var video = slide.querySelector('video.video-bg');
+//         if (video) {
+//             slide.addEventListener('mouseenter', function () {
+//                 video.play().catch(function(){});
+//             });
+//             slide.addEventListener('mouseleave', function () {
+//                 video.pause();
+//             });
+//         }
+//         // For YouTube iframe
+//         var yt = slide.querySelector('iframe[src*="youtube.com"]');
+//         if (yt) {
+//             slide.addEventListener('mouseenter', function () {
+//                 yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+//             });
+//             slide.addEventListener('mouseleave', function () {
+//                 yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+//             });
+//         }
+//         // For Vimeo iframe
+//         var vimeo = slide.querySelector('iframe[src*="vimeo.com"]');
+//         if (vimeo) {
+//             slide.addEventListener('mouseenter', function () {
+//                 vimeo.contentWindow.postMessage('{"method":"play"}', '*');
+//             });
+//             slide.addEventListener('mouseleave', function () {
+//                 vimeo.contentWindow.postMessage('{"method":"pause"}', '*');
+//             });
+//         }
+//     });
+// });

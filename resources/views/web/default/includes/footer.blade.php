@@ -60,7 +60,6 @@
             @endif
         </div>
     </div>
-
 </footer>
 
 {{-- @php

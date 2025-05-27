@@ -14,7 +14,7 @@
     }
 </style>
 
-<div class="custom-dropdown btn-text-primary">
+<div class="custom-dropdown">
 
     @if((empty($userCarts) or count($userCarts) < 1) and !empty($userCartDiscount))
         <a href="/cart" class="btn-transparent">
