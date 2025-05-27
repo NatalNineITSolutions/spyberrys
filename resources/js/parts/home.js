@@ -325,33 +325,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-const slider = document.getElementById('liveClassesSlider');
-
-document.querySelector('.live-webinars-next')?.addEventListener('click', () => {
-    slider.scrollBy({ left: 320, behavior: 'smooth' });
-});
-
-document.querySelector('.live-webinars-prev')?.addEventListener('click', () => {
-    slider.scrollBy({ left: -320, behavior: 'smooth' });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const slider = document.getElementById('liveClassesSlider');
-    const nextBtn = document.querySelector('.live-webinars-next');
-    const prevBtn = document.querySelector('.live-webinars-prev');
-
-    if (window.innerWidth < 992 && slider && nextBtn && prevBtn) {
-      const cardWidth = slider.querySelector('.live-class-card')?.offsetWidth || 0;
-
-      nextBtn.addEventListener('click', () => {
-        slider.scrollBy({ left: cardWidth + 10, behavior: 'smooth' });
-      });
-
-      prevBtn.addEventListener('click', () => {
-        slider.scrollBy({ left: -(cardWidth + 10), behavior: 'smooth' });
-      });
-    }
-  });
 
 // document.addEventListener('DOMContentLoaded', function () {
 //     document.querySelectorAll('.swiper-slide').forEach(function (slide) {

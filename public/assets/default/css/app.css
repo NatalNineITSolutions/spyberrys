@@ -13557,6 +13557,14 @@ body {
   border-radius: 0.4rem !important;
 }
 
+.btn-text-primary:hover {
+  background-color: #2563eb !important;
+}
+
+.btn-secondary-hover {
+  background-color: var(--secondary-hover);
+}
+
 .badge {
   line-height: 1.58;
   font-weight: normal;
@@ -14778,20 +14786,30 @@ p {
 
 @media (min-width: 1800px) {
   .custom-banner-section {
-    max-width: 1140px;
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
   }
   .section {
-    max-width: 1140px;
+    max-width: 1400px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 !important;
+  }
+  .newest-courses {
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
   }
 }
+.newest-courses {
+  padding: 0 3rem;
+}
+
 /* Tablet view */
 @media (max-width: 991px) {
   .custom-banner {
@@ -15120,6 +15138,14 @@ p {
   font-size: 20px;
   text-align: center;
   font-family: "Poetsen One", sans-serif;
+}
+
+.category-button:hover span {
+  color: white;
+}
+
+.category-button span:hover {
+  color: white;
 }
 
 /* Hover Effect */
@@ -15489,6 +15515,7 @@ p {
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
+  overflow-x: hidden;
 }
 
 .live-classes-container {
@@ -15628,9 +15655,19 @@ p {
 }
 
 .live-classes-slider-wrapper {
-  overflow: hidden;
-  padding-bottom: 10px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   display: flex;
+  width: 100%;
+}
+
+.swiper-slide {
+  margin-right: 0 !important;
+  margin: 10px !important;
+}
+
+.video-section {
+  overflow-y: hidden;
 }
 
 .live-classes-slider {
@@ -15702,20 +15739,25 @@ p {
     display: flex;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    padding: 0 10px;
+    max-width: 100vw; /* Enforce viewport boundary */
   }
   .live-classes-slider {
     display: flex;
     flex-wrap: nowrap;
-    gap: 10px;
+    gap: 0; /* avoid overflow due to gaps */
+    max-width: 100%;
   }
   .live-class-card {
-    min-width: 100%; /* Show 1 card per screen width */
+    flex: 0 0 calc(100% - 20px); /* 100% width minus wrapper padding */
+    margin-right: 10px;
     flex-shrink: 0;
   }
   .live-classes-arrows {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    padding: 0 10px;
   }
   .arrow-btn {
     display: inline-block;
@@ -16135,6 +16177,11 @@ p {
 }
 
 .menu-category > ul > li {
+  color: black !important;
+}
+
+.nav-item a {
+  font-weight: 500 !important;
   color: black !important;
 }
 

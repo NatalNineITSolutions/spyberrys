@@ -277,7 +277,8 @@
                                                         <img src="{{ $category->icon }}" class="cat-dropdown-menu-icon mr-10" alt="{{ $category->title }} icon">
                                                     @endif
 
-                                                    {{ $category->title }}
+                                                    <p class="text-black">{{ $category->title }}</p>
+                                                    
                                                 </div>
 
                                                 @if(!empty($category->subCategories) and count($category->subCategories))

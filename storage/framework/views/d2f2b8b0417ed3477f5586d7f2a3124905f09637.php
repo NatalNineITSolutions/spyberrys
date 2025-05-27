@@ -5,8 +5,6 @@
     <link rel="stylesheet" href="/assets/default/vendors/owl-carousel2/owl.carousel.min.css">
 <?php $__env->stopPush(); ?>
 
-
-
 <?php $__env->startSection('content'); ?>
 
     <?php if(!empty($heroSectionData)): ?>
@@ -100,7 +98,6 @@
 
     <?php if(!empty($liveWebinars) && $liveWebinars->isNotEmpty()): ?>
         <div class="live-classes-section">
-
             <div class="live-classes-container">
                 <div class="live-classes-header">On going Live Classes</div>
 
@@ -112,10 +109,10 @@
                 <?php endif; ?>
 
                 <div class="live-classes mt-30">
-                    <div class="live-classes-slider-wrapper">
-                        <div class="live-classes-slider" id="liveClassesSlider">
+                    <div class="live-classes-slider-wrapper live-webinars-swiper">
+                        <div class="swiper-wrapper video-section">
                             <?php $__currentLoopData = $liveWebinars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $webinar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="live-class-card">
+                                <div class="swiper-slide live-class-card">
                                     <div class="video-bg-wrapper" style="position:relative;">
                                         <?php if($webinar->video_demo_source == 'youtube'): ?>
                                             <?php
@@ -327,8 +324,6 @@
                 </div>
             </section>
         <?php endif; ?>
-
-
         
         
         <?php if(
@@ -369,7 +364,7 @@
             $homeSection->name == \App\Models\HomeSection::$latest_classes and
                 !empty($latestWebinars) and
                 !$latestWebinars->isEmpty()): ?>
-            <section class="home-sections home-sections-swiper container">
+            <section class="home-sections home-sections-swiper newest-courses">
                 <div class="d-flex justify-content-between ">
                     <div>
                         <h2 class="section-title"><?php echo e(trans('home.latest_classes')); ?></h2>

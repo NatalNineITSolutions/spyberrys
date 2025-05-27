@@ -272,8 +272,8 @@
                                                         <img src="<?php echo e($category->icon); ?>" class="cat-dropdown-menu-icon mr-10" alt="<?php echo e($category->title); ?> icon">
                                                     <?php endif; ?>
 
-                                                    <?php echo e($category->title); ?>
-
+                                                    <p class="text-black"><?php echo e($category->title); ?></p>
+                                                    
                                                 </div>
 
                                                 <?php if(!empty($category->subCategories) and count($category->subCategories)): ?>

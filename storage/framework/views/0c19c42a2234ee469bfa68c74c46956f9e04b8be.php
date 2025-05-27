@@ -7,6 +7,11 @@
         font-weight: 700;
     }
 
+    .custom-login:hover {
+        background-color: black;
+        color: white;
+    }
+
     .custom-register {
         border-radius: 0.4rem;
         border: none;
@@ -119,7 +124,7 @@
     </div>
 <?php else: ?>
     <div class="d-flex align-items-center">
-        <a href="/login" class="text-dark-blue font-14 custom-login btn-text-primary"><?php echo e(trans('auth.login')); ?></a>
+        <a href="/login" class="text-dark-blue font-14 custom-login"><?php echo e(trans('auth.login')); ?></a>
         <a href="/register" class="text-dark-blue font-14 custom-register btn-primary"><?php echo e(trans('auth.sign_up')); ?></a>
     </div>
 <?php endif; ?><?php /**PATH C:\laragon\www\spyberrys\resources\views/web/default/includes/top_nav/user_menu.blade.php ENDPATH**/ ?>

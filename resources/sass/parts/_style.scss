@@ -120,7 +120,7 @@
 
 @media (min-width: 1800px) {
   .custom-banner-section {
-    max-width: 1140px;
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
@@ -128,12 +128,23 @@
   }
 
   .section {
-    max-width: 1140px;
+    max-width: 1400px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 !important;
+  }
+
+  .newest-courses {
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+
+.newest-courses {
+    padding: 0 3rem;
 }
 
 /* Tablet view */
@@ -491,6 +502,14 @@
   font-size: 20px;
   text-align: center;
   font-family: "Poetsen One", sans-serif;
+}
+
+.category-button:hover span {
+    color: white;
+}
+
+.category-button span:hover {
+    color: white;
 }
 
 /* Hover Effect */
@@ -913,6 +932,7 @@
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
+  overflow-x: hidden;
 }
 
 .live-classes-container {
@@ -1054,9 +1074,19 @@
 }
 
 .live-classes-slider-wrapper {
-  overflow: hidden;
-  padding-bottom: 10px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   display: flex;
+  width: 100%;
+}
+
+.swiper-slide {
+    margin-right: 0 !important;
+    margin: 10px !important;
+}
+
+.video-section {
+    overflow-y: hidden;
 }
 
 .live-classes-slider {
@@ -1126,33 +1156,39 @@
 
 @media (max-width: 991px) {
   .live-classes-slider-wrapper {
-    overflow-x: auto;
-    display: flex;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
+  overflow-x: auto;
+  display: flex;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 10px;
+  max-width: 100vw; /* Enforce viewport boundary */
+}
 
-  .live-classes-slider {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
+.live-classes-slider {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0; /* avoid overflow due to gaps */
+  max-width: 100%;
+}
 
-  .live-class-card {
-    min-width: 100%; /* Show 1 card per screen width */
-    flex-shrink: 0;
-  }
+.live-class-card {
+  flex: 0 0 calc(100% - 20px); /* 100% width minus wrapper padding */
+  margin-right: 10px;
+  flex-shrink: 0;
+}
 
   .live-classes-arrows {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    padding: 0 10px;
   }
 
   .arrow-btn {
     display: inline-block;
   }
 }
+
 
 @media (max-width: 576px) {
   .live-classes-slider {
