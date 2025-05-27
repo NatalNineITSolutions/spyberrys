@@ -56,7 +56,7 @@
                         </div>
                     @else
                         <div class="text-center slider-content">
-                            <h1>{{ $heroSectionData['title'] }}</h1>
+                            <h2 class="hero_title">{{ $heroSectionData['title'] }}</h2>
                             <div class="row h-100 align-items-center text-center">
                                 <div class="col-12 col-md-9 col-lg-7 d-flex flex-column align-items-start">
                                     <p class="mt-30 slide-hint">{!! nl2br($heroSectionData['description']) !!}</p>
@@ -86,7 +86,7 @@
     @endif
 
     <div class="section">
-        <h2>All the Skills You Need in One Place</h2>
+        <h3>All the Skills You Need in One Place</h3>
         <p>From critical skills to technical topics, Spyberry supports your professional development</p>
 
         <div class="category-container">
@@ -102,7 +102,8 @@
     </div>
 
     @if (!empty($liveWebinars) && $liveWebinars->isNotEmpty())
-        <div class="live-classes-section">
+        <div class="live-classes-section container">
+
             <div class="live-classes-container">
                 <div class="live-classes-header">On going Live Classes</div>
 
@@ -114,78 +115,83 @@
                 @endif
 
                 <div class="live-classes mt-30">
-                    <div class="live-classes-slider-wrapper live-webinars-swiper">
-                        <div class="swiper-wrapper video-section">
-                            @foreach ($liveWebinars as $webinar)
-                                <div class="swiper-slide live-class-card">
-                                    <div class="video-bg-wrapper" style="position:relative;">
-                                        @if ($webinar->video_demo_source == 'youtube')
-                                            @php
-                                                $youtubeId = null;
-                                                if (
-                                                    preg_match(
-                                                        '/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([A-Za-z0-9_\-]+)/',
-                                                        $webinar->video_demo,
-                                                        $matches
-                                                    )
-                                                ) {
-                                                    $youtubeId = $matches[1];
-                                                }
-                                            @endphp
-                                            @if ($youtubeId)
-                                                <iframe
-                                                    id="liveWebinarPlayer{{ $webinar->id }}"
-                                                    src="https://www.youtube.com/embed/{{ $youtubeId }}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist={{ $youtubeId }}&enablejsapi=1"
-                                                    frameborder="0"
-                                                    allow="autoplay; encrypted-media"
-                                                    allowfullscreen
+                    <div class="swiper-container live-webinars-swiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($liveWebinars as $index => $webinar)
+                                <div class="swiper-slide">
+                                    <div class="live-class-card">
+                                        <div class="video-bg-wrapper" style="position:relative;">
+                                            @if ($webinar->video_demo_source == 'youtube')
+                                                @php
+                                                    $youtubeId = null;
+                                                    if (
+                                                        preg_match(
+                                                            '/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([A-Za-z0-9_\-]+)/',
+                                                            $webinar->video_demo,
+                                                            $matches,
+                                                        )
+                                                    ) {
+                                                        $youtubeId = $matches[1];
+                                                    }
+                                                @endphp
+                                                @if ($youtubeId)
+                                                    <iframe id="liveWebinarPlayer{{ $webinar->id }}"
+                                                        src="https://www.youtube.com/embed/{{ $youtubeId }}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist={{ $youtubeId }}&enablejsapi=1"
+                                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
+                                                        tabindex="-1"
+                                                        style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
+                                                    </iframe>
+                                                @endif
+                                            @elseif($webinar->video_demo_source == 'vimeo')
+                                                <iframe id="liveWebinarPlayer{{ $webinar->id }}"
+                                                    src="https://player.vimeo.com/video/{{ $webinar->video_demo }}?autoplay=1&muted=1&background=1&loop=1"
+                                                    frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+                                                    tabindex="-1"
                                                     style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
                                                 </iframe>
+                                            @elseif($webinar->video_demo)
+                                                <video id="liveWebinarPlayer{{ $webinar->id }}" class="video-bg" autoplay
+                                                    muted loop playsinline tabindex="-1"
+                                                    style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
+                                                    <source src="{{ $webinar->video_demo }}" type="video/mp4" />
+                                                </video>
+                                            @else
+                                                <div class="thumbnail-bg"
+                                                    style="background-image: url('{{ asset($webinar->thumbnail) }}');">
+                                                </div>
                                             @endif
-                                        @elseif($webinar->video_demo_source == 'vimeo')
-                                            <iframe
-                                                id="liveWebinarPlayer{{ $webinar->id }}"
-                                                src="https://player.vimeo.com/video/{{ $webinar->video_demo }}?autoplay=1&muted=1&background=1&loop=1"
-                                                frameborder="0"
-                                                allow="autoplay; fullscreen"
-                                                allowfullscreen
-                                                style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
-                                            </iframe>
-                                        @elseif($webinar->video_demo)
-                                            <video
-                                                id="liveWebinarPlayer{{ $webinar->id }}"
-                                                autoplay muted loop playsinline
-                                                style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
-                                                <source src="{{ $webinar->video_demo }}" type="video/mp4" />
-                                            </video>
-                                        @else
-                                            <div class="thumbnail-bg" style="background-image: url('{{ asset($webinar->thumbnail) }}');"></div>
-                                        @endif
-                                        <div class="video-bg-overlay"></div>
-                                    </div>
-                                    <div class="info d-flex align-items-center justify-content-between" style="gap: 10px;">
-                                        <a href="{{ $webinar->getUrl() }}" class="card-link" style="color: inherit; text-decoration: none;">
-                                            <div>
-                                                <h4 title="{{ $webinar->title }}">
-                                                    {{ \Illuminate\Support\Str::limit($webinar->title, 15) }}
-                                                </h4>
-                                                <p>{{ $webinar->category->title ?? 'Instructor' }}</p>
-                                            </div>
-                                        </a>
-                                        <button class="play-btn" id="playPauseBtn{{ $webinar->id }}"
-                                            onclick="toggleLiveWebinarVideo('{{ $webinar->id }}', '{{ $webinar->video_demo_source }}')"
-                                            style="background: #2563eb; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                                            <i class="fa fa-pause"></i>
-                                        </button>
+                                            <div class="video-bg-overlay"></div>
+                                        </div>
+                                        <div class="info d-flex align-items-center justify-content-between"
+                                            style="gap: 10px;">
+                                            <a href="{{ $webinar->getUrl() }}" class="card-link"
+                                                style="color: inherit; text-decoration: none;">
+                                                <div>
+                                                    <h4 title="{{ $webinar->title }}">
+                                                        {{ \Illuminate\Support\Str::limit($webinar->title, 15) }}
+                                                    </h4>
+                                                    <p>{{ $webinar->category->title ?? 'Instructor' }}</p>
+                                                </div>
+                                            </a>
+                                            <button class="play-btn" id="playPauseBtn{{ $webinar->id }}"
+                                                onclick="toggleLiveWebinarVideo('{{ $webinar->id }}', '{{ $webinar->video_demo_source }}')"
+                                                style="background: #2563eb; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                                <i class="fa fa-pause"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     @endif
+
+
+
 
     {{-- Statistics --}}
     {{-- @include('web.default.pages.includes.home_statistics') --}}
@@ -324,7 +330,7 @@
                 </div>
             </section>
         @endif
-        
+
         {{-- Upcoming Course --}}
         @if (
             $homeSection->name == \App\Models\HomeSection::$upcoming_courses and
@@ -364,7 +370,9 @@
             $homeSection->name == \App\Models\HomeSection::$latest_classes and
                 !empty($latestWebinars) and
                 !$latestWebinars->isEmpty())
-            <section class="home-sections home-sections-swiper newest-courses">
+            {{-- <section class="home-sections home-sections-swiper newest-courses"> --}}
+            <section class="home-sections home-sections-swiper container">
+
                 <div class="d-flex justify-content-between ">
                     <div>
                         <h2 class="section-title">{{ trans('home.latest_classes') }}</h2>

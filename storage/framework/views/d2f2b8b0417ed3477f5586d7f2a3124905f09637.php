@@ -56,7 +56,7 @@
                         </div>
                     <?php else: ?>
                         <div class="text-center slider-content">
-                            <h1><?php echo e($heroSectionData['title']); ?></h1>
+                            <h2 class="hero_title"><?php echo e($heroSectionData['title']); ?></h2>
                             <div class="row h-100 align-items-center text-center">
                                 <div class="col-12 col-md-9 col-lg-7 d-flex flex-column align-items-start">
                                     <p class="mt-30 slide-hint"><?php echo nl2br($heroSectionData['description']); ?></p>
@@ -81,7 +81,7 @@
     <?php endif; ?>
 
     <div class="section">
-        <h2>All the Skills You Need in One Place</h2>
+        <h3>All the Skills You Need in One Place</h3>
         <p>From critical skills to technical topics, Spyberry supports your professional development</p>
 
         <div class="category-container">
@@ -97,7 +97,8 @@
     </div>
 
     <?php if(!empty($liveWebinars) && $liveWebinars->isNotEmpty()): ?>
-        <div class="live-classes-section">
+        <div class="live-classes-section container">
+
             <div class="live-classes-container">
                 <div class="live-classes-header">On going Live Classes</div>
 
@@ -109,79 +110,84 @@
                 <?php endif; ?>
 
                 <div class="live-classes mt-30">
-                    <div class="live-classes-slider-wrapper live-webinars-swiper">
-                        <div class="swiper-wrapper video-section">
-                            <?php $__currentLoopData = $liveWebinars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $webinar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="swiper-slide live-class-card">
-                                    <div class="video-bg-wrapper" style="position:relative;">
-                                        <?php if($webinar->video_demo_source == 'youtube'): ?>
-                                            <?php
-                                                $youtubeId = null;
-                                                if (
-                                                    preg_match(
-                                                        '/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([A-Za-z0-9_\-]+)/',
-                                                        $webinar->video_demo,
-                                                        $matches
-                                                    )
-                                                ) {
-                                                    $youtubeId = $matches[1];
-                                                }
-                                            ?>
-                                            <?php if($youtubeId): ?>
-                                                <iframe
-                                                    id="liveWebinarPlayer<?php echo e($webinar->id); ?>"
-                                                    src="https://www.youtube.com/embed/<?php echo e($youtubeId); ?>?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=<?php echo e($youtubeId); ?>&enablejsapi=1"
-                                                    frameborder="0"
-                                                    allow="autoplay; encrypted-media"
-                                                    allowfullscreen
+                    <div class="swiper-container live-webinars-swiper">
+                        <div class="swiper-wrapper">
+                            <?php $__currentLoopData = $liveWebinars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $webinar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <div class="swiper-slide">
+                                    <div class="live-class-card">
+                                        <div class="video-bg-wrapper" style="position:relative;">
+                                            <?php if($webinar->video_demo_source == 'youtube'): ?>
+                                                <?php
+                                                    $youtubeId = null;
+                                                    if (
+                                                        preg_match(
+                                                            '/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([A-Za-z0-9_\-]+)/',
+                                                            $webinar->video_demo,
+                                                            $matches,
+                                                        )
+                                                    ) {
+                                                        $youtubeId = $matches[1];
+                                                    }
+                                                ?>
+                                                <?php if($youtubeId): ?>
+                                                    <iframe id="liveWebinarPlayer<?php echo e($webinar->id); ?>"
+                                                        src="https://www.youtube.com/embed/<?php echo e($youtubeId); ?>?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=<?php echo e($youtubeId); ?>&enablejsapi=1"
+                                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
+                                                        tabindex="-1"
+                                                        style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
+                                                    </iframe>
+                                                <?php endif; ?>
+                                            <?php elseif($webinar->video_demo_source == 'vimeo'): ?>
+                                                <iframe id="liveWebinarPlayer<?php echo e($webinar->id); ?>"
+                                                    src="https://player.vimeo.com/video/<?php echo e($webinar->video_demo); ?>?autoplay=1&muted=1&background=1&loop=1"
+                                                    frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+                                                    tabindex="-1"
                                                     style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
                                                 </iframe>
+                                            <?php elseif($webinar->video_demo): ?>
+                                                <video id="liveWebinarPlayer<?php echo e($webinar->id); ?>" class="video-bg" autoplay
+                                                    muted loop playsinline tabindex="-1"
+                                                    style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
+                                                    <source src="<?php echo e($webinar->video_demo); ?>" type="video/mp4" />
+                                                </video>
+                                            <?php else: ?>
+                                                <div class="thumbnail-bg"
+                                                    style="background-image: url('<?php echo e(asset($webinar->thumbnail)); ?>');">
+                                                </div>
                                             <?php endif; ?>
-                                        <?php elseif($webinar->video_demo_source == 'vimeo'): ?>
-                                            <iframe
-                                                id="liveWebinarPlayer<?php echo e($webinar->id); ?>"
-                                                src="https://player.vimeo.com/video/<?php echo e($webinar->video_demo); ?>?autoplay=1&muted=1&background=1&loop=1"
-                                                frameborder="0"
-                                                allow="autoplay; fullscreen"
-                                                allowfullscreen
-                                                style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
-                                            </iframe>
-                                        <?php elseif($webinar->video_demo): ?>
-                                            <video
-                                                id="liveWebinarPlayer<?php echo e($webinar->id); ?>"
-                                                autoplay muted loop playsinline
-                                                style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
-                                                <source src="<?php echo e($webinar->video_demo); ?>" type="video/mp4" />
-                                            </video>
-                                        <?php else: ?>
-                                            <div class="thumbnail-bg" style="background-image: url('<?php echo e(asset($webinar->thumbnail)); ?>');"></div>
-                                        <?php endif; ?>
-                                        <div class="video-bg-overlay"></div>
-                                    </div>
-                                    <div class="info d-flex align-items-center justify-content-between" style="gap: 10px;">
-                                        <a href="<?php echo e($webinar->getUrl()); ?>" class="card-link" style="color: inherit; text-decoration: none;">
-                                            <div>
-                                                <h4 title="<?php echo e($webinar->title); ?>">
-                                                    <?php echo e(\Illuminate\Support\Str::limit($webinar->title, 15)); ?>
+                                            <div class="video-bg-overlay"></div>
+                                        </div>
+                                        <div class="info d-flex align-items-center justify-content-between"
+                                            style="gap: 10px;">
+                                            <a href="<?php echo e($webinar->getUrl()); ?>" class="card-link"
+                                                style="color: inherit; text-decoration: none;">
+                                                <div>
+                                                    <h4 title="<?php echo e($webinar->title); ?>">
+                                                        <?php echo e(\Illuminate\Support\Str::limit($webinar->title, 15)); ?>
 
-                                                </h4>
-                                                <p><?php echo e($webinar->category->title ?? 'Instructor'); ?></p>
-                                            </div>
-                                        </a>
-                                        <button class="play-btn" id="playPauseBtn<?php echo e($webinar->id); ?>"
-                                            onclick="toggleLiveWebinarVideo('<?php echo e($webinar->id); ?>', '<?php echo e($webinar->video_demo_source); ?>')"
-                                            style="background: #2563eb; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                                            <i class="fa fa-pause"></i>
-                                        </button>
+                                                    </h4>
+                                                    <p><?php echo e($webinar->category->title ?? 'Instructor'); ?></p>
+                                                </div>
+                                            </a>
+                                            <button class="play-btn" id="playPauseBtn<?php echo e($webinar->id); ?>"
+                                                onclick="toggleLiveWebinarVideo('<?php echo e($webinar->id); ?>', '<?php echo e($webinar->video_demo_source); ?>')"
+                                                style="background: #2563eb; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                                <i class="fa fa-pause"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     <?php endif; ?>
+
+
+
 
     
     
@@ -324,7 +330,7 @@
                 </div>
             </section>
         <?php endif; ?>
-        
+
         
         <?php if(
             $homeSection->name == \App\Models\HomeSection::$upcoming_courses and
@@ -364,7 +370,9 @@
             $homeSection->name == \App\Models\HomeSection::$latest_classes and
                 !empty($latestWebinars) and
                 !$latestWebinars->isEmpty()): ?>
-            <section class="home-sections home-sections-swiper newest-courses">
+            
+            <section class="home-sections home-sections-swiper container">
+
                 <div class="d-flex justify-content-between ">
                     <div>
                         <h2 class="section-title"><?php echo e(trans('home.latest_classes')); ?></h2>

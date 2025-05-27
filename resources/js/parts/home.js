@@ -225,13 +225,14 @@ window.toggleLiveWebinarVideo = function(id, source) {
         }
     }
 };
+
 // document.addEventListener('DOMContentLoaded', function () {
 //     if (window.Swiper) {
 //         new Swiper('.live-webinars-swiper', {
 //             slidesPerView: 1.5,
 //             centeredSlides: false,
 //             spaceBetween: 100, // Adjust as needed
-//             loop: true, // Enable infinite loop
+//             loop: false, // Enable infinite loop
 //             navigation: {
 //                 nextEl: '.live-webinars-next',
 //                 prevEl: '.live-webinars-prev',
@@ -268,8 +269,8 @@ document.addEventListener('DOMContentLoaded', function () {
             breakpoints: {
                 576: { slidesPerView: 1.5, centeredSlides: false, spaceBetween: 20 },
                 768: { slidesPerView: 2, centeredSlides: false, spaceBetween: 24 },
-                992: { slidesPerView: 3, centeredSlides: false, spaceBetween: 28 },
-                1200: { slidesPerView: 4, centeredSlides: false, spaceBetween: 100 }
+                992: { slidesPerView: 3, centeredSlides: false, spaceBetween: 50 },
+                1200: { slidesPerView: 3, centeredSlides: false, spaceBetween: -30 }
             },
             on: {
                 slideChange: function () {
@@ -325,38 +326,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     document.querySelectorAll('.swiper-slide').forEach(function (slide) {
-//         // For HTML5 video
-//         var video = slide.querySelector('video.video-bg');
-//         if (video) {
-//             slide.addEventListener('mouseenter', function () {
-//                 video.play().catch(function(){});
-//             });
-//             slide.addEventListener('mouseleave', function () {
-//                 video.pause();
-//             });
-//         }
-//         // For YouTube iframe
-//         var yt = slide.querySelector('iframe[src*="youtube.com"]');
-//         if (yt) {
-//             slide.addEventListener('mouseenter', function () {
-//                 yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-//             });
-//             slide.addEventListener('mouseleave', function () {
-//                 yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-//             });
-//         }
-//         // For Vimeo iframe
-//         var vimeo = slide.querySelector('iframe[src*="vimeo.com"]');
-//         if (vimeo) {
-//             slide.addEventListener('mouseenter', function () {
-//                 vimeo.contentWindow.postMessage('{"method":"play"}', '*');
-//             });
-//             slide.addEventListener('mouseleave', function () {
-//                 vimeo.contentWindow.postMessage('{"method":"pause"}', '*');
-//             });
-//         }
-//     });
-// });
