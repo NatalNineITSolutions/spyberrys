@@ -1,3 +1,13 @@
+<style>
+    .footer-sub-link {
+        color: white;
+    }
+
+    a {
+        color: white;
+    }
+</style>
+
 <footer class="custom-footer">
     <div class="custom-footer-container">
 
@@ -13,8 +23,7 @@
         <div class="custom-footer-column">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Top Course</a></li>
+                <li><a href="/classes">Top Course</a></li>
             </ul>
         </div>
 
@@ -32,7 +41,7 @@
                     @endif
 
                     @if(!empty($footerColumns[$column]['value']))
-                        {!! $footerColumns[$column]['value'] !!}
+                        <p class="footer-sub-link">{!! $footerColumns[$column]['value'] !!}</p>
                     @endif
                 </div>
             @endif
@@ -50,7 +59,7 @@
     <div class="custom-footer-bottom">
         <p>{{ trans('update.platform_copyright_hint') }}</p>
 
-        <div class="custom-footer-social-icons">
+        {{-- <div class="custom-footer-social-icons">
             @if(!empty($socials))
                 @foreach($socials as $social)
                     <a href="{{ $social['link'] }}" target="_blank" title="{{ $social['title'] }}">
@@ -58,7 +67,14 @@
                     </a>
                 @endforeach
             @endif
+        </div> --}}
+
+        <div class="custom-footer-social-icons">
+            <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
         </div>
+
     </div>
 
 </footer>

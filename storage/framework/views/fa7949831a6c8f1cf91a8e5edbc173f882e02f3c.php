@@ -1,3 +1,13 @@
+<style>
+    .footer-sub-link {
+        color: white;
+    }
+
+    a {
+        color: white;
+    }
+</style>
+
 <footer class="custom-footer">
     <div class="custom-footer-container">
 
@@ -13,8 +23,7 @@
         <div class="custom-footer-column">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Top Course</a></li>
+                <li><a href="/classes">Top Course</a></li>
             </ul>
         </div>
 
@@ -32,8 +41,7 @@
                     <?php endif; ?>
 
                     <?php if(!empty($footerColumns[$column]['value'])): ?>
-                        <?php echo $footerColumns[$column]['value']; ?>
-
+                        <p class="footer-sub-link"><?php echo $footerColumns[$column]['value']; ?></p>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -51,15 +59,14 @@
     <div class="custom-footer-bottom">
         <p><?php echo e(trans('update.platform_copyright_hint')); ?></p>
 
+        
+
         <div class="custom-footer-social-icons">
-            <?php if(!empty($socials)): ?>
-                <?php $__currentLoopData = $socials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $social): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <a href="<?php echo e($social['link']); ?>" target="_blank" title="<?php echo e($social['title']); ?>">
-                        <img src="<?php echo e(asset($social['image'])); ?>" alt="<?php echo e($social['title']); ?>" class="footer-social-icon">
-                    </a>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <?php endif; ?>
+            <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
         </div>
+
     </div>
 
 </footer>
