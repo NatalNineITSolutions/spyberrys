@@ -8,7 +8,7 @@
 
 @section('content')
     <section class="course-cover-container {{ empty($activeSpecialOffer) ? 'not-active-special-offer' : '' }}">
-        <img src="{{ $course->getImageCover() }}" class="img-cover course-cover-img" alt="{{ $course->title }}"/>
+        {{-- <img src="{{ $course->getImageCover() }}" class="img-cover course-cover-img" alt="{{ $course->title }}"/> --}}
 
         <div class="cover-content pt-40">
             <div class="container position-relative">
@@ -77,37 +77,21 @@
                         @endforeach
                     @endif
 
-                    <div class="mt-35">
-                        <ul class="nav nav-tabs bg-secondary rounded-sm p-15 d-flex align-items-center justify-content-between" id="tabs-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white {{ (empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'active' : '' }}" id="information-tab"
-                                   data-toggle="tab" href="#information" role="tab" aria-controls="information"
-                                   aria-selected="true">{{ trans('product.information') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white {{ (request()->get('tab','') == 'content') ? 'active' : '' }}" id="content-tab" data-toggle="tab"
-                                   href="#content" role="tab" aria-controls="content"
-                                   aria-selected="false">{{ trans('product.content') }} ({{ $webinarContentCount }})</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white {{ (request()->get('tab','') == 'reviews') ? 'active' : '' }}" id="reviews-tab" data-toggle="tab"
-                                   href="#reviews" role="tab" aria-controls="reviews"
-                                   aria-selected="false">{{ trans('product.reviews') }} ({{ $course->reviews->count() > 0 ? $course->reviews->pluck('creator_id')->count() : 0 }})</a>
-                            </li>
-                        </ul>
+                    <div class="course-about">
 
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade {{ (empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'show active' : '' }} " id="information" role="tabpanel"
-                                 aria-labelledby="information-tab">
-                                @include(getTemplate().'.course.tabs.information')
-                            </div>
-                            <div class="tab-pane fade {{ (request()->get('tab','') == 'content') ? 'show active' : '' }}" id="content" role="tabpanel" aria-labelledby="content-tab">
-                                @include(getTemplate().'.course.tabs.content')
-                            </div>
-                            <div class="tab-pane fade {{ (request()->get('tab','') == 'reviews') ? 'show active' : '' }}" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                                @include(getTemplate().'.course.tabs.reviews')
-                            </div>
-                        </div>
+                        @include(getTemplate().'.course.tabs.information')
+
+                        @include(getTemplate().'.course.tabs.content')
+
+                        @include(getTemplate().'.course.tabs.reviews')
+
+                        {{-- course Comments --}}
+                        @include('web.default.includes.comments',[
+                                'comments' => $course->comments,
+                                'inputName' => 'webinar_id',
+                                'inputValue' => $course->id
+                            ])
+                        {{-- ./ course Comments --}}
 
                     </div>
 
@@ -127,7 +111,7 @@
             </div>
 
             <div class="course-content-sidebar col-12 col-lg-4 mt-25 mt-lg-0">
-                <div class="rounded-lg shadow-sm">
+                <div class="rounded-lg shadow-sm sidebar">
                     <div class="course-img {{ $course->video_demo ? 'has-video' :'' }}">
 
                         <img src="{{ $course->getImage() }}" class="img-cover" alt="">
@@ -345,6 +329,101 @@
                         <div class="mt-30 text-center">
                             <button type="button" id="webinarReportBtn" class="font-14 text-gray btn-transparent">{{ trans('webinars.report_this_webinar') }}</button>
                         </div>
+
+                        <div class="mt-25 py-20 course-rightbar">
+                            <h3 class="sidebar-title font-16 text-secondary font-weight-bold">{{ trans('webinars.'.$course->type) .' '. trans('webinars.specifications') }}</h3>
+
+                            <div class="mt-30">
+                                @if($course->isWebinar())
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <i data-feather="calendar" width="20" height="20"></i>
+                                            <span class="ml-5 font-14 font-weight-500">{{ trans('public.start_date') }}:</span>
+                                        </div>
+                                        <span class="font-14">{{ dateTimeFormat($course->start_date, 'j M Y | H:i') }}</span>
+                                    </div>
+                                @endif
+
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="user" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500">{{ trans('public.capacity') }}:</span>
+                                    </div>
+                                    @if(!is_null($course->capacity))
+                                        <span class="font-14">{{ $course->capacity }} {{ trans('quiz.students') }}</span>
+                                    @else
+                                        <span class="font-14">{{ trans('update.unlimited') }}</span>
+                                    @endif
+                                </div>
+
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="clock" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500">{{ trans('public.duration') }}:</span>
+                                    </div>
+                                    <span class="font-14">{{ convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0) }} {{ trans('home.hours') }}</span>
+                                </div>
+
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="users" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500">{{ trans('quiz.students') }}:</span>
+                                    </div>
+                                    <span class="font-14">{{ $course->getSalesCount() }}</span>
+                                </div>
+
+                                @if($course->isWebinar())
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500">{{ trans('public.sessions') }}:</span>
+                                        </div>
+                                        <span class="font-14">{{ $course->sessions->count() }}</span>
+                                    </div>
+                                @endif
+
+                                @if($course->isTextCourse())
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500">{{ trans('webinars.text_lessons') }}:</span>
+                                        </div>
+                                        <span class="font-14">{{ $course->textLessons->count() }}</span>
+                                    </div>
+                                @endif
+
+                                @if($course->isCourse() or $course->isTextCourse())
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500">{{ trans('public.files') }}:</span>
+                                        </div>
+                                        <span class="font-14">{{ $course->files->count() }}</span>
+                                    </div>
+
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500">{{ trans('public.created_at') }}:</span>
+                                        </div>
+                                        <span class="font-14">{{ dateTimeFormat($course->created_at,'j M Y') }}</span>
+                                    </div>
+                                @endif
+
+                                @if(!empty($course->access_days))
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <i data-feather="alert-circle" width="20" height="20"></i>
+                                            <span class="ml-5 font-14 font-weight-500">{{ trans('update.access_period') }}:</span>
+                                        </div>
+                                        <span class="font-14">{{ $course->access_days }} {{ trans('public.days') }}</span>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- teacher --}}
+                        @include('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->teacher])
                     </div>
                 </div>
 
@@ -379,104 +458,12 @@
                     </div>
                 @endif
 
-                <div class="rounded-lg shadow-sm mt-35 px-25 py-20">
-                    <h3 class="sidebar-title font-16 text-secondary font-weight-bold">{{ trans('webinars.'.$course->type) .' '. trans('webinars.specifications') }}</h3>
-
-                    <div class="mt-30">
-                        @if($course->isWebinar())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <i data-feather="calendar" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.start_date') }}:</span>
-                                </div>
-                                <span class="font-14">{{ dateTimeFormat($course->start_date, 'j M Y | H:i') }}</span>
-                            </div>
-                        @endif
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="user" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500">{{ trans('public.capacity') }}:</span>
-                            </div>
-                            @if(!is_null($course->capacity))
-                                <span class="font-14">{{ $course->capacity }} {{ trans('quiz.students') }}</span>
-                            @else
-                                <span class="font-14">{{ trans('update.unlimited') }}</span>
-                            @endif
-                        </div>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="clock" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500">{{ trans('public.duration') }}:</span>
-                            </div>
-                            <span class="font-14">{{ convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0) }} {{ trans('home.hours') }}</span>
-                        </div>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="users" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500">{{ trans('quiz.students') }}:</span>
-                            </div>
-                            <span class="font-14">{{ $course->getSalesCount() }}</span>
-                        </div>
-
-                        @if($course->isWebinar())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.sessions') }}:</span>
-                                </div>
-                                <span class="font-14">{{ $course->sessions->count() }}</span>
-                            </div>
-                        @endif
-
-                        @if($course->isTextCourse())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('webinars.text_lessons') }}:</span>
-                                </div>
-                                <span class="font-14">{{ $course->textLessons->count() }}</span>
-                            </div>
-                        @endif
-
-                        @if($course->isCourse() or $course->isTextCourse())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.files') }}:</span>
-                                </div>
-                                <span class="font-14">{{ $course->files->count() }}</span>
-                            </div>
-
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.created_at') }}:</span>
-                                </div>
-                                <span class="font-14">{{ dateTimeFormat($course->created_at,'j M Y') }}</span>
-                            </div>
-                        @endif
-
-                        @if(!empty($course->access_days))
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <i data-feather="alert-circle" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('update.access_period') }}:</span>
-                                </div>
-                                <span class="font-14">{{ $course->access_days }} {{ trans('public.days') }}</span>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
                 {{-- organization --}}
                 @if($course->creator_id != $course->teacher_id)
                     @include('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->creator])
                 @endif
-                {{-- teacher --}}
-                @include('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->teacher])
+                
+               
 
                 @if($course->webinarPartnerTeacher->count() > 0)
                     @foreach($course->webinarPartnerTeacher as $webinarPartnerTeacher)
@@ -531,7 +518,7 @@
     </section>
 
     <div id="webinarReportModal" class="d-none">
-        <h3 class="section-title after-line font-20 text-dark-blue">{{ trans('product.report_the_course') }}</h3>
+        <h3 class="section-title font-20 text-dark-blue">{{ trans('product.report_the_course') }}</h3>
 
         <form action="/course/{{ $course->id }}/report" method="post" class="mt-25">
 

@@ -1599,6 +1599,21 @@ function getReferralSettings()
     return $settings;
 }
 
+function convertYoutubeUrlToEmbed($url)
+{
+    if (empty($url)) {
+        return '';
+    }
+
+    preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/', $url, $matches);
+
+    if (isset($matches[1])) {
+        return 'https://www.youtube.com/embed/' . $matches[1];
+    }
+
+    return $url;
+}
+
 /**
  * @return array
  */

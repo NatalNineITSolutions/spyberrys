@@ -152,3 +152,15 @@
 .badge-circle-primary{
     font-size: 0.75rem !important;
 }
+
+.btn-text-primary {
+    border-radius: 0.4rem !important;
+}
+
+.btn-text-primary:hover {
+    background-color: #2563eb !important;
+}
+
+.btn-secondary-hover {
+    background-color: var(--secondary-hover);
+}

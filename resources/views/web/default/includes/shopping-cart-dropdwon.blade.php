@@ -1,20 +1,29 @@
 <style>
     .custom-dropdown {
-        background: rgba(234, 235, 239, 1);
-        border-radius: 7px;
+        border-radius: 0.4rem;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cart-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>
 
-<div class="custom-dropdown py-2 px-2">
+<div class="custom-dropdown">
 
     @if((empty($userCarts) or count($userCarts) < 1) and !empty($userCartDiscount))
         <a href="/cart" class="btn-transparent">
-            <i data-feather="shopping-cart" width="20" height="20" class="mr-10"></i>
+            <i class="fas fa-shopping-cart"></i>
         </a>
     @else
-        <button type="button" {{ (empty($userCarts) or count($userCarts) < 1) ? 'disabled' : '' }} class="btn-transparent dropdown-toggle" id="navbarShopingCart" data-toggle="dropdown"
+        <button type="button" {{ (empty($userCarts) or count($userCarts) < 1) ? 'disabled' : '' }} class="btn-transparent dropdown-toggle cart-button" id="navbarShopingCart" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-            <i data-feather="shopping-cart" width="20" height="20" class="mr-10"></i>
+            <i data-feather="shopping-cart" width="20" height="20" class=""></i>
 
             @if(!empty($userCarts) and count($userCarts))
                 <span class="badge badge-circle-primary d-flex align-items-center justify-content-center">{{ count($userCarts) }}</span>

@@ -78,9 +78,9 @@
     "/assets/default/js/panel/registration_bonus.min.js": "/assets/default/js/panel/registration_bonus.min.js",
     "/assets/default/js/panel/ai-content-generator.min.js": "/assets/default/js/panel/ai-content-generator.min.js",
     "/assets/default/js/panel/personal_note.min.js": "/assets/default/js/panel/personal_note.min.js",
+    "/assets/default/css/app.css": "/assets/default/css/app.css",
     "/assets/default/learning_page/styles.css": "/assets/default/learning_page/styles.css",
     "/assets/default/agora/agora.css": "/assets/default/agora/agora.css",
     "/assets/default/css/rtl-app.css": "/assets/default/css/rtl-app.css",
-    "/assets/default/css/panel.css": "/assets/default/css/panel.css",
-    "/assets/default/css/app.css": "/assets/default/css/app.css"
+    "/assets/default/css/panel.css": "/assets/default/css/panel.css"
 }

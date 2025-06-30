@@ -9,6 +9,7 @@
         background-color: #fff;
         transition: box-shadow 0.3s ease;
         padding: 1rem 3rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .header.scrolled {
@@ -61,7 +62,7 @@
     .right {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 5px;
     }
 
     /* Mobile responsive */
@@ -74,7 +75,6 @@
     .nav-menu {
         display: flex;
         align-items: center;
-        gap: 20px;
     }
 
     .search-toggle-button {
@@ -204,26 +204,27 @@
         <div class="left">
             
 
-            <div class="glitch-container">
-                <!-- Glitch Target Disk -->
-                <div class="glitch glitch-disk">
-                    <div class="outer-ring"></div>
-                    <div class="middle-ring"></div>
-                    <div class="center-dot"></div>
+            <a href="<?php echo e(url('/')); ?>" class="glitch-link-wrapper">
+                <div class="glitch-container">
+                    <!-- Glitch Target Disk -->
+                    <div class="glitch glitch-disk">
+                        <div class="outer-ring"></div>
+                        <div class="middle-ring"></div>
+                        <div class="center-dot"></div>
 
-                    <!-- Glitch layers -->
-                    <span aria-hidden="true" class="glitch-layer"></span>
-                    <span aria-hidden="true" class="glitch-layer"></span>
+                        <!-- Glitch layers -->
+                        <span aria-hidden="true" class="glitch-layer"></span>
+                        <span aria-hidden="true" class="glitch-layer"></span>
+                    </div>
+
+                    <!-- Glitch Text -->
+                    <h1 class="glitch">
+                        <span aria-hidden="true">SPYBERRYS</span>
+                        SPYBERRYS
+                        <span aria-hidden="true">SPYBERRYS</span>
+                    </h1>
                 </div>
-
-                <!-- Glitch Text -->
-                <h1 class="glitch">
-                    <span aria-hidden="true">SPYBERRYS</span>
-                    SPYBERRYS
-                    <span aria-hidden="true">SPYBERRYS</span>
-                </h1>
-            </div>
-
+            </a>
 
             <form action="/search" method="get" class="navbar-search position-relative">
                 <div class="custom-search-wrapper">
@@ -255,7 +256,7 @@
 
          <div class="right nav-menu" id="mobileNav">
             <?php if(!empty($categories) and count($categories)): ?>
-                <li class="">
+                <li class="nav-item btn-text-primary">
                     <div class="menu-category">
                         <ul>
                             <li class="cursor-pointer user-select-none d-flex xs-categories-toggle text-black">
@@ -271,8 +272,8 @@
                                                         <img src="<?php echo e($category->icon); ?>" class="cat-dropdown-menu-icon mr-10" alt="<?php echo e($category->title); ?> icon">
                                                     <?php endif; ?>
 
-                                                    <?php echo e($category->title); ?>
-
+                                                    <p class="text-black"><?php echo e($category->title); ?></p>
+                                                    
                                                 </div>
 
                                                 <?php if(!empty($category->subCategories) and count($category->subCategories)): ?>
@@ -306,13 +307,13 @@
                 </li>
             <?php endif; ?>
 
-            <li class="nav-item">
+            <li class="nav-item btn-text-primary ">
                 <a class="text-black" href="<?php echo e(route('classes.index')); ?>">Top Course</a>
             </li>
 
-            <?php echo $__env->make('web.default.includes.top_nav.user_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
             <?php echo $__env->make(getTemplate().'.includes.shopping-cart-dropdwon', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+            <?php echo $__env->make('web.default.includes.top_nav.user_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
 </div>

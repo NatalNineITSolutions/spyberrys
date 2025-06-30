@@ -352,6 +352,22 @@ class HomeController extends Controller
 
         $featuredCategories = Category::where('is_featured', 1)->get();
 
+        $liveWebinars = Webinar::where('status', Webinar::$active)
+            ->where('private', false)
+            ->where('type', 'webinar') // Only include "webinar" type
+            ->orderBy('updated_at', 'desc')
+            ->with([
+                'teacher' => function ($qu) {
+                    $qu->select('id', 'full_name', 'avatar');
+                },
+                'reviews' => function ($query) {
+                    $query->where('status', 'active');
+                },
+                'tickets',
+                'feature'
+            ])
+            ->paginate(6);
+
         $data = [
             'pageTitle' => $pageTitle,
             'featuredCategories' => $featuredCategories,
@@ -384,6 +400,7 @@ class HomeController extends Controller
             'rewardProgramSection' => $rewardProgramSection ?? null,
             'becomeInstructorSection' => $becomeInstructorSection ?? null,
             'forumSection' => $forumSection ?? null,
+            'liveWebinars' => $liveWebinars,
         ];
 
         return view(getTemplate() . '.pages.home', $data);

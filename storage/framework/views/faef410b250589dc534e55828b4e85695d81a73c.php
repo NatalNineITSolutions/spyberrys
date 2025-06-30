@@ -1,3 +1,5 @@
+
+
 <?php $__env->startPush('styles_top'); ?>
     <link rel="stylesheet" href="/assets/default/css/css-stars.css">
     <link rel="stylesheet" href="/assets/default/vendors/video/video-js.min.css">
@@ -6,7 +8,7 @@
 
 <?php $__env->startSection('content'); ?>
     <section class="course-cover-container <?php echo e(empty($activeSpecialOffer) ? 'not-active-special-offer' : ''); ?>">
-        <img src="<?php echo e($course->getImageCover()); ?>" class="img-cover course-cover-img" alt="<?php echo e($course->title); ?>"/>
+        
 
         <div class="cover-content pt-40">
             <div class="container position-relative">
@@ -79,37 +81,21 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php endif; ?>
 
-                    <div class="mt-35">
-                        <ul class="nav nav-tabs bg-secondary rounded-sm p-15 d-flex align-items-center justify-content-between" id="tabs-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white <?php echo e((empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'active' : ''); ?>" id="information-tab"
-                                   data-toggle="tab" href="#information" role="tab" aria-controls="information"
-                                   aria-selected="true"><?php echo e(trans('product.information')); ?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white <?php echo e((request()->get('tab','') == 'content') ? 'active' : ''); ?>" id="content-tab" data-toggle="tab"
-                                   href="#content" role="tab" aria-controls="content"
-                                   aria-selected="false"><?php echo e(trans('product.content')); ?> (<?php echo e($webinarContentCount); ?>)</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-white <?php echo e((request()->get('tab','') == 'reviews') ? 'active' : ''); ?>" id="reviews-tab" data-toggle="tab"
-                                   href="#reviews" role="tab" aria-controls="reviews"
-                                   aria-selected="false"><?php echo e(trans('product.reviews')); ?> (<?php echo e($course->reviews->count() > 0 ? $course->reviews->pluck('creator_id')->count() : 0); ?>)</a>
-                            </li>
-                        </ul>
+                    <div class="course-about">
 
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade <?php echo e((empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'show active' : ''); ?> " id="information" role="tabpanel"
-                                 aria-labelledby="information-tab">
-                                <?php echo $__env->make(getTemplate().'.course.tabs.information', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            </div>
-                            <div class="tab-pane fade <?php echo e((request()->get('tab','') == 'content') ? 'show active' : ''); ?>" id="content" role="tabpanel" aria-labelledby="content-tab">
-                                <?php echo $__env->make(getTemplate().'.course.tabs.content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            </div>
-                            <div class="tab-pane fade <?php echo e((request()->get('tab','') == 'reviews') ? 'show active' : ''); ?>" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                                <?php echo $__env->make(getTemplate().'.course.tabs.reviews', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            </div>
-                        </div>
+                        <?php echo $__env->make(getTemplate().'.course.tabs.information', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+                        <?php echo $__env->make(getTemplate().'.course.tabs.content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+                        <?php echo $__env->make(getTemplate().'.course.tabs.reviews', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+                        
+                        <?php echo $__env->make('web.default.includes.comments',[
+                                'comments' => $course->comments,
+                                'inputName' => 'webinar_id',
+                                'inputValue' => $course->id
+                            ], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        
 
                     </div>
 
@@ -129,7 +115,7 @@
             </div>
 
             <div class="course-content-sidebar col-12 col-lg-4 mt-25 mt-lg-0">
-                <div class="rounded-lg shadow-sm">
+                <div class="rounded-lg shadow-sm sidebar">
                     <div class="course-img <?php echo e($course->video_demo ? 'has-video' :''); ?>">
 
                         <img src="<?php echo e($course->getImage()); ?>" class="img-cover" alt="">
@@ -361,6 +347,101 @@
                         <div class="mt-30 text-center">
                             <button type="button" id="webinarReportBtn" class="font-14 text-gray btn-transparent"><?php echo e(trans('webinars.report_this_webinar')); ?></button>
                         </div>
+
+                        <div class="mt-25 py-20 course-rightbar">
+                            <h3 class="sidebar-title font-16 text-secondary font-weight-bold"><?php echo e(trans('webinars.'.$course->type) .' '. trans('webinars.specifications')); ?></h3>
+
+                            <div class="mt-30">
+                                <?php if($course->isWebinar()): ?>
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <i data-feather="calendar" width="20" height="20"></i>
+                                            <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.start_date')); ?>:</span>
+                                        </div>
+                                        <span class="font-14"><?php echo e(dateTimeFormat($course->start_date, 'j M Y | H:i')); ?></span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="user" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.capacity')); ?>:</span>
+                                    </div>
+                                    <?php if(!is_null($course->capacity)): ?>
+                                        <span class="font-14"><?php echo e($course->capacity); ?> <?php echo e(trans('quiz.students')); ?></span>
+                                    <?php else: ?>
+                                        <span class="font-14"><?php echo e(trans('update.unlimited')); ?></span>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="clock" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.duration')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e(convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0)); ?> <?php echo e(trans('home.hours')); ?></span>
+                                </div>
+
+                                <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="users" width="20" height="20"></i>
+                                        <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('quiz.students')); ?>:</span>
+                                    </div>
+                                    <span class="font-14"><?php echo e($course->getSalesCount()); ?></span>
+                                </div>
+
+                                <?php if($course->isWebinar()): ?>
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.sessions')); ?>:</span>
+                                        </div>
+                                        <span class="font-14"><?php echo e($course->sessions->count()); ?></span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if($course->isTextCourse()): ?>
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.text_lessons')); ?>:</span>
+                                        </div>
+                                        <span class="font-14"><?php echo e($course->textLessons->count()); ?></span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if($course->isCourse() or $course->isTextCourse()): ?>
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.files')); ?>:</span>
+                                        </div>
+                                        <span class="font-14"><?php echo e($course->files->count()); ?></span>
+                                    </div>
+
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
+                                            <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.created_at')); ?>:</span>
+                                        </div>
+                                        <span class="font-14"><?php echo e(dateTimeFormat($course->created_at,'j M Y')); ?></span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if(!empty($course->access_days)): ?>
+                                    <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
+                                        <div class="d-flex align-items-center">
+                                            <i data-feather="alert-circle" width="20" height="20"></i>
+                                            <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('update.access_period')); ?>:</span>
+                                        </div>
+                                        <span class="font-14"><?php echo e($course->access_days); ?> <?php echo e(trans('public.days')); ?></span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        
+                        <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->teacher], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     </div>
                 </div>
 
@@ -395,104 +476,12 @@
                     </div>
                 <?php endif; ?>
 
-                <div class="rounded-lg shadow-sm mt-35 px-25 py-20">
-                    <h3 class="sidebar-title font-16 text-secondary font-weight-bold"><?php echo e(trans('webinars.'.$course->type) .' '. trans('webinars.specifications')); ?></h3>
-
-                    <div class="mt-30">
-                        <?php if($course->isWebinar()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <i data-feather="calendar" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.start_date')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e(dateTimeFormat($course->start_date, 'j M Y | H:i')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="user" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.capacity')); ?>:</span>
-                            </div>
-                            <?php if(!is_null($course->capacity)): ?>
-                                <span class="font-14"><?php echo e($course->capacity); ?> <?php echo e(trans('quiz.students')); ?></span>
-                            <?php else: ?>
-                                <span class="font-14"><?php echo e(trans('update.unlimited')); ?></span>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="clock" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.duration')); ?>:</span>
-                            </div>
-                            <span class="font-14"><?php echo e(convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0)); ?> <?php echo e(trans('home.hours')); ?></span>
-                        </div>
-
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="users" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('quiz.students')); ?>:</span>
-                            </div>
-                            <span class="font-14"><?php echo e($course->getSalesCount()); ?></span>
-                        </div>
-
-                        <?php if($course->isWebinar()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.sessions')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->sessions->count()); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if($course->isTextCourse()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('webinars.text_lessons')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->textLessons->count()); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if($course->isCourse() or $course->isTextCourse()): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.files')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->files->count()); ?></span>
-                            </div>
-
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('public.created_at')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e(dateTimeFormat($course->created_at,'j M Y')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if(!empty($course->access_days)): ?>
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
-                                    <i data-feather="alert-circle" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500"><?php echo e(trans('update.access_period')); ?>:</span>
-                                </div>
-                                <span class="font-14"><?php echo e($course->access_days); ?> <?php echo e(trans('public.days')); ?></span>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
                 
                 <?php if($course->creator_id != $course->teacher_id): ?>
                     <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->creator], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <?php endif; ?>
                 
-                <?php echo $__env->make('web.default.course.sidebar_instructor_profile', ['courseTeacher' => $course->teacher], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+               
 
                 <?php if($course->webinarPartnerTeacher->count() > 0): ?>
                     <?php $__currentLoopData = $course->webinarPartnerTeacher; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $webinarPartnerTeacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -547,7 +536,7 @@
     </section>
 
     <div id="webinarReportModal" class="d-none">
-        <h3 class="section-title after-line font-20 text-dark-blue"><?php echo e(trans('product.report_the_course')); ?></h3>
+        <h3 class="section-title font-20 text-dark-blue"><?php echo e(trans('product.report_the_course')); ?></h3>
 
         <form action="/course/<?php echo e($course->id); ?>/report" method="post" class="mt-25">
 

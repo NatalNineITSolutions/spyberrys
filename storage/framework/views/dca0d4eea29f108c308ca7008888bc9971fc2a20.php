@@ -1,4 +1,5 @@
 <div class="mt-35">
+    <h2 class="section-title after-line course-learn-title mt-3 mb-3">Course Rating</h2>
     <div class="course-reviews-box row align-items-center">
         <div class="col-3 text-center">
             <div class="reviews-rate font-36 font-weight-bold text-primary"><?php echo e($course->getRate()); ?></div>

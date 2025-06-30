@@ -118,10 +118,9 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 1800px) {
   .custom-banner-section {
-    max-width: 1140px;
-    /* or match Bootstrap's container width */
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
@@ -129,13 +128,23 @@
   }
 
   .section {
-    max-width: 1140px;
-    /* or match Bootstrap's container width */
+    max-width: 1300px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 !important;
+  }
+
+  .newest-courses {
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+
+.newest-courses {
+    padding: 0 3rem;
 }
 
 /* Tablet view */
@@ -200,8 +209,6 @@
   flex: 1 1 200px;
   margin: 20px;
 }
-
-
 
 .custom-footer-column h4 {
   font-size: 14px;
@@ -292,6 +299,15 @@
 
 .custom-footer-social-icons a:hover {
   color: #fff;
+}
+
+.custom-subscribe-button {
+    background-color: black;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    outline: none;
+    color: white;
 }
 
 /* Responsive */
@@ -479,6 +495,23 @@
   pointer-events: none;
 }
 
+.category-button span {
+  z-index: 1;
+  position: relative;
+  padding: 0 0.5rem;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 800;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.category-button:hover span {
+    color: white;
+}
+
+.category-button span:hover {
+    color: white;
+}
 
 /* Hover Effect */
 .category-button:hover {
@@ -519,23 +552,6 @@
   display: inline-block;
   position: relative;
   animation: glitch-skew 1s infinite linear alternate-reverse;
-}
-
-.glitch-wrapper::before,
-.glitch-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('{{ $generalSettings[' logo'] }}');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  z-index: 2;
 }
 
 .glitch-wrapper::before {
@@ -808,10 +824,6 @@
   transition: 0.3s all;
 }
 
-.nav-item:hover a {
-  color: white !important;
-}
-
 .nav-item:hover .menu-category>ul>li {
   color: white !important;
 }
@@ -841,6 +853,7 @@
 
 .course-about {
   margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .course-learn-title {
@@ -921,10 +934,11 @@
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
+  overflow-x: hidden;
 }
 
 .live-classes-container {
-  max-width: 1200px;
+  max-width: 1400px !important; 
   width: 100%;
 }
 
@@ -966,7 +980,7 @@
 
 .live-class-card {
   position: relative;
-  width: 300px;
+  width: 250px;
   height: 350px;
   border-radius: 16px;
   overflow: hidden;
@@ -1010,13 +1024,6 @@
   cursor: pointer;
 }
 
-/* .play-btn::before {
-  content: '▶';
-  color: white;
-  font-size: 14px;
-  margin-left: 2px;
-} */
-
 .thumbnail-wrapper {
   width: 100%;
   height: 100%;
@@ -1025,38 +1032,11 @@
   position: relative;
 }
 
-.video-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+
+
+
+
+.text-black {
+    color: black;
 }
 
-.modal-content {
-  background: #fff;
-  padding: 20px;
-  width: 80%;
-  max-width: 800px;
-  border-radius: 8px;
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-#videoContainer iframe,
-#videoContainer video {
-  width: 100%;
-  height: 400px;
-}

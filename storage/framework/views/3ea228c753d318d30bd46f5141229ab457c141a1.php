@@ -2,6 +2,7 @@
 
 <?php if(!empty($course->chapters) and count($course->chapters)): ?>
     <section class="">
+        <h2 class="section-title after-line course-learn-title mt-3">Course Content</h2>
         <?php echo $__env->make('web.default.course.tabs.contents.chapter', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </section>
 <?php endif; ?>
