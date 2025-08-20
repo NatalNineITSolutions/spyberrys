@@ -1825,7 +1825,7 @@ return [
 "select_position" => "Select Position",
 "header" => "Header",
 "footer" => "Footer",
-"platform_copyright_hint" => "All rights are reserved for learning management system platform",
+"platform_copyright_hint" => "All rights are reserved by Natal Nine ",
 "admin_template" => "Admin Template",
 "front_template" => "Front Template",
 

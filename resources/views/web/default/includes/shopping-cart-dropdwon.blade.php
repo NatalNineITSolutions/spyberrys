@@ -3,6 +3,13 @@
         background: rgba(234, 235, 239, 1);
         border-radius: 7px;
     }
+
+    .custom-dropdown .dropdown-menu {
+        right: 0 !important;
+        left: auto !important;
+        top: 120px !important;
+        transform: translate3d(0, 0, 0) !important;
+    }
 </style>
 
 <div class="custom-dropdown py-2 px-2">
@@ -22,7 +29,7 @@
         </button>
     @endif
 
-    <div class="dropdown-menu" aria-labelledby="navbarShopingCart">
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarShopingCart">
         <div class="d-md-none border-bottom mb-20 pb-10 text-right">
             <i class="close-dropdown" data-feather="x" width="32" height="32" class="mr-10"></i>
         </div>

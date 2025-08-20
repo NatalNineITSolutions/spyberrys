@@ -1,3 +1,5 @@
+
+
 <?php $__env->startPush('styles_top'); ?>
     <link rel="stylesheet" href="/assets/default/css/css-stars.css">
     <link rel="stylesheet" href="/assets/default/vendors/video/video-js.min.css">
@@ -292,6 +294,11 @@
                                 <?php endif; ?>
 
                             </div>
+
+                            <button type="button" class="btn btn-primary js-course-add-to-cart-btn">
+                                <?php echo e(trans('public.add_to_cart')); ?>
+
+                            </button>
 
                         </form>
 
